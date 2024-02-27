@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${pretendard.variable} font-pretendard`}>{children}</body>
+      <body className={`${pretendard.variable} font-pretendard text-[#272727] font-normal`}>{children}</body>
     </html>
   )
 }
