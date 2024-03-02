@@ -1,4 +1,21 @@
-const MOCK_SCHEDULE_DATA = {
+import RaiderInfo from '@/components/scheduleDetail/RaiderInfo'
+import Raiders from '@/components/scheduleDetail/Raiders'
+
+export interface MOCK_SCHEDULE_DATA_TYPE {
+  title: string
+  createdAt: string
+  startTime: string
+  members: MOCK_MEMBER_DATA_TYPE[]
+}
+
+export interface MOCK_MEMBER_DATA_TYPE {
+  discordId: string
+  character: string
+  class: string
+  itemLevel: string
+}
+
+const MOCK_SCHEDULE_DATA: MOCK_SCHEDULE_DATA_TYPE = {
   title: '일하 트라이',
   createdAt: '2024-03-02',
   startTime: '2024-03-03 14:50',
@@ -15,5 +32,12 @@ const MOCK_SCHEDULE_DATA = {
 }
 
 export default function ScheduleDetail() {
-  return <div className='flex-1 flex gap-5'>레이드 일정 상세</div>
+  const raiders = MOCK_SCHEDULE_DATA.members
+
+  return (
+    <div className='flex-1 flex gap-5'>
+      <Raiders raiders={raiders} />
+      <RaiderInfo />
+    </div>
+  )
 }
