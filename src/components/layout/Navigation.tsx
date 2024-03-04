@@ -1,5 +1,4 @@
 export default function Navigation() {
-  console.log('test')
   return (
     <nav className='border-b border-gray-200/70'>
       <ul className='flex'>
