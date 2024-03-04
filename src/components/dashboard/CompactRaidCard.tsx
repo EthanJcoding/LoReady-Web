@@ -21,12 +21,12 @@ export default function CompactRaidCard({ boss, leader, date, headCount }: Ownpr
         height={400}
       />
       <div className='flex gap-2'>
-        <h6 className='text-gray-400'>보스</h6>
+        <h6 className='text-gray-500'>보스</h6>
         <span>{boss}</span>
         <Label color='black' label='Hard' />
       </div>
       <div className='flex gap-2'>
-        <h6 className='text-gray-400'>공대장</h6>
+        <h6 className='text-gray-500'>공대장</h6>
         <span>{leader}</span>
       </div>
       <div className='flex items-center gap-2'>
