@@ -1,6 +1,6 @@
 interface Ownprops {
   label: string
-  color: Color
+  color?: Color
 }
 
 type Color = 'red' | 'yellow' | 'black' | 'blue' | 'green'
