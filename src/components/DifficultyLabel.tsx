@@ -5,7 +5,7 @@ interface Ownprops {
 
 type Color = 'red' | 'yellow' | 'black' | 'blue' | 'green'
 
-export default function Label({ label, color = 'red' }: Ownprops) {
+export default function DifficultyLabel({ label, color = 'red' }: Ownprops) {
   return (
     <div
       className={`flex items-center min-w-5 h-5 px-2 py-1 ${changeBgColor(color)}
