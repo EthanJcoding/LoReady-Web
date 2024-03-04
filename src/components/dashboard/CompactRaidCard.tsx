@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Label from '../Label'
+import Label from '../DifficultyLabel'
 import { LuClock3 } from 'react-icons/lu'
 import { SlPeople } from 'react-icons/sl'
 
