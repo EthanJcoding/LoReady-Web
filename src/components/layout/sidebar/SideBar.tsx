@@ -1,3 +1,5 @@
+import ThemeButton from './ThemeButton'
+
 export default function SideBar() {
   return (
     <aside className='min-w-72 flex flex-col border-r bg-white border-gray-200/70'>
@@ -7,7 +9,9 @@ export default function SideBar() {
             LoReady
           </a>
         </div>
-        <div>light</div>
+        <div className='flex items-center'>
+          <ThemeButton />
+        </div>
       </header>
       <div className='flex-1 flex flex-col justify-center p-7'>참여중인 서버</div>
       <footer className='flex flex-col gap-5 px-7 py-5 border-t border-gray-200/70'>
