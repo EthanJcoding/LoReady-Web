@@ -12,7 +12,7 @@ export default function ThemeButton() {
 
   return (
     <button
-      className='p-1 border border-gray-200/50 rounded-md bg-transparent text-gray-400 hover:bg-gray-50 dark:text-white hover:dark:bg-gray-700'
+      className='p-1 border border-secondary-gray/50 rounded-md bg-transparent text-primary-gray hover:bg-light dark:border-primary-gray/50 dark:text-light hover:dark:bg-dark'
       onClick={handleClick}
     >
       {currentTheme === 'dark' ? <MdOutlineDarkMode size='26' /> : <MdOutlineLightMode size='26' />}
