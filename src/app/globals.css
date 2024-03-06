@@ -2,12 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-}
-
 @layer utilities {
   .clip-path-polygon {
     clip-path: polygon(55% 0, 100% 0, 100% 100%, 90% 100%);
+  }
+}
+
+@layer components {
+  .card {
+    @apply p-5 rounded-lg bg-white/50 shadow-lg shadow-gray-200/50 dark:bg-light/5 dark:shadow-neutral-700/10;
   }
 }
