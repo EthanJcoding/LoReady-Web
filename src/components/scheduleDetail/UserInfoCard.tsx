@@ -9,14 +9,20 @@ interface Ownprops {
 }
 
 export default function UserInfoCard({ name, character, level, classType }: Ownprops) {
+  const textTruncateStyle = 'text-center truncate'
+
   return (
-    <li className='flex items-center justify-around rounded-md shadow-sm border'>
-      <FaDiscord />
-      <p>{name}</p>
-      <p>{character}</p>
-      <p>{level}</p>
-      <p>{classType}</p>
-      <GoGear />
+    <li className='flex h-9 items-center justify-around rounded-md shadow-sm border'>
+      <div className='flex justify-center items-center basis-1/12'>
+        <FaDiscord />
+      </div>
+      <p className={`${textTruncateStyle} basis-2/12`}>{name}</p>
+      <p className={`${textTruncateStyle} basis-4/12`}>{character}</p>
+      <p className={`${textTruncateStyle} basis-3/12`}>{level}</p>
+      <p className={`${textTruncateStyle} basis-3/12`}>{classType}</p>
+      <div className='flex justify-center items-center basis-1/12'>
+        <GoGear />
+      </div>
     </li>
   )
 }

@@ -25,7 +25,7 @@ export default function Raiders({ raiders }: Ownprops) {
       </section>
       <section className='flex flex-col basis-1/2 rounded-md p-3 border'>
         <h6>공대원을 배치해주세요</h6>
-        <ul className='flex flex-wrap'>
+        <ul className='grid xl:grid-cols-2 lg:grid-cols-1 gap-2'>
           {raiders.map(raider => (
             <UserInfoCard
               key={raider.discordId}
