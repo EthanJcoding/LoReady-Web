@@ -1,5 +1,7 @@
+import ServerLists from './ServerLists'
 import ThemeButton from './ThemeButton'
 import { MdEmail } from 'react-icons/md'
+import { BsHash } from 'react-icons/bs'
 
 export default function SideBar() {
   return (
@@ -14,7 +16,17 @@ export default function SideBar() {
           <ThemeButton />
         </div>
       </header>
-      <div className='flex-1 flex flex-col justify-center p-7'>참여중인 서버</div>
+      <div className='flex-1 flex flex-col justify-center px-7 py-14 overflow-hidden'>
+        <div className='flex items-center text-sm pb-3'>
+          <span>
+            <BsHash size={18} />
+          </span>
+          참여중인 서버
+        </div>
+        <div className='flex-1 overflow-y-auto'>
+          <ServerLists />
+        </div>
+      </div>
       <footer className='flex flex-col gap-5 px-7 py-5 border-t border-inherit'>
         <ul className='flex gap-5 text-base text-inherit'>
           <li className='flex items-center gap-1'>
