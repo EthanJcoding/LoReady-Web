@@ -1,4 +1,5 @@
 import CompactRaidCard from '@/components/dashboard/CompactRaidCard'
+import PartyList from '@/components/partyList/PartyList'
 
 export default function Schedule() {
   return (
