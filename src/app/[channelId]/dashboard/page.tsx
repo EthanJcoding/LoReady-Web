@@ -1,4 +1,12 @@
-export default function Dashboard() {
+import { getChannelData } from '@/api/firebase'
+
+export default async function Dashboard({ params }: { params: { channelId: string } }) {
+  const { channelId } = params
+
+  // 올바른 취업생활의 채널 Id = '1050686760373469234'
+  const data = await getChannelData('1050686760373469234')
+
+  console.log(data)
   return (
     <div className='flex-1 flex gap-5 overflow-hidden'>
       <div className='card basis-1/3 bg-secondary-accent/50 dark:bg-primary-accent/80'>
