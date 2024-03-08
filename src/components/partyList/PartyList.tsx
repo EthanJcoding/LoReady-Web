@@ -23,23 +23,27 @@ export default function PartyList() {
   const { party1, party2 } = useStore()
 
   return (
-    <div className='grid gap-4 grid-cols-2 pt-2 px-3 '>
-      <ul className=' grid-rows-{1} text-center gap-1'>
-        <li className='bg-lime-400 rounded-md font-bold text-white'>1번파티</li>
-        {party1.map((party, index) => (
-          <li className='bg-slate-300 mt-1 rounded-md' key={index}>
-            {party.name}
-          </li>
-        ))}
-      </ul>
-      <ul className='grid-rows-{2} text-center'>
-        <li className='bg-violet-600 rounded-md font-bold text-white'>2번파티</li>
-        {party2.map((party, index) => (
-          <li className='bg-slate-300 mt-1 rounded-md' key={index}>
-            {party.name}
-          </li>
-        ))}
-      </ul>
+    <div className='grid grid-cols-2 gap-4 pt-2 px-3 '>
+      <div>
+        <div className='bg-lime-400 rounded-md font-bold text-white'>1번파티</div>
+        <ul className='text-center gap-1'>
+          {party1.map((party, index) => (
+            <li className='bg-slate-300 mt-1 rounded-md' key={index}>
+              {party.name}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <div className='bg-violet-600 rounded-md font-bold text-white'>2번파티</div>
+        <ul className='text-center'>
+          {party2.map((party, index) => (
+            <li className='bg-slate-300 mt-1 rounded-md' key={index}>
+              {party.name}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
