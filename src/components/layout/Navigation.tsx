@@ -5,12 +5,14 @@ import { useState } from 'react'
 interface OwnProps {
   channelId: string
 }
-export default function Navigation({ channelId }: OwnProps) {
+export default function Navigation() {
   const [navTap, setNabTap] = useState('dashboard')
 
   const handleClick = (event: string) => {
     setNabTap(event)
   }
+
+  const channelId = 'channelId'
 
   return (
     <nav className='border-b border-secondary-gray/50 dark:border-primary-gray/50'>
