@@ -7,7 +7,7 @@ interface Ownprops {
   fontSize?: 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl'
 }
 
-export default async function ServerProfile({ name, iconSrc, iconSize, fontSize = 'base' }: Ownprops) {
+export default function ServerProfile({ name, iconSrc, iconSize, fontSize = 'base' }: Ownprops) {
   return (
     <div className={`flex items-center gap-2 text-${fontSize}`}>
       <span className={`flex-none w-${iconSize} h-${iconSize} rounded-full border overflow-hidden`}>
