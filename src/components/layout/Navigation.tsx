@@ -1,7 +1,5 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
-// import { useRouter } from 'next/router'
 import { usePathname, useRouter } from 'next/navigation'
 
 interface OwnProps {
