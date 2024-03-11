@@ -1,4 +1,6 @@
 'use client'
+// 파이어베이스에서 데이터 가져오기 : zustand로 가져오기?
+
 import { create } from 'zustand'
 type Store = {
   party1: {
@@ -23,10 +25,10 @@ export default function PartyList() {
   const { party1, party2 } = useStore()
 
   return (
-    <div className='grid grid-cols-2 gap-4 pt-2 px-3 '>
+    <div className='grid grid-cols-2 gap-4 pt-2 px-3 text-center'>
       <div>
-        <div className='bg-lime-400 rounded-md font-bold text-white'>1번파티</div>
-        <ul className='text-center gap-1'>
+        <div className='bg-lime-400 rounded-md font-bold text-white '>1번파티</div>
+        <ul className='gap-1'>
           {party1.map((party, index) => (
             <li className='bg-slate-300 mt-1 rounded-md' key={index}>
               {party.name}
@@ -36,7 +38,7 @@ export default function PartyList() {
       </div>
       <div>
         <div className='bg-violet-600 rounded-md font-bold text-white'>2번파티</div>
-        <ul className='text-center'>
+        <ul className='gap-1'>
           {party2.map((party, index) => (
             <li className='bg-slate-300 mt-1 rounded-md' key={index}>
               {party.name}
