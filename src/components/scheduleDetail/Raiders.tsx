@@ -2,15 +2,12 @@
 
 import { MOCK_MEMBER_DATA_TYPE } from '@/app/[channelId]/schedule/[scheduleId]/page'
 import UserInfoCard from './UserInfoCard'
-import { getSchdules } from '@/api/firebase/schedules'
 
 interface Ownprops {
   raiders: MOCK_MEMBER_DATA_TYPE[]
 }
 
 export default function Raiders({ raiders }: Ownprops) {
-  const schedules = getSchdules('HjoJZv0cnKrECghRMgSa').then(data => console.log(data))
-
   return (
     <section className='flex flex-col basis-1/2 gap-5 bg-white rounded-md p-3 shadow-sm'>
       <section className='flex basis-1/2 gap-5 rounded-md border'>
