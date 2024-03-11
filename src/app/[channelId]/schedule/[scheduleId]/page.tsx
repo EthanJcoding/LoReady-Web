@@ -36,7 +36,7 @@ export default function ScheduleDetail() {
 
   return (
     <div className='flex-1 flex gap-5'>
-      <Raiders raiders={raiders} />
+      <Raiders raidersData={raiders} />
       <RaiderInfo />
     </div>
   )
