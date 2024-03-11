@@ -2,12 +2,20 @@
 
 import { MOCK_MEMBER_DATA_TYPE } from '@/app/[channelId]/schedule/[scheduleId]/page'
 import UserInfoCard from './UserInfoCard'
+import { useRaidersStore } from '@/stores/raiders'
+import { useEffect } from 'react'
 
 interface Ownprops {
-  raiders: MOCK_MEMBER_DATA_TYPE[]
+  raidersData: MOCK_MEMBER_DATA_TYPE[]
 }
 
-export default function Raiders({ raiders }: Ownprops) {
+export default function Raiders({ raidersData }: Ownprops) {
+  const { raiders, setRaiders } = useRaidersStore()
+
+  useEffect(() => {
+    setRaiders(raidersData)
+  }, [])
+
   return (
     <section className='flex flex-col basis-1/2 gap-5 bg-white rounded-md p-3 shadow-sm'>
       <section className='flex basis-1/2 gap-5 rounded-md border'>
