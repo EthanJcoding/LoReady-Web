@@ -4,13 +4,15 @@ import { MOCK_MEMBER_DATA_TYPE } from '@/app/[channelId]/schedule/[scheduleId]/p
 import UserInfoCard from './UserInfoCard'
 import { useRaidersStore } from '@/stores/raiders'
 import { useEffect } from 'react'
+import { RaidType } from '@/types/raid'
 
 interface Ownprops {
   raidersData: MOCK_MEMBER_DATA_TYPE[]
+  raidType: RaidType
 }
 
-export default function Raiders({ raidersData }: Ownprops) {
-  const { raiders, setRaiders } = useRaidersStore()
+export default function Raiders({ raidersData, raidType }: Ownprops) {
+  const { raiders, firstPartyRaiders, secondPartyRaiders, setRaiders } = useRaidersStore()
 
   useEffect(() => {
     setRaiders(raidersData)
@@ -21,12 +23,34 @@ export default function Raiders({ raidersData }: Ownprops) {
       <section className='flex basis-1/2 gap-5 rounded-md border'>
         <div className='flex basis-1/2 rounded-md p-3 border'>
           <h6>1파티</h6>
-          <ul></ul>
+          <ul>
+            {firstPartyRaiders.map(raider => (
+              <UserInfoCard
+                key={raider.discordId}
+                name={raider.discordId}
+                character={raider.character}
+                classType={raider.class}
+                level={raider.itemLevel}
+              />
+            ))}
+          </ul>
         </div>
-        <div className='flex basis-1/2 rounded-md p-3 border'>
-          <h6>2파티</h6>
-          <ul></ul>
-        </div>
+        {raidType === '8인레이드' && (
+          <div className='flex basis-1/2 rounded-md p-3 border'>
+            <h6>2파티</h6>
+            <ul>
+              {secondPartyRaiders.map(raider => (
+                <UserInfoCard
+                  key={raider.discordId}
+                  name={raider.discordId}
+                  character={raider.character}
+                  classType={raider.class}
+                  level={raider.itemLevel}
+                />
+              ))}
+            </ul>
+          </div>
+        )}
       </section>
       <section className='flex flex-col basis-1/2 rounded-md p-3 border'>
         <h6>공대원을 배치해주세요</h6>
