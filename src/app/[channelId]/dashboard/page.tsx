@@ -1,24 +1,25 @@
 import { getChannelData } from '@/api/firebase'
+import AdditionalConts from '@/components/dashboard/AdditionalConts'
+import RaidLists from '@/components/dashboard/UpcomingRaid'
 
-export default async function Dashboard({ params }: { params: { channelId: string } }) {
-  const { channelId } = params
+interface Ownprops {
+  params: {
+    channelId: string
+  }
+}
 
-  // 올바른 취업생활의 채널 Id = '1050686760373469234'
-  const data = await getChannelData('1050686760373469234')
+export default async function Dashboard({ params: { channelId } }: Ownprops) {
+  //FIXME: 작업 완료 후 channelId 할당 삭제하기
+  channelId = '1050686760373469234'
+  const data = await getChannelData(channelId)
 
   console.log(data)
+
+  if (!data) return
   return (
     <div className='flex-1 flex gap-5 overflow-hidden'>
-      <div className='card basis-1/3 bg-secondary-accent/50 dark:bg-primary-accent/80'>
-        <div className='pb-4 text-xl'>다가오는 레이드</div>
-        <div className='flex flex-col gap-3'></div>
-      </div>
-      <div className='flex-1 grid grid-cols-2 grid-rows-2 gap-5'>
-        <div className='card'>1</div>
-        <div className='card'>2</div>
-        <div className='card'>3</div>
-        <div className='card'>4</div>
-      </div>
+      <RaidLists />
+      <AdditionalConts />
     </div>
   )
 }
