@@ -1,6 +1,6 @@
 import { getChannelData } from '@/api/firebase'
 import AdditionalConts from '@/components/dashboard/AdditionalConts'
-import RaidLists from '@/components/dashboard/UpcomingRaid'
+import UpcomingRaid from '@/components/dashboard/UpcomingRaid'
 
 interface Ownprops {
   params: {
@@ -18,7 +18,7 @@ export default async function Dashboard({ params: { channelId } }: Ownprops) {
   if (!data) return
   return (
     <div className='flex-1 flex gap-5 overflow-hidden'>
-      <RaidLists />
+      <UpcomingRaid channelId={channelId} />
       <AdditionalConts />
     </div>
   )
