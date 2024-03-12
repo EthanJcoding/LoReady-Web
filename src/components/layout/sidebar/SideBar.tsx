@@ -5,7 +5,7 @@ import { BsHash } from 'react-icons/bs'
 
 export default function SideBar() {
   return (
-    <aside className='min-w-72 flex flex-col bg-white border-r border-secondary-gray/50 dark:bg-neutral-900 dark:border-primary-gray/50'>
+    <aside className='w-72 flex flex-col bg-white border-r border-secondary-gray/50 dark:bg-neutral-900 dark:border-primary-gray/50'>
       <header className='flex items-center p-7'>
         <div className='flex-1'>
           <a className='text-2xl text-blue-700' href='/'>
