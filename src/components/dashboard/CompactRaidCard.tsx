@@ -1,16 +1,17 @@
 import Image from 'next/image'
-import Label from '../DifficultyLabel'
+import DifficultyLabel from '../DifficultyLabel'
 import { LuClock3 } from 'react-icons/lu'
 import { SlPeople } from 'react-icons/sl'
 
 interface Ownprops {
   boss: string
+  rank: string
   leader: string
   date: string
   headCount: string
 }
 
-export default function CompactRaidCard({ boss, leader, date, headCount }: Ownprops) {
+export default function CompactRaidCard({ boss, rank, leader, date, headCount }: Ownprops) {
   return (
     <section className='relative flex flex-col justify-center gap-2 h-[105px] w-[480px] bg-white p-3 rounded-md shadow-sm'>
       <Image
@@ -23,7 +24,7 @@ export default function CompactRaidCard({ boss, leader, date, headCount }: Ownpr
       <div className='flex gap-2'>
         <h6 className='text-gray-500'>보스</h6>
         <span>{boss}</span>
-        <Label color='black' label='Hard' />
+        <DifficultyLabel color='black' label={rank} />
       </div>
       <div className='flex gap-2'>
         <h6 className='text-gray-500'>공대장</h6>
