@@ -40,5 +40,7 @@ function setLableColor(label: string) {
       return 'bg-amber-400'
     case 'HELL':
       return 'bg-red-600'
+    default:
+      return 'bg-primary-gray'
   }
 }
