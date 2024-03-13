@@ -7,16 +7,23 @@ import { RaidType, RaiderType } from '@/types/raid'
 
 interface Ownprops {
   raidersData: RaiderType[]
+  firstPartyraidersData: RaiderType[]
+  secondPartyraidersData: RaiderType[]
   raidType: RaidType
 }
 
-export default function Raiders({ raidersData, raidType }: Ownprops) {
-  const { raiders, firstPartyRaiders, secondPartyRaiders, setRaiders } = useRaidersStore()
+export default function Raiders({ raidersData, firstPartyraidersData, secondPartyraidersData, raidType }: Ownprops) {
+  const { raiders, firstPartyRaiders, secondPartyRaiders, setRaiders, setFirstPartyRaiders, setSecondPartyRaiders } =
+    useRaidersStore()
+
+  console.log(raidersData)
 
   useEffect(() => {
     setRaiders(raidersData)
-    console.log(raidersData)
+    setFirstPartyRaiders(firstPartyraidersData)
+    setSecondPartyRaiders(secondPartyraidersData)
   }, [])
+  console.log(raiders)
 
   return (
     <section className='flex flex-col basis-1/2 gap-5 bg-white rounded-md p-3 shadow-sm'>
