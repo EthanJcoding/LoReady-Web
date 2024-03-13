@@ -1,4 +1,4 @@
-import { getChannelData } from '@/api/firebase'
+import { getChannelData, getScheduleData } from '@/api/firebase'
 import PartyListDetail from './PartyListDetail'
 import RaidList from '@/components/dashboard/RaidList'
 
