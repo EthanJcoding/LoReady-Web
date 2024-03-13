@@ -15,6 +15,6 @@ export const useRaidersStore = create<RaidersStoreType>(set => ({
   firstPartyRaiders: [],
   secondPartyRaiders: [],
   setRaiders: raiders => set({ raiders }),
-  setFirstPartyRaiders: raiders => set({ raiders }),
-  setSecondPartyRaiders: raiders => set({ raiders })
+  setFirstPartyRaiders: firstPartyRaiders => set({ firstPartyRaiders }),
+  setSecondPartyRaiders: secondPartyRaiders => set({ secondPartyRaiders })
 }))

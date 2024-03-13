@@ -14,15 +14,21 @@ interface Ownprops {
 
 export default function Raiders({ raidersData, firstPartyraidersData, secondPartyraidersData, raidType }: Ownprops) {
   const { raiders, firstPartyRaiders, secondPartyRaiders, setRaiders, setFirstPartyRaiders, setSecondPartyRaiders } =
-    useRaidersStore()
-
-  console.log(raidersData)
+    useRaidersStore(state => ({
+      raiders: state.raiders,
+      firstPartyRaiders: state.firstPartyRaiders,
+      secondPartyRaiders: state.secondPartyRaiders,
+      setRaiders: state.setRaiders,
+      setFirstPartyRaiders: state.setFirstPartyRaiders,
+      setSecondPartyRaiders: state.setSecondPartyRaiders
+    }))
 
   useEffect(() => {
     setRaiders(raidersData)
     setFirstPartyRaiders(firstPartyraidersData)
     setSecondPartyRaiders(secondPartyraidersData)
   }, [])
+
   console.log(raiders)
 
   return (

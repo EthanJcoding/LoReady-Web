@@ -11,6 +11,8 @@ interface Ownprops {
 export default function UserInfoCard({ name, character, level, classType }: Ownprops) {
   const textTruncateStyle = 'text-center truncate'
 
+  console.log('name', name)
+
   return (
     <li className='flex h-9 items-center justify-around rounded-md shadow-sm border'>
       <div className='flex justify-center items-center basis-1/12'>
