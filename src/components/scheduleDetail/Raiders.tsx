@@ -2,7 +2,7 @@
 
 import { MOCK_MEMBER_DATA_TYPE } from '@/app/[channelId]/schedule/[scheduleId]/page'
 import UserInfoCard from './UserInfoCard'
-import { useRaidersStore } from '@/stores/raiders'
+import { useRaidersStore } from '@/stores/raidersStore'
 import { useEffect } from 'react'
 import { RaidType } from '@/types/raid'
 
