@@ -1,19 +1,13 @@
+import { RaiderType } from '@/types/raid'
 import { create } from 'zustand'
 
-interface RaidersType {
-  discordId: string
-  character: string
-  class: string
-  itemLevel: string
-}
-
 interface RaidersStoreType {
-  raiders: RaidersType[]
-  firstPartyRaiders: RaidersType[]
-  secondPartyRaiders: RaidersType[]
-  setRaiders: (raiders: RaidersType[]) => void
-  setFirstPartyRaiders: (raiders: RaidersType[]) => void
-  setSecondPartyRaiders: (raiders: RaidersType[]) => void
+  raiders: RaiderType[]
+  firstPartyRaiders: RaiderType[]
+  secondPartyRaiders: RaiderType[]
+  setRaiders: (raiders: RaiderType[]) => void
+  setFirstPartyRaiders: (raiders: RaiderType[]) => void
+  setSecondPartyRaiders: (raiders: RaiderType[]) => void
 }
 
 export const useRaidersStore = create<RaidersStoreType>(set => ({

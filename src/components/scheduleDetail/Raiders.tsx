@@ -1,13 +1,12 @@
 'use client'
 
-import { MOCK_MEMBER_DATA_TYPE } from '@/app/[channelId]/schedule/[scheduleId]/page'
 import UserInfoCard from './UserInfoCard'
 import { useRaidersStore } from '@/stores/raidersStore'
 import { useEffect } from 'react'
-import { RaidType } from '@/types/raid'
+import { RaidType, RaiderType } from '@/types/raid'
 
 interface Ownprops {
-  raidersData: MOCK_MEMBER_DATA_TYPE[]
+  raidersData: RaiderType[]
   raidType: RaidType
 }
 
@@ -16,6 +15,7 @@ export default function Raiders({ raidersData, raidType }: Ownprops) {
 
   useEffect(() => {
     setRaiders(raidersData)
+    console.log(raidersData)
   }, [])
 
   return (
@@ -26,11 +26,11 @@ export default function Raiders({ raidersData, raidType }: Ownprops) {
           <ul>
             {firstPartyRaiders.map(raider => (
               <UserInfoCard
-                key={raider.discordId}
-                name={raider.discordId}
-                character={raider.character}
-                classType={raider.class}
-                level={raider.itemLevel}
+                key={raider.CharacterName}
+                name={raider.CharacterName}
+                character={raider.CharacterName}
+                classType={raider.CharacterClassName}
+                level={raider.ItemAvgLevel}
               />
             ))}
           </ul>
@@ -41,11 +41,11 @@ export default function Raiders({ raidersData, raidType }: Ownprops) {
             <ul>
               {secondPartyRaiders.map(raider => (
                 <UserInfoCard
-                  key={raider.discordId}
-                  name={raider.discordId}
-                  character={raider.character}
-                  classType={raider.class}
-                  level={raider.itemLevel}
+                  key={raider.CharacterName}
+                  name={raider.CharacterName}
+                  character={raider.CharacterName}
+                  classType={raider.CharacterClassName}
+                  level={raider.ItemAvgLevel}
                 />
               ))}
             </ul>
@@ -57,11 +57,11 @@ export default function Raiders({ raidersData, raidType }: Ownprops) {
         <ul className='grid xl:grid-cols-2 lg:grid-cols-1 gap-2'>
           {raiders.map(raider => (
             <UserInfoCard
-              key={raider.discordId}
-              name={raider.discordId}
-              character={raider.character}
-              classType={raider.class}
-              level={raider.itemLevel}
+              key={raider.CharacterName}
+              name={raider.CharacterName}
+              character={raider.CharacterName}
+              classType={raider.CharacterClassName}
+              level={raider.ItemAvgLevel}
             />
           ))}
         </ul>
