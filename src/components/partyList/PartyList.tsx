@@ -13,7 +13,7 @@ export default async function PartyList({ channelId }: Ownprops) {
   if (!data) return
 
   return (
-    <div className='h-auto border-solid border-2 rounded-md w-full md:w-[350px]'>
+    <div className='h-auto border-solid border-2 rounded-md md:w-[350px]'>
       <ul className='flex flex-col gap-3 pb-2.5'>
         {data.schedules.map((scheduleId: string) => (
           <>
