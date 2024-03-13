@@ -14,10 +14,8 @@ export default async function Schedule({ params: { channelId } }: Ownprops) {
   if (!data) return
 
   return (
-    <div className='flex-1 flex gap-5 flex-wrap overflow-y-scroll overscroll-y-auto'>
-      <div className='h-auto '>
-        <PartyList channelId={channelId} />
-      </div>
+    <div className='flex flex-wrap gap-5 overflow-x-auto min-w-0'>
+      <PartyList channelId={channelId} />
     </div>
   )
 }
