@@ -1,7 +1,8 @@
 import { getScheduleData } from '@/api/firebase'
 import CompactRaidCard from './CompactRaidCard'
 import Link from 'next/link'
-import { extractBossRank, extractCapacity } from '@/utils/util'
+import { extractBossRank } from '@/utils/extractBossRank'
+import { extractCapacity } from '@/utils/extractCapacity'
 
 interface Ownprops {
   scheduleId: string
