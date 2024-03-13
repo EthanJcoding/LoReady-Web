@@ -1,18 +1,18 @@
 interface Ownprops {
-  label: string
+  difficulty: string
   color?: Color | null
 }
 
 type Color = 'red' | 'yellow' | 'black' | 'blue' | 'green'
 
-export default function DifficultyLabel({ label, color }: Ownprops) {
+export default function DifficultyLabel({ difficulty, color }: Ownprops) {
   return (
     <div
       className={`flex items-center min-w-5 h-5 px-2 py-1 ${
-        color ? changeBgColor(color) : setLableColor(label)
+        color ? changeBgColor(color) : setLableColor(difficulty)
       } text-white text-xs text-center align-middle rounded-full`}
     >
-      {label}
+      {difficulty}
     </div>
   )
 }
@@ -32,8 +32,8 @@ function changeBgColor(color: Color) {
   }
 }
 
-function setLableColor(label: string) {
-  switch (label) {
+function setLableColor(difficulty: string) {
+  switch (difficulty) {
     case 'NORMAL':
       return 'bg-neutral-950'
     case 'HARD':

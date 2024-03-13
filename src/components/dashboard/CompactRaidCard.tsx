@@ -26,7 +26,7 @@ export default function CompactRaidCard({ boss, rank, leader, date, headCount }:
           <h6 className='flex-none text-primary-gray'>보스</h6>
           <div className='flex-1 flex items-center gap-1 overflow-hidden'>
             <span className='truncate'>{boss}</span>
-            <DifficultyLabel label={rank} />
+            <DifficultyLabel difficulty={rank} />
           </div>
         </div>
         <div className='flex gap-2'>
