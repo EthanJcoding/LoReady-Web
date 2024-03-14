@@ -6,10 +6,9 @@ import { extractCapacity } from '@/utils/extractCapacity'
 
 interface Ownprops {
   scheduleId: string
-  enableRouting: boolean
 }
 
-export default async function RaidList({ scheduleId, enableRouting }: Ownprops) {
+export default async function RaidList({ scheduleId }: Ownprops) {
   const data = await getScheduleData(scheduleId)
 
   if (!data) return
@@ -20,27 +19,15 @@ export default async function RaidList({ scheduleId, enableRouting }: Ownprops) 
 
   return (
     <li>
-      {enableRouting ? (
-        <Link href={`/${data.channel}/schedule/${scheduleId}`}>
-          <CompactRaidCard
-            boss={boss}
-            rank={rank}
-            leader={data.raidLeader.character}
-            date={data.raidDate}
-            headCount={`${participants} / ${capacity}`}
-          />
-        </Link>
-      ) : (
-        <div>
-          <CompactRaidCard
-            boss={boss}
-            rank={rank}
-            leader={data.raidLeader.character}
-            date={data.raidDate}
-            headCount={`${participants} / ${capacity}`}
-          />
-        </div>
-      )}
+      <Link href={`/${data.channel}/schedule/${scheduleId}`}>
+        <CompactRaidCard
+          boss={boss}
+          rank={rank}
+          leader={data.raidLeader.character}
+          date={data.raidDate}
+          headCount={`${participants} / ${capacity}`}
+        />
+      </Link>
     </li>
   )
 }
