@@ -18,8 +18,6 @@ export default async function ScheduleDetail() {
     secondPartyraidersData = await setRaidersData(scheduleData, 'party2')
   }
 
-  console.log('info', raidersData)
-
   return (
     <div className='flex-1 flex gap-5'>
       <Raiders
