@@ -28,29 +28,27 @@ export default async function PartyListDetail({ scheduleId }: Ownprops) {
   if (!data) return
 
   return (
-    <Link href={`/${data.channel}/schedule/${scheduleId}`}>
-      <div className='grid grid-cols-2 gap-4 pt-2 px-3 text-center'>
-        <div>
-          <div className='bg-lime-400 rounded-md font-bold text-white '>1번파티</div>
-          <ul className='gap-1'>
-            {data.characters.party0.map((party: ScheduleData, index: number) => (
-              <li className='bg-slate-300 mt-1 rounded-md' key={index}>
-                {party.character}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <div className='bg-violet-600 rounded-md font-bold text-white'>2번파티</div>
-          <ul className='gap-1'>
-            {data.characters.party0.map((party: ScheduleData, index: number) => (
-              <li className='bg-slate-300 mt-1 rounded-md' key={index}>
-                {party.character}
-              </li>
-            ))}
-          </ul>
-        </div>
+    <div className='grid grid-cols-2 gap-4 pt-2 px-3 text-center'>
+      <div>
+        <div className='bg-lime-400 rounded-md font-bold text-white '>1번파티</div>
+        <ul className='gap-1'>
+          {data.characters.party0.map((party: ScheduleData, index: number) => (
+            <li className='bg-slate-300 mt-1 rounded-md' key={index}>
+              {party.character}
+            </li>
+          ))}
+        </ul>
       </div>
-    </Link>
+      <div>
+        <div className='bg-violet-600 rounded-md font-bold text-white'>2번파티</div>
+        <ul className='gap-1'>
+          {data.characters.party0.map((party: ScheduleData, index: number) => (
+            <li className='bg-slate-300 mt-1 rounded-md' key={index}>
+              {party.character}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   )
 }
