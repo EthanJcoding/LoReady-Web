@@ -9,7 +9,8 @@ const nextConfig = {
       }
     ]
   },
-  reactStrictMode: false
+  reactStrictMode: false,
+  swcMinify: true
 }
 
 export default nextConfig
