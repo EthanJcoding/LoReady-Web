@@ -33,8 +33,8 @@ export default function Raiders({ raidersData, firstPartyraidersData, secondPart
 
   return (
     <section className='flex flex-col basis-1/2 gap-5 bg-white rounded-md p-3 shadow-sm'>
-      <section className='flex basis-1/2 gap-5 rounded-md border'>
-        <div className='flex basis-1/2 rounded-md p-3 border'>
+      <section className='flex flex-col basis-1/2 gap-5 rounded-md border'>
+        <div className='flex basis-1/2 grow rounded-md p-3 border'>
           <h6>1파티</h6>
           <ul>
             {firstPartyRaiders.map(raider => (
