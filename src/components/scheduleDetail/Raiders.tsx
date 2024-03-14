@@ -4,15 +4,15 @@ import UserInfoCard from './UserInfoCard'
 import { useRaidersStore } from '@/stores/raidersStore'
 import { useEffect } from 'react'
 import { RaidType, RaiderType } from '@/types/raid'
+import { DocumentData } from 'firebase/firestore'
+import setRaidersData from '@/utils/setRaidersData'
 
 interface Ownprops {
-  raidersData: RaiderType[]
-  firstPartyraidersData: RaiderType[]
-  secondPartyraidersData: RaiderType[]
+  scheduleData: DocumentData | null
   raidType: RaidType
 }
 
-export default function Raiders({ raidersData, firstPartyraidersData, secondPartyraidersData, raidType }: Ownprops) {
+export default function Raiders({ scheduleData, raidType }: Ownprops) {
   const { raiders, firstPartyRaiders, secondPartyRaiders, setRaiders, setFirstPartyRaiders, setSecondPartyRaiders } =
     useRaidersStore(state => ({
       raiders: state.raiders,
@@ -24,9 +24,11 @@ export default function Raiders({ raidersData, firstPartyraidersData, secondPart
     }))
 
   useEffect(() => {
-    setRaiders(raidersData)
-    setFirstPartyRaiders(firstPartyraidersData)
-    setSecondPartyRaiders(secondPartyraidersData)
+    if (scheduleData) {
+      setRaidersData(scheduleData, 'party0').then((data: RaiderType[]) => setRaiders(data))
+      setRaidersData(scheduleData, 'party1').then((data: RaiderType[]) => setFirstPartyRaiders(data))
+      setRaidersData(scheduleData, 'party2').then((data: RaiderType[]) => setSecondPartyRaiders(data))
+    }
   }, [])
 
   console.log(raiders)
