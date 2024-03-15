@@ -14,13 +14,15 @@ interface Ownprops {
 export default function CompactRaidCard({ boss, rank, leader, date, headCount }: Ownprops) {
   return (
     <section className='relative flex bg-white text-dark p-3 rounded-md shadow-sm'>
-      <Image
-        className='absolute w-full h-full inset-0 clip-path-polygon object-cover object-center rounded-md'
-        src={setBossImage(boss)}
-        alt='boss_img'
-        width={400}
-        height={400}
-      />
+      <div className='absolute w-full h-full inset-0 clip-path-polygon rounded-md overflow-hidden'>
+        <Image
+          className='w-full h-full absolute left-1/3 object-cover object-center'
+          src={setBossImage(boss)}
+          alt='boss_img'
+          width={400}
+          height={400}
+        />
+      </div>
       <div className='flex flex-col gap-1 z-10 overflow-hidden'>
         <div className='flex gap-2'>
           <h6 className='flex-none text-primary-gray'>보스</h6>
