@@ -14,7 +14,7 @@ interface Ownprops {
 export default function UserInfoCard({ name, character, level, classType, index }: Ownprops) {
   const textTruncateStyle = 'text-center truncate'
 
-  console.log('name', name)
+  console.log('test', name)
 
   const [isBrowser, setIsBrowser] = useState(false)
 
