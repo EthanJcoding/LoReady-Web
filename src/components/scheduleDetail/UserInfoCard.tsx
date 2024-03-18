@@ -1,4 +1,5 @@
 import { Draggable } from '@hello-pangea/dnd'
+import { useEffect, useState } from 'react'
 import { FaDiscord } from 'react-icons/fa'
 import { GoGear } from 'react-icons/go'
 
@@ -14,6 +15,14 @@ export default function UserInfoCard({ name, character, level, classType, index 
   const textTruncateStyle = 'text-center truncate'
 
   console.log('name', name)
+
+  const [isBrowser, setIsBrowser] = useState(false)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsBrowser(true)
+    }
+  }, [])
 
   return (
     <Draggable draggableId={name} index={index}>
