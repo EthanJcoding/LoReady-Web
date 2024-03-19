@@ -13,7 +13,7 @@ export default function AuthButton() {
   }
   return (
     <button
-      className='bg-indigo-500 flex items-center justify-start space-x-4 p-4 rounded-lg px-8 w-full hover:bg-indigo-500/75 transition'
+      className='bg-indigo-500 inline-flex items-center justify-center whitespace-nowrap space-x-4 px-4 py-2 h-10 rounded-lg hover:bg-indigo-500/75 transition'
       onClick={() => signIn('discord')}
     >
       <FaDiscord color='white' className='w-8 h-8' />
