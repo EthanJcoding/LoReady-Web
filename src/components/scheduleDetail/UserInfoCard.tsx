@@ -14,16 +14,6 @@ interface Ownprops {
 export default function UserInfoCard({ name, character, level, classType, index }: Ownprops) {
   const textTruncateStyle = 'text-center truncate'
 
-  console.log('test', name)
-
-  const [isBrowser, setIsBrowser] = useState(false)
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setIsBrowser(true)
-    }
-  }, [])
-
   return (
     <Draggable draggableId={name} index={index}>
       {provided => (
