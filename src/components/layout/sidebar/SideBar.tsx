@@ -7,7 +7,7 @@ import AuthButton from './auth/AuthButton'
 export default function SideBar() {
   return (
     <aside className='w-72 flex flex-col bg-white border-r border-secondary-gray/50 dark:bg-neutral-900 dark:border-primary-gray/50'>
-      <header className='flex items-center p-7 flex-col space-y-12'>
+      <header className='flex items-center p-7'>
         <div className='flex w-full justify-between'>
           <a className='text-2xl text-blue-700' href='/'>
             LoReady
@@ -16,7 +16,6 @@ export default function SideBar() {
             <ThemeButton />
           </div>
         </div>
-        <AuthButton />
       </header>
       <div className='flex-1 flex flex-col justify-center px-7 py-14 overflow-hidden'>
         <div className='flex items-center text-sm pb-3'>
