@@ -5,7 +5,10 @@ export default async function AbyssContent() {
 
   return (
     <div className='card flex flex-col gap-3'>
-      <div className='text-lg'>이번 주 도전 어비스 던전</div>
+      <div className='text-lg font-medium'>
+        이번 주 도전
+        <span className='text-primary-accent pl-1'>어비스 던전</span>
+      </div>
       <ul className='flex-1 flex flex-col gap-3'>
         {data.map((item, idx) => (
           <li
