@@ -5,8 +5,6 @@ interface Ownprops {
 }
 
 export default async function UpcomingRaid({ channelId }: Ownprops) {
-  //FIXME: 작업 완료 후 channelId 할당 삭제하기
-  channelId = '1209059689657016371'
   const data = await getChannelData(channelId)
 
   if (!data) return
