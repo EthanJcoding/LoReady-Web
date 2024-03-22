@@ -14,13 +14,15 @@ interface Ownprops {
 export default function CompactRaidCard({ boss, rank, leader, date, headCount }: Ownprops) {
   return (
     <section className='relative flex bg-white text-dark p-3 rounded-md shadow-sm'>
-      <Image
-        className='absolute w-full h-full inset-0 clip-path-polygon object-cover object-center rounded-md'
-        src={setBossImage(boss)}
-        alt='boss_img'
-        width={400}
-        height={400}
-      />
+      <div className='absolute w-full h-full inset-0 clip-path-polygon rounded-md overflow-hidden'>
+        <Image
+          className='w-full h-full absolute left-1/3 object-cover object-center'
+          src={`/images/raid/${setBossImage(boss)}`}
+          alt='boss_img'
+          width={400}
+          height={400}
+        />
+      </div>
       <div className='flex flex-col gap-1 z-10 overflow-hidden'>
         <div className='flex gap-2'>
           <h6 className='flex-none text-primary-gray'>보스</h6>
@@ -51,8 +53,20 @@ export default function CompactRaidCard({ boss, rank, leader, date, headCount }:
 function setBossImage(boss: string) {
   switch (boss) {
     case '아브렐슈드':
-      return '/images/mockIMG.jpg'
+      return 'abrelshud.png'
+    case '쿠크세이튼':
+      return 'koukusaton.png'
+    case '카멘':
+      return 'kamen.png'
+    case '발탄':
+      return 'valtan.png'
+    case '비아키스':
+      return 'biackiss.png'
+    case '일리아칸':
+      return 'illiakan.png'
+    case '카양겔':
+      return 'kayangel.png'
     default:
-      return '/images/mockIMG.jpg'
+      return 'mokoko.png'
   }
 }
