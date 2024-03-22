@@ -25,11 +25,10 @@ interface ScheduleData {
 }
 
 export default async function PartyListDetail({ scheduleId }: Ownprops) {
-  scheduleId = '57FNJZW3G0hI2hXcVK1v'
-
   const data = await getScheduleData(scheduleId)
 
   if (!data) return
+
   const { boss, rank } = extractBossRank(data.raidName)
   const capacity = extractCapacity(data.raidType)
   const participants = data.participants.length

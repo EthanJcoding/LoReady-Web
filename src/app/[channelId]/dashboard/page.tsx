@@ -13,7 +13,7 @@ export default async function Dashboard({ params: { channelId } }: Ownprops) {
   channelId = '1050686760373469234'
   const data = await getChannelData(channelId)
 
-  console.log(data)
+  // console.log(data)
 
   if (!data) return
   return (

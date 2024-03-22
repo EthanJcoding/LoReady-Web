@@ -12,6 +12,7 @@ export default async function Schedule({ params: { channelId } }: Ownprops) {
   const data = await getChannelData(channelId)
 
   if (!data) return
+  // chanelId 불러오기
 
   return (
     <div className='flex flex-wrap gap-5 overflow-x-auto min-w-0'>

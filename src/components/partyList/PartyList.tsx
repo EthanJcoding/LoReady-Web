@@ -6,17 +6,21 @@ interface Ownprops {
 }
 
 export default async function PartyList({ channelId }: Ownprops) {
-  channelId = '1209059689657016371'
   const data = await getChannelData(channelId)
 
   if (!data) return
+
+  const scheduleIdArr = data.schedules
+
   return (
-    <div className='h-auto border-solid border-2 rounded-md md:w-[350px]'>
-      <ul className='flex flex-col gap-3 pb-2.5'>
-        {data.schedules.map((scheduleId: string) => (
-          <PartyListDetail key={scheduleId} scheduleId={data.scheduleId} />
-        ))}
-      </ul>
-    </div>
+    <>
+      {scheduleIdArr.map((scheduleId: string, index: number) => (
+        <div className='h-auto border-solid border-2 rounded-md md:w-[350px]'>
+          <ul key={index} className='flex flex-col gap-3 pb-2.5'>
+            <PartyListDetail scheduleId={scheduleId} />
+          </ul>
+        </div>
+      ))}
+    </>
   )
 }
