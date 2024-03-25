@@ -34,8 +34,7 @@ export default function UpcomingRaid({ channelId }: Ownprops) {
 
     if (targetRef.current && isMore) {
       observer = new IntersectionObserver(handleIntersect, {
-        root: rootRef.current,
-        threshold: 1
+        root: rootRef.current
       })
 
       observer.observe(targetRef.current)
@@ -64,11 +63,7 @@ export default function UpcomingRaid({ channelId }: Ownprops) {
             />
           ))}
         </ul>
-        {isMore && (
-          <div className='pb-3 flex justify-center' ref={targetRef}>
-            Loading...
-          </div>
-        )}
+        {isMore && <div ref={targetRef}></div>}
       </div>
     </div>
   )
