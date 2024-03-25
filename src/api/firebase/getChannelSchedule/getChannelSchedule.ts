@@ -6,7 +6,7 @@ export const getChannelSchedule = async (channelId: string, lastSnap?: DocumentD
   let scheduleQuery = query(
     collection(firestore, 'schedules'),
     where('channel', '==', channelId),
-    orderBy('raidDate', 'desc')
+    orderBy('raidDate', 'asc')
   )
 
   if (lastSnap) scheduleQuery = query(scheduleQuery, startAfter(lastSnap))
