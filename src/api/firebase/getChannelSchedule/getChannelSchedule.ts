@@ -3,9 +3,12 @@ import { firestore } from '../config'
 import { Schedule, ScheduleWithId } from '@/types/channelSchedule'
 
 export const getChannelSchedule = async (channelId: string, lastSnap?: DocumentData) => {
+  const now = new Date().toISOString()
+
   let scheduleQuery = query(
     collection(firestore, 'schedules'),
     where('channel', '==', channelId),
+    where('raidDate', '>=', now),
     orderBy('raidDate', 'asc')
   )
 
