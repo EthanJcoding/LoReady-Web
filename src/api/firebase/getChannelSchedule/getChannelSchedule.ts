@@ -1,6 +1,6 @@
 import { DocumentData, collection, getDocs, limit, orderBy, query, startAfter, where } from 'firebase/firestore'
 import { firestore } from '../config'
-import { Schedule, ScheduleWithId } from '@/types/channelSchedule'
+import { Schedule, ScheduleWithId } from '@/types/schedule'
 
 export const getChannelSchedule = async (channelId: string, lastSnap?: DocumentData) => {
   const now = new Date().toISOString()

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import RaidList from './RaidList'
 import { getChannelSchedule } from '@/api/firebase/getChannelSchedule/getChannelSchedule'
 import { DocumentData } from 'firebase/firestore'
-import { ScheduleWithId } from '@/types/channelSchedule'
+import { ScheduleWithId } from '@/types/schedule'
 
 interface Ownprops {
   channelId: string
