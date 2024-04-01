@@ -15,7 +15,7 @@ export default function SchedulesFilter() {
   return (
     <div>
       <label>
-        완료파티 제외
+        완료된 일정 제외
         <input type='checkbox' checked={isChecked} onChange={handleCheckboxChange} />
       </label>
     </div>
