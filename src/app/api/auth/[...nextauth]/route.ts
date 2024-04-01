@@ -3,7 +3,7 @@ import NextAuth from 'next-auth/next'
 import Discord from 'next-auth/providers/discord'
 import { Session } from 'next-auth'
 
-const authOptions = {
+export const authOptions = {
   providers: [
     Discord({
       clientId: process.env.NEXT_PUBLIC_DISCORD_ID ?? '',
