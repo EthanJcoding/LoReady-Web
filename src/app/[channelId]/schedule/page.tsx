@@ -1,5 +1,4 @@
 import { getChannelData } from '@/api/firebase'
-import SchedulesFilter from '@/components/ScheduleFilter/ScheduleFilter'
 import PartyList from '@/components/partyList/PartyList'
 
 interface Ownprops {
@@ -17,7 +16,6 @@ export default async function Schedule({ params: { channelId } }: Ownprops) {
 
   return (
     <>
-      {/* <SchedulesFilter /> */}
       <div className='flex flex-wrap gap-5 overflow-x-auto min-w-0'>
         <PartyList channelId={channelId} />
       </div>
