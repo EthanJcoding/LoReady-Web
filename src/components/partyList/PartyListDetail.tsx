@@ -65,7 +65,6 @@ export default function PartyListDetail({ scheduleId }: Ownprops) {
   const { boss, rank } = extractBossRank(data.raidName)
   const capacity = extractCapacity(data.raidType)
   const participants = data.participants.length
-  console.log('filter :', filter)
 
   return (
     <li className='relative border-solid border-2 rounded-md md:w-[350px] p-1 m-1'>
