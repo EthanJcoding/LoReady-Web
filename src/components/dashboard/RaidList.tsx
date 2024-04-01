@@ -1,4 +1,3 @@
-import { getScheduleData } from '@/api/firebase'
 import CompactRaidCard from './CompactRaidCard'
 import Link from 'next/link'
 import { extractBossRank } from '@/utils/extractBossRank'
@@ -6,26 +5,36 @@ import { extractCapacity } from '@/utils/extractCapacity'
 
 interface Ownprops {
   scheduleId: string
+  channelId: string
+  raidName: string
+  raidType: string
+  raidLeader: string
+  raidDate: string
+  participants: string[]
 }
 
-export default async function RaidList({ scheduleId }: Ownprops) {
-  const data = await getScheduleData(scheduleId)
-
-  if (!data) return
-
-  const { boss, rank } = extractBossRank(data.raidName)
-  const capacity = extractCapacity(data.raidType)
-  const participants = data.participants.length
+export default function RaidList({
+  scheduleId,
+  channelId,
+  raidName,
+  raidType,
+  raidLeader,
+  raidDate,
+  participants
+}: Ownprops) {
+  const { boss, rank } = extractBossRank(raidName)
+  const capacity = extractCapacity(raidType)
+  const participant = participants.length
 
   return (
     <li>
-      <Link href={`/${data.channel}/schedule/${scheduleId}`}>
+      <Link href={`/${channelId}/schedule/${scheduleId}`}>
         <CompactRaidCard
           boss={boss}
           rank={rank}
-          leader={data.raidLeader.character}
-          date={data.raidDate}
-          headCount={`${participants} / ${capacity}`}
+          leader={raidLeader}
+          date={raidDate}
+          headCount={`${participant} / ${capacity}`}
         />
       </Link>
     </li>
