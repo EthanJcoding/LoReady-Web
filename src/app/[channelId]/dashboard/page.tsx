@@ -8,9 +8,6 @@ interface Ownprops {
 }
 
 export default async function Dashboard({ params: { channelId } }: Ownprops) {
-  //FIXME: 작업 완료 후 channelId 할당 삭제하기
-  channelId = '1050686760373469234'
-
   return (
     <div className='flex-1 flex gap-5 overflow-hidden'>
       <UpcomingRaid channelId={channelId} />
