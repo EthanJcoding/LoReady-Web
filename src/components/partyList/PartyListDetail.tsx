@@ -68,7 +68,7 @@ export default function PartyListDetail({ scheduleId }: Ownprops) {
   console.log('filter :', filter)
 
   return (
-    <li className='relative border-solid border-2 rounded-md md:w-[350px] p-1'>
+    <li className='relative border-solid border-2 rounded-md md:w-[350px] p-1 m-1'>
       <Link href={`/${data.channel}/schedule/${scheduleId}`} className='pointer-events-auto'>
         <CompactRaidCard
           boss={boss}

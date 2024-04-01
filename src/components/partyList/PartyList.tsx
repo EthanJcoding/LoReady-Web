@@ -11,15 +11,17 @@ export default async function PartyList({ channelId }: Ownprops) {
   const scheduleIdArr = data.schedules
 
   return (
-    <>
+    <div>
       <SchedulesFilter />
-      {scheduleIdArr.map((scheduleId: string, index: number) => (
-        <div>
-          <ul key={index} className='flex flex-col gap-3'>
-            <PartyListDetail scheduleId={scheduleId} />
-          </ul>
-        </div>
-      ))}
-    </>
+      <div className='flex flex-wrap'>
+        {scheduleIdArr.map((scheduleId: string, index: number) => (
+          <div key={index} className=''>
+            <ul className='flex flex-col'>
+              <PartyListDetail scheduleId={scheduleId} />
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
