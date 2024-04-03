@@ -6,6 +6,7 @@ import ThemeProvider from '@/components/providers/ThemeProvider'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]/route'
 import { notFound } from 'next/navigation'
+import SignIn from '@/components/auth/SignIn'
 
 interface Ownprops {
   children: React.ReactNode
@@ -21,7 +22,7 @@ export default async function ChannelLayout({ children, params: { channelId } }:
   const userId: string | undefined = session?.user?.id
   const isInChannel = !!userId && channelMembers.includes(userId)
 
-  if (!session) return <div>로그인 해주세요.</div>
+  if (!session) return <SignIn />
 
   if (!channelData || !isInChannel) notFound()
 
