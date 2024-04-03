@@ -5,6 +5,7 @@ import SideBar from '@/components/layout/sidebar/SideBar'
 import ThemeProvider from '@/components/providers/ThemeProvider'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]/route'
+import { notFound } from 'next/navigation'
 
 interface Ownprops {
   children: React.ReactNode
@@ -14,18 +15,15 @@ interface Ownprops {
 }
 
 export default async function ChannelLayout({ children, params: { channelId } }: Ownprops) {
-  const channelData = await getChannelData(channelId)
   const session = await getServerSession(authOptions)
-
-  if (!channelData) return <div>유효하지 않은 서버입니다.</div>
+  const channelData = await getChannelData(channelId)
+  const channelMembers: string[] = channelData?.memberIds || []
+  const userId: string | undefined = session?.user?.id
+  const isInChannel = !!userId && channelMembers.includes(userId)
 
   if (!session) return <div>로그인 해주세요.</div>
 
-  const channelMembers: string[] = channelData.memberIds
-  const userId: string = session.user.id
-  const isInChannel = channelMembers.includes(userId)
-
-  if (!isInChannel) return <div>서버에 참여하고 있지 않아요.</div>
+  if (!channelData || !isInChannel) notFound()
 
   return (
     <ThemeProvider>
