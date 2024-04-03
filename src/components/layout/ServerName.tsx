@@ -1,6 +1,6 @@
 import { getChannelData } from '@/api/firebase'
 import Image from 'next/image'
-import AuthButton from './sidebar/auth/AuthButton'
+import AuthButton from '../auth/AuthButton'
 
 interface Ownprops {
   id: string

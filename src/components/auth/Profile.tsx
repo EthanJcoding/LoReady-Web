@@ -17,7 +17,7 @@ export default function Profile() {
       />
       <button
         className='bg-indigo-500 inline-flex items-center justify-center whitespace-nowrap space-x-4 px-4 py-2 h-10 rounded-lg hover:bg-indigo-500/75 transition'
-        onClick={() => signOut()}
+        onClick={() => signOut({ callbackUrl: '/' })}
       >
         <div className='text-sm text-white font-semibold'>로그아웃</div>
       </button>
