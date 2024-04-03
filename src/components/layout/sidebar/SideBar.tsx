@@ -2,7 +2,6 @@ import ServerLists from './ServerLists'
 import ThemeButton from './ThemeButton'
 import { MdEmail } from 'react-icons/md'
 import { BsHash } from 'react-icons/bs'
-import AuthButton from './auth/AuthButton'
 
 export default function SideBar() {
   return (
