@@ -1,96 +1,10 @@
-// 'use client'
-// import { getUserData } from '@/api/firebase'
-// import React, { useState } from 'react'
-
-// interface Ownprops {
-//   characters: {
-//     party0: Character[]
-//     party1: Character[]
-//     party2: Character[]
-//     [key: string]: Character[]
-//   }
-// }
-
-// interface Character {
-//   userId: string
-//   character: string
-// }
-
-// export default function TeamAllocator({ characters }: Ownprops) {
-//   // const [parties, setParties] = useState(characters)
-
-//   // const moveMember = (character: Character, targetParty: string) => {
-//   //   const updatedParties = {
-//   //     ...parties,
-//   //     [targetParty]: [...parties[targetParty], character],
-//   //     [targetParty === 'party1' ? 'party2' : 'party1']: parties[targetParty === 'party1' ? 'party2' : 'party1'].filter(
-//   //       member => member.character !== character.character
-//   //     ),
-//   //     party0: parties.party0.filter(member => member.character !== character.character)
-//   //   }
-
-//   //   setParties(updatedParties)
-//   // }
-
-//   // const getUserInfo = async (userId: string) => {
-//   //   const data = await getUserData(userId)
-//   //   console.log(data)
-//   // }
-//   const resetParties = () => {
-//     setParties(characters)
-//   }
-
-//   const saveParties = () => {}
-
-//   return (
-//     <section className='w-full h-full p-4 rounded-lg flex flex-col space-y-2'>
-//       <div className='w-full flex justify-end space-x-4'>
-//         <button onClick={resetParties}>초기화</button>
-//         <button onClick={saveParties}>저장하기</button>
-//       </div>
-//       <div className='w-full flex justify-between h-full space-x-2'>
-//         {['party1', 'party2'].map(partyKey => (
-//           <div className='border w-full p-4 rounded' key={partyKey}>
-//             {parties[partyKey].map(character => (
-//               <div className='flex justify-between w-full' key={character.character}>
-//                 <div>{character.character}</div>
-//                 <div className='space-x-4'>
-//                   <button onClick={() => moveMember(character, partyKey === 'party1' ? 'party2' : 'party1')}>
-//                     {partyKey === 'party1' ? '2파티로' : '1파티로'}
-//                   </button>
-//                 </div>
-//               </div>
-//             ))}
-//           </div>
-//         ))}
-//       </div>
-//       <div className='border w-full p-4 space-y-4 h-full rounded'>
-//         {parties.party0.map(character => {
-//           return (
-//             <div className='flex justify-between w-full' key={character.character}>
-//               <div>{character.character}</div>
-//               <div className='space-x-4'>
-//                 <button onClick={() => moveMember(character, 'party1')}>1파티로</button>
-//                 <button onClick={() => moveMember(character, 'party2')}>2파티로</button>
-//               </div>
-//             </div>
-//           )
-//         })}
-//       </div>
-//     </section>
-//   )
-// }
-
 'use client'
 
 import { useState } from 'react'
+import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
 
 interface Ownprops {
-  characters: {
-    party0: Character[]
-    party1: Character[]
-    party2: Character[]
-  }
+  parties: { [key: string]: Character[] }
 }
 
 interface Character {
@@ -98,104 +12,93 @@ interface Character {
   character: string
 }
 
-export default function TeamAllocator({ characters }: Ownprops) {
-  const [party0, setParty0] = useState(characters.party0)
-  const [party1, setParty1] = useState(characters.party1)
-  const [party2, setParty2] = useState(characters.party2)
+export default function TeamAllocator({ parties }: Ownprops) {
+  const [party1, setParty1] = useState(parties.party1)
+  const [party2, setParty2] = useState(parties.party2)
 
-  const moveMemberToParty1 = (character: Character) => {
-    const updatedParty1 = [...party1, character]
-    const updatedParty0 = party0.filter(member => member.character !== character.character)
-
-    setParty1(updatedParty1)
-    setParty0(updatedParty0)
-  }
-  const moveMemberToParty2 = (character: Character) => {
-    const updatedParty2 = [...party2, character]
-    const updatedParty0 = party0.filter(member => member.character !== character.character)
-
-    setParty2(updatedParty2)
-    setParty0(updatedParty0)
-  }
-  const moveMemberInParties = (character: Character, currentParty: string) => {
-    if (currentParty === 'party1') {
-      const updatedParty2 = [...party2, character]
-      const updatedParty1 = party1.filter(member => member.character !== character.character)
-
-      setParty2(updatedParty2)
-      setParty1(updatedParty1)
+  const moveMemberUp = (partyIndex: number, memberIndex: number) => {
+    if (partyIndex === 0 && memberIndex > 0) {
+      const newParty1 = [...party1]
+      ;[newParty1[memberIndex - 1], newParty1[memberIndex]] = [newParty1[memberIndex], newParty1[memberIndex - 1]]
+      setParty1(newParty1)
+    } else if (partyIndex === 1 && party1.length === 0) {
+      const newParty2 = [...party2]
+      const movedMember = newParty2.shift()!
+      setParty2(newParty2)
+      setParty1([movedMember])
+    } else if (partyIndex === 1 && memberIndex > 0) {
+      const newParty2 = [...party2]
+      ;[newParty2[memberIndex - 1], newParty2[memberIndex]] = [newParty2[memberIndex], newParty2[memberIndex - 1]]
+      setParty2(newParty2)
+    } else if (partyIndex === 1 && memberIndex === 0 && party1.length > 0) {
+      const newParty1 = [...party1]
+      const newParty2 = [...party2]
+      const movedMember = newParty2.shift()!
+      setParty2(newParty2)
+      setParty1([...newParty1, movedMember])
     }
-    if (currentParty === 'party2') {
-      const updatedParty1 = [...party1, character]
-      const updatedParty2 = party2.filter(member => member.character !== character.character)
+  }
 
-      setParty1(updatedParty1)
-      setParty2(updatedParty2)
+  const moveMemberDown = (partyIndex: number, memberIndex: number) => {
+    if (partyIndex === 0 && memberIndex < party1.length - 1) {
+      const newParty1 = [...party1]
+      ;[newParty1[memberIndex], newParty1[memberIndex + 1]] = [newParty1[memberIndex + 1], newParty1[memberIndex]]
+      setParty1(newParty1)
+    } else if (partyIndex === 1 && memberIndex < party2.length - 1) {
+      const newParty2 = [...party2]
+      ;[newParty2[memberIndex], newParty2[memberIndex + 1]] = [newParty2[memberIndex + 1], newParty2[memberIndex]]
+      setParty2(newParty2)
+    } else if (partyIndex === 0 && memberIndex === party1.length - 1 && party1.length > 0) {
+      const newParty1 = [...party1]
+      const movedMember = newParty1.pop()!
+      setParty1(newParty1)
+      setParty2([movedMember, ...party2])
     }
   }
 
   return (
-    <section className='border w-full h-full p-8 rounded-lg shadow-sm'>
-      <div className='w-full flex justify-end space-x-4'>
-        <button>초기화</button>
-        <button>저장하기</button>
-      </div>
-      <div className='bg-slate-300 w-full h-1/2 flex justify-between'>
-        <div className='border w-full p-4'>
-          {party1.map(character => (
-            <div className='flex justify-between w-full' key={character.character}>
-              <div>{character.character}</div>
-              <div className='space-x-4'>
-                <button
-                  onClick={() => {
-                    moveMemberInParties(character, 'party1')
-                  }}
-                >
-                  2파티로
+    <section className='border w-1/3 h-full p-8 rounded-lg shadow-sm space-y-4 flex flex-col'>
+      <div className='w-full h-full space-y-2'>
+        <div className='text-xl font-semibold'>1번 공대</div>
+        {party1.map((member, idx) => {
+          return (
+            <div key={idx} className='flex w-full justify-between border p-2 rounded'>
+              <div className='flex space-x-2'>
+                <div>{idx + 1}.</div>
+                <div>{member.character}</div>
+              </div>
+              <div className='space-x-2'>
+                <button onClick={() => moveMemberDown(0, idx)}>
+                  <FaArrowDown />
+                </button>
+                <button onClick={() => moveMemberUp(0, idx)}>
+                  <FaArrowUp />
                 </button>
               </div>
             </div>
-          ))}
-        </div>
-        <div className='border w-full p-4'>
-          {party2.map(character => (
-            <div className='flex justify-between w-full' key={character.character}>
-              <div>{character.character}</div>
-              <div className='space-x-4'>
-                <button
-                  onClick={() => {
-                    moveMemberInParties(character, 'party2')
-                  }}
-                >
-                  1파티로
+          )
+        })}
+      </div>
+      <div className='w-full h-full space-y-2'>
+        <div className='text-xl font-semibold'>2번 공대</div>
+        {party2.map((member, idx) => {
+          return (
+            <div key={idx} className='flex w-full justify-between border p-2 rounded'>
+              <div className='flex space-x-2'>
+                <div>{idx + 1}.</div>
+                <div>{member.character}</div>
+              </div>
+              <div className='space-x-2'>
+                <button onClick={() => moveMemberDown(1, idx)}>
+                  <FaArrowDown />
+                </button>
+                <button onClick={() => moveMemberUp(1, idx)}>
+                  <FaArrowUp />
                 </button>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-      <div className='bg-yellow-300 w-full h-1/2 p-4 space-y-4'>
-        {party0.map(character => (
-          <div className='flex justify-between w-full' key={character.character}>
-            <div>{character.character}</div>
-            <div className='space-x-4'>
-              <button
-                onClick={() => {
-                  moveMemberToParty1(character)
-                }}
-              >
-                1파티로
-              </button>
-              <button
-                onClick={() => {
-                  moveMemberToParty2(character)
-                }}
-              >
-                2파티로
-              </button>
-            </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </section>
   )
