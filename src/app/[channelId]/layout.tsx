@@ -4,7 +4,7 @@ import ServerName from '@/components/layout/ServerName'
 import SideBar from '@/components/layout/sidebar/SideBar'
 import ThemeProvider from '@/components/providers/ThemeProvider'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../api/auth/[...nextauth]/route'
+import { authOptions } from '@/utils/authOptions'
 import { notFound } from 'next/navigation'
 import SignIn from '@/components/auth/SignIn'
 
