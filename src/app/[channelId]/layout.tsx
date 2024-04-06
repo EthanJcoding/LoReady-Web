@@ -7,11 +7,19 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/utils/authOptions'
 import { notFound } from 'next/navigation'
 import SignIn from '@/components/auth/SignIn'
+import { Metadata } from 'next'
 
 interface Ownprops {
   children: React.ReactNode
   params: {
     channelId: string
+  }
+}
+
+export const metadata: Metadata = {
+  title: {
+    template: '%s - 로레디',
+    default: '로레디'
   }
 }
 
