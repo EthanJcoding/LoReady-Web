@@ -1,6 +1,8 @@
+import { getScheduleData } from '@/api/firebase'
 import RaiderInfo from '@/components/scheduleDetail/RaiderInfo'
 import Raiders from '@/components/scheduleDetail/Raiders'
 import { RaidType } from '@/types/raid'
+import { Metadata } from 'next'
 
 export interface MOCK_SCHEDULE_DATA_TYPE {
   title: string
@@ -32,6 +34,23 @@ const MOCK_SCHEDULE_DATA: MOCK_SCHEDULE_DATA_TYPE = {
     { discordId: '송덕용', character: 'vss최강덕용v', class: '소울이터', itemLevel: '1607' },
     { discordId: '정한슬', character: 'v최d강한슬v', class: '데빌헌터', itemLevel: '1608' }
   ]
+}
+
+interface Ownprops {
+  params: {
+    scheduleId: string
+  }
+}
+
+export async function generateMetadata({ params: { scheduleId } }: Ownprops) {
+  const data = await getScheduleData(scheduleId)
+
+  const metadata: Metadata = {
+    title: data ? `${data?.raidName} ${data?.raidType}` : '레이드 일정',
+    description: '레이드의 공대 구성을 편집하고 공대원의 캐릭터 정보를 확인할 수 있습니다.'
+  }
+
+  return metadata
 }
 
 export default function ScheduleDetail() {
