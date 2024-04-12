@@ -8,6 +8,7 @@ import { authOptions } from '@/utils/authOptions'
 import { notFound } from 'next/navigation'
 import SignIn from '@/components/auth/SignIn'
 import { Metadata } from 'next'
+import { validateMember } from '@/utils/validateMember'
 
 interface Ownprops {
   children: React.ReactNode
@@ -26,13 +27,11 @@ export const metadata: Metadata = {
 export default async function ChannelLayout({ children, params: { channelId } }: Ownprops) {
   const session = await getServerSession(authOptions)
   const channelData = await getChannelData(channelId)
-  const channelMembers: string[] = channelData?.memberIds || []
-  const userId: string | undefined = session?.user?.id
-  const isInChannel = !!userId && channelMembers.includes(userId)
+  const isValidMember = validateMember(session?.user.id, channelData?.memberIds)
 
   if (!session) return <SignIn />
 
-  if (!channelData || !isInChannel) notFound()
+  if (!channelData || !isValidMember) notFound()
 
   return (
     <ThemeProvider>
