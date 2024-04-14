@@ -1,3 +1,3 @@
-export const validateMember = (userId: string | undefined, memberIds: string[]) => {
-  return !!userId && memberIds.includes(userId)
+export const validateMember = (userId: string | undefined, memberIds: string[] | undefined) => {
+  return !!userId && !!memberIds?.includes(userId)
 }
