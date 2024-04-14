@@ -1,6 +1,8 @@
 import { getChannelData } from '@/api/firebase'
 import PartyList from '@/components/partyList/PartyList'
-import { Metadata } from 'next'
+import { authOptions } from '@/utils/authOptions'
+import { validateMember } from '@/utils/validateMember'
+import { getServerSession } from 'next-auth'
 
 interface Ownprops {
   params: {
@@ -9,19 +11,20 @@ interface Ownprops {
 }
 
 export async function generateMetadata({ params: { channelId } }: Ownprops) {
-  const data = await getChannelData(channelId)
-  const channelName: string = data?.channelName
+  const session = await getServerSession(authOptions)
+  const channelData = await getChannelData(channelId)
+  const isValidMember = validateMember(session?.user.id, channelData?.memberIds)
+  const channelName: string = channelData?.channelName || ''
 
-  const metadata: Metadata = {
-    title: channelName ? `${channelName} 레이드 일정` : '레이드 일정',
-    description: `참여중인 디스코드 서버(로레디봇이 추가된 서버)의 예정된 로스트아크 레이드 일정을 확인할 수 있습니다.`
+  if (!channelData || !isValidMember) return
+
+  return {
+    title: `${channelName} 레이드 일정`,
+    description: '참여중인 디스코드 서버(로레디봇이 추가된 서버)의 예정된 로스트아크 레이드 일정을 확인할 수 있습니다.'
   }
-
-  return metadata
 }
 
 export default async function Schedule({ params: { channelId } }: Ownprops) {
-  channelId = '1050686760373469234'
   const data = await getChannelData(channelId)
 
   if (!data) return
