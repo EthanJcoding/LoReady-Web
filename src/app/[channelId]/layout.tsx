@@ -7,7 +7,6 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/utils/authOptions'
 import { notFound } from 'next/navigation'
 import SignIn from '@/components/auth/SignIn'
-import { Metadata } from 'next'
 import { validateMember } from '@/utils/validateMember'
 
 interface Ownprops {
@@ -17,10 +16,22 @@ interface Ownprops {
   }
 }
 
-export const metadata: Metadata = {
-  title: {
-    template: '%s - 로레디',
-    default: '로레디'
+export async function generateMetadata({ params: { channelId } }: Ownprops) {
+  const session = await getServerSession(authOptions)
+  const channelData = await getChannelData(channelId)
+  const isValidMember = validateMember(session?.user.id, channelData?.memberIds)
+
+  if (!channelData || !isValidMember)
+    return {
+      title: 'Not found',
+      description: '페이지가 존재하지 않거나 사용할 수 없는 페이지입니다.'
+    }
+
+  return {
+    title: {
+      template: '%s - 로레디',
+      default: '로레디'
+    }
   }
 }
 
