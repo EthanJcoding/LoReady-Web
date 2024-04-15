@@ -17,7 +17,7 @@ export async function generateMetadata({ params: { channelId } }: Ownprops) {
   const isValidMember = validateMember(session?.user.id, channelData?.memberIds)
   const channelName: string = channelData?.channelName || ''
 
-  if (!channelData || !isValidMember) return
+  if (!isValidMember) return
 
   return {
     title: `${channelName} 대시보드`,
