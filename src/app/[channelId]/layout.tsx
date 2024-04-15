@@ -23,7 +23,7 @@ export async function generateMetadata({ params: { channelId } }: Ownprops) {
 
   if (!isValidMember)
     return {
-      title: 'Not found',
+      title: 'Not found - 로레디',
       description: '페이지가 존재하지 않거나 사용할 수 없는 페이지입니다.'
     }
 
