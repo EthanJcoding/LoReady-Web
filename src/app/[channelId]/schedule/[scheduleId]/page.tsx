@@ -1,8 +1,9 @@
-import { getScheduleData } from '@/api/firebase'
+import { getChannelData, getScheduleData } from '@/api/firebase'
 import RaiderInfo from '@/components/scheduleDetail/RaiderInfo'
 import Raiders from '@/components/scheduleDetail/Raiders'
 import { RaidType } from '@/types/raid'
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 export interface MOCK_SCHEDULE_DATA_TYPE {
   title: string
@@ -38,6 +39,7 @@ const MOCK_SCHEDULE_DATA: MOCK_SCHEDULE_DATA_TYPE = {
 
 interface Ownprops {
   params: {
+    channelId: string
     scheduleId: string
   }
 }
@@ -53,9 +55,12 @@ export async function generateMetadata({ params: { scheduleId } }: Ownprops) {
   return metadata
 }
 
-export default function ScheduleDetail() {
+export default async function ScheduleDetail({ params: { channelId, scheduleId } }: Ownprops) {
   const raiders = MOCK_SCHEDULE_DATA.members
   const raidType = MOCK_SCHEDULE_DATA.raidType
+  const scheduleData = await getScheduleData(scheduleId)
+
+  if (scheduleData?.channel !== channelId) notFound()
 
   return (
     <div className='flex-1 flex gap-5'>
