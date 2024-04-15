@@ -21,7 +21,7 @@ export async function generateMetadata({ params: { channelId } }: Ownprops) {
   const channelData = await getChannelData(channelId)
   const isValidMember = validateMember(session?.user.id, channelData?.memberIds)
 
-  if (!channelData || !isValidMember)
+  if (!isValidMember)
     return {
       title: 'Not found',
       description: '페이지가 존재하지 않거나 사용할 수 없는 페이지입니다.'
@@ -42,7 +42,7 @@ export default async function ChannelLayout({ children, params: { channelId } }:
 
   if (!session) return <SignIn />
 
-  if (!channelData || !isValidMember) notFound()
+  if (!isValidMember) notFound()
 
   return (
     <ThemeProvider>
