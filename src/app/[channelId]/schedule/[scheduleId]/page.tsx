@@ -2,7 +2,9 @@ import { getChannelData, getScheduleData } from '@/api/firebase'
 import RaiderInfo from '@/components/scheduleDetail/RaiderInfo'
 import Raiders from '@/components/scheduleDetail/Raiders'
 import { RaidType } from '@/types/raid'
-import { Metadata } from 'next'
+import { authOptions } from '@/utils/authOptions'
+import { validateMember } from '@/utils/validateMember'
+import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
 
 export interface MOCK_SCHEDULE_DATA_TYPE {
@@ -44,15 +46,24 @@ interface Ownprops {
   }
 }
 
-export async function generateMetadata({ params: { scheduleId } }: Ownprops) {
-  const data = await getScheduleData(scheduleId)
+export async function generateMetadata({ params: { channelId, scheduleId } }: Ownprops) {
+  const session = await getServerSession(authOptions)
+  const channelData = await getChannelData(channelId)
+  const scheduleData = await getScheduleData(scheduleId)
+  const isValidMember = validateMember(session?.user.id, channelData?.memberIds)
 
-  const metadata: Metadata = {
-    title: data ? `${data?.raidName} ${data?.raidType}` : '레이드 일정',
+  if (!isValidMember) return
+
+  if (isValidMember && scheduleData?.channel !== channelId)
+    return {
+      title: 'Not found',
+      description: '페이지가 존재하지 않거나 사용할 수 없는 페이지입니다.'
+    }
+
+  return {
+    title: `${scheduleData?.raidName} ${scheduleData?.raidType}`,
     description: '레이드의 공대 구성을 편집하고 공대원의 캐릭터 정보를 확인할 수 있습니다.'
   }
-
-  return metadata
 }
 
 export default async function ScheduleDetail({ params: { channelId, scheduleId } }: Ownprops) {
