@@ -11,12 +11,12 @@ interface Ownprops {
 }
 
 export default function Raid({ parties }: Ownprops) {
-  const [partiesState, setPartiesState] = useState(parties)
+  const [selectedCharacter, setSelectedCharacter] = useState(parties.party1[0])
 
   return (
-    <div className='flex-1 flex gap-4'>
-      <TeamAllocator parties={partiesState} />
-      <CharacterDetail />
+    <div className='flex-1 flex gap-4 h-1/2'>
+      <TeamAllocator parties={parties} setSelectedCharacter={setSelectedCharacter} />
+      <CharacterDetail selectedCharacter={selectedCharacter} />
     </div>
   )
 }
