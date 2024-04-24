@@ -10,11 +10,17 @@ export default function Navigation() {
     <nav className='border-b border-secondary-gray/50 dark:border-primary-gray/50'>
       <ul className='flex'>
         <li
-          className={`px-4 py-1 ${pathname === `/${channelId}/dashboard` ? 'border-b-2 border-black font-bold' : ''}`}
+          className={`px-4 py-1 font-bold border-dark dark:border-light ${
+            pathname === `/${channelId}/dashboard` ? 'border-b-2' : ''
+          }`}
         >
           <Link href={`/${channelId}/dashboard`}>대시보드</Link>
         </li>
-        <li className={`px-4 py-1 ${pathname === `/${channelId}/schedule` ? 'border-b-2 border-black font-bold' : ''}`}>
+        <li
+          className={`px-4 py-1 font-bold border-dark dark:border-light ${
+            pathname === `/${channelId}/schedule` ? 'border-b-2' : ''
+          }`}
+        >
           <Link href={`/${channelId}/schedule`}>레이드 일정</Link>
         </li>
       </ul>
