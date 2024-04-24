@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react'
 import ServerList from './ServerList'
 import { useEffect, useState } from 'react'
 import { Channel } from '@/types/channel'
-import { getUserChannels } from '@/api/firebase/getUserChannels/getUserChannels'
+import { getUserChannels } from '@/api/firebase'
 
 export default function ServerLists() {
   const [lists, setLists] = useState<Channel[]>([])

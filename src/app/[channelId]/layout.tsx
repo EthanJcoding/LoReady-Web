@@ -1,7 +1,13 @@
+import { getChannelData } from '@/api/firebase'
 import Navigation from '@/components/layout/Navigation'
 import ServerName from '@/components/layout/ServerName'
 import SideBar from '@/components/layout/sidebar/SideBar'
 import ThemeProvider from '@/components/providers/ThemeProvider'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/utils/authOptions'
+import { notFound } from 'next/navigation'
+import SignIn from '@/components/auth/SignIn'
+import { validateMember } from '@/utils/validateMember'
 
 interface Ownprops {
   children: React.ReactNode
@@ -10,7 +16,34 @@ interface Ownprops {
   }
 }
 
-export default function ChannelLayout({ children, params: { channelId } }: Ownprops) {
+export async function generateMetadata({ params: { channelId } }: Ownprops) {
+  const session = await getServerSession(authOptions)
+  const channelData = await getChannelData(channelId)
+  const isValidMember = validateMember(session?.user.id, channelData?.memberIds)
+
+  if (!isValidMember)
+    return {
+      title: 'Not found - 로레디',
+      description: '페이지가 존재하지 않거나 사용할 수 없는 페이지입니다.'
+    }
+
+  return {
+    title: {
+      template: '%s - 로레디',
+      default: '로레디'
+    }
+  }
+}
+
+export default async function ChannelLayout({ children, params: { channelId } }: Ownprops) {
+  const session = await getServerSession(authOptions)
+  const channelData = await getChannelData(channelId)
+  const isValidMember = validateMember(session?.user.id, channelData?.memberIds)
+
+  if (!session) return <SignIn />
+
+  if (!isValidMember) notFound()
+
   return (
     <ThemeProvider>
       <div className='h-dvh flex bg-light dark:bg-dark dark:text-light'>
