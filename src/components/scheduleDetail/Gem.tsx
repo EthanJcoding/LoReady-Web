@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import { GemsInterface } from '@/types/GemInterface'
-import { getGem } from '@/utils/getGem'
 
 interface Ownprops {
   ArmoryGem: GemsInterface
