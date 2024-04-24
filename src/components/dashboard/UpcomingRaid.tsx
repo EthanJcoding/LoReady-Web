@@ -50,18 +50,24 @@ export default function UpcomingRaid({ channelId }: Ownprops) {
           다가오는 레이드
         </div>
         <ul className='flex flex-col gap-3 px-5 pb-5'>
-          {schedules.map(schedule => (
-            <RaidList
-              key={schedule.id}
-              scheduleId={schedule.id}
-              channelId={schedule.channel}
-              raidName={schedule.raidName}
-              raidType={schedule.raidType}
-              raidLeader={schedule.raidLeader.character}
-              raidDate={schedule.raidDate}
-              participants={schedule.participants}
-            />
-          ))}
+          {schedules.length ? (
+            schedules.map(schedule => (
+              <RaidList
+                key={schedule.id}
+                scheduleId={schedule.id}
+                channelId={schedule.channel}
+                raidName={schedule.raidName}
+                raidType={schedule.raidType}
+                raidLeader={schedule.raidLeader.character}
+                raidDate={schedule.raidDate}
+                participants={schedule.participants}
+              />
+            ))
+          ) : (
+            <li className='py-10 text-center text-xl font-medium text-dark/60 dark:text-light/90'>
+              예정된 레이드가 없습니다.
+            </li>
+          )}
         </ul>
         {isMore && <div ref={targetRef}></div>}
       </div>
