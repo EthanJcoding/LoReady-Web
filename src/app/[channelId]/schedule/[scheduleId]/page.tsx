@@ -68,11 +68,13 @@ export default async function ScheduleDetail({ params }: Ownprops) {
 
   if (scheduleData?.channel !== channelId) notFound()
 
+  const { raidType } = scheduleData
+
   const parties = await fetchCharacterData(scheduleData)
 
   return (
     <>
-      <Raid parties={parties} />
+      <Raid parties={parties} raidType={raidType} />
     </>
   )
 }
