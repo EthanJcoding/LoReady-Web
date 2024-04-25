@@ -33,11 +33,13 @@ export default function CardGemEngSummary({ ArmoryCard, ArmoryGem, ArmoryEngravi
   const getGemAvgLevel = () => {
     let sum = 0
 
-    ArmoryGem.Gems.map(g => (sum += g.Level))
+    if (ArmoryGem) {
+      ArmoryGem.Gems.map(g => (sum += g.Level))
 
-    const gemAvg = Math.round((sum / ArmoryGem.Gems.length) * 10) / 10
+      const gemAvg = Math.round((sum / ArmoryGem.Gems.length) * 10) / 10
 
-    return gemAvg
+      return gemAvg + ' 레벨'
+    } else return '보석이 없어요'
   }
 
   const getEngraving = () => {
@@ -64,7 +66,7 @@ export default function CardGemEngSummary({ ArmoryCard, ArmoryGem, ArmoryEngravi
         </div>
         <div className='flex w-full space-x-2 items-center'>
           <div className='border rounded p-1 text-sm font-semibold'>평균 보석 레벨</div>
-          <div className='text-lg font-semibold'>{getGemAvgLevel()} 레벨</div>
+          <div className='text-lg font-semibold'>{getGemAvgLevel()}</div>
         </div>
       </div>
       <div className='text-sm font-semibold space-y-2'>
