@@ -1,6 +1,5 @@
 'use client'
 
-import { Schedule } from '@/types/schedule'
 import CharacterDetail from './CharacterDetail'
 import TeamAllocator from './TeamAllocator'
 import { Character } from '@/types/raid'
