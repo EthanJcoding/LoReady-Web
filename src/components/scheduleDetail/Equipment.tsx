@@ -70,8 +70,8 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
   }
 
   return (
-    <div className='flex w-full justify-between gap-12'>
-      <div className='space-y-2'>
+    <div className='flex w-full justify-between gap-8'>
+      <div className='space-y-2 w-full'>
         {equipments.map((equipment, idx) => {
           const parsedObject = JSON.parse(equipment.Tooltip)
           const quality = parsedObject.Element_001.value.qualityValue
@@ -123,7 +123,7 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
           )
         })}
       </div>
-      <div className='space-y-2'>
+      <div className='space-y-2 w-full'>
         {accessories.map((equipment, idx) => {
           const parsedObject = JSON.parse(equipment.Tooltip)
 
@@ -138,9 +138,9 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
           return (
             <div key={idx} className='flex gap-2'>
               <div className={getEquipmentGrade(equipment.Grade) + ` rounded min-w-[38px] max-h-[38px] p-0.5`}>
-                <Image src={equipment.Icon} width={42} height={42} alt='악세 이미지' className='w-full' />
+                <Image src={equipment.Icon} width={38} height={38} alt='악세 이미지' className='w-full' />
               </div>
-              <div className='flex flex-col w-full justify-between'>
+              <div className='flex flex-col'>
                 <div className='text-sm truncate font-medium'>{equipment.Type}</div>
                 <div className='flex items-center'>
                   <div
@@ -165,7 +165,7 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
           )
         })}
       </div>
-      <div className='space-y-2 '>
+      <div className='space-y-2 w-full'>
         {braceletAndStone.map((equipment, idx) => {
           const parsedObject = JSON.parse(equipment.Tooltip)
 
@@ -180,7 +180,7 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
                 <div className={getEquipmentGrade(equipment.Grade) + ` rounded min-w-[42px] max-h-[42px]`}>
                   <Image src={equipment.Icon} width={38} height={38} alt='장비 이미지' className='w-full' />
                 </div>
-                <div className='flex flex-col justify-between'>
+                <div className='flex flex-col'>
                   <div className='text-sm truncate font-medium'>{equipment.Name}</div>
                   <div className='flex flex-wrap gap-2'>
                     {bracelet.map((el, idx) => {
