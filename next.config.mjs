@@ -11,14 +11,9 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'cdn-lostark.game.onstove.com',
         pathname: '**'
-      },
-      {
-        protocol: 'https',
-        hostname: 'img.lostark.co.kr',
-        pathname: '**'
       }
     ]
   }
 }
 
-export default nextConfig
+export default nextConfig;
