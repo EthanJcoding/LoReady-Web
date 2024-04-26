@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
+import { FaArrowUp, FaArrowDown, FaRegCaretSquareDown, FaRegCaretSquareUp } from 'react-icons/fa'
 
 interface Ownprops {
   parties: { [key: string]: Character[] }
@@ -58,6 +58,24 @@ export default function TeamAllocator({ parties, setSelectedCharacter, raidType 
     }
   }
 
+  const moveMember = (partyIndex: number, memberIndex: number) => {
+    if (partyIndex === 0) {
+      const newParty1 = party1.filter(el => el !== party1[memberIndex])
+      const newParty2 = [...party2, party1[memberIndex]]
+
+      setParty1(newParty1)
+      setParty2(newParty2)
+    }
+
+    if (partyIndex === 1) {
+      const newParty2 = party2.filter(el => el !== party2[memberIndex])
+      const newParty1 = [...party1, party2[memberIndex]]
+
+      setParty1(newParty1)
+      setParty2(newParty2)
+    }
+  }
+
   const handleSelect = (character: Character) => {
     setSelectedCharacter(character)
   }
@@ -95,6 +113,9 @@ export default function TeamAllocator({ parties, setSelectedCharacter, raidType 
                   <div className=''>{member.character}</div>
                 </button>
                 <div className='flex space-x-2'>
+                  <button onClick={() => moveMember(0, idx)}>
+                    <FaRegCaretSquareDown />
+                  </button>
                   <button onClick={() => moveMemberDown(0, idx)}>
                     <FaArrowDown />
                   </button>
@@ -116,6 +137,9 @@ export default function TeamAllocator({ parties, setSelectedCharacter, raidType 
                   <div className='truncate'>{member.character}</div>
                 </button>
                 <div className='flex space-x-2'>
+                  <button onClick={() => moveMember(1, idx)}>
+                    <FaRegCaretSquareUp />
+                  </button>
                   <button onClick={() => moveMemberDown(1, idx)}>
                     <FaArrowDown />
                   </button>
