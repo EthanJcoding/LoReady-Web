@@ -12,17 +12,17 @@ export interface Schedule {
   raidDate: string
   raidName: string
   participants: string[]
-  characters: Characters
+  characters: Character[]
   channel: string
+  parties: Party
 }
 
-interface Characters {
-  party0: Character[]
-  party2: Character[]
+interface Party {
   party1: Character[]
+  party2: Character[]
 }
 
-interface Character {
+export interface Character {
   character: string
   userId: string
 }
