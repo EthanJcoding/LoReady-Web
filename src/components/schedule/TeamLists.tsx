@@ -1,18 +1,19 @@
-import TeamList from './TeamList'
+import { Character } from '@/types/schedule'
+import Member from './Member'
 
 interface Ownprops {
-  arr: string[]
+  members: Character[]
 }
 
-export default function TeamLists({ arr }: Ownprops) {
+export default function TeamLists({ members }: Ownprops) {
   //TODO: 4인팀일 경우 아래 4칸 배경색 gray
   return (
     <ul className='flex-1 grid grid-rows-4'>
-      {arr.map((el, idx) => (
-        <TeamList key={idx} character={el} />
+      {members.map(member => (
+        <Member key={member.userId} character={member.character} />
       ))}
-      {[...Array(4 - arr.length)].map((_, idx) => (
-        <TeamList key={idx} />
+      {[...Array(4 - members.length)].map((_, idx) => (
+        <Member key={idx} />
       ))}
     </ul>
   )
