@@ -27,7 +27,7 @@ export default function RaidList({
   const participant = participants.length
 
   return (
-    <li>
+    <li className='rounded-md overflow-hidden shadow-sm'>
       <Link href={`/${channelId}/schedule/${scheduleId}`}>
         <CompactRaidCard
           boss={boss}

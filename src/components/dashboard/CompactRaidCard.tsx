@@ -13,8 +13,8 @@ interface Ownprops {
 
 export default function CompactRaidCard({ boss, rank, leader, date, headCount }: Ownprops) {
   return (
-    <section className='relative flex bg-white text-dark p-3 rounded-md shadow-sm'>
-      <div className='absolute w-full h-full inset-0 clip-path-polygon rounded-md overflow-hidden'>
+    <div className='relative flex bg-white text-dark p-3'>
+      <div className='absolute w-full h-full inset-0 clip-path-polygon overflow-hidden'>
         <Image
           className='w-full h-full absolute left-1/3 object-cover object-center'
           src={`/images/raid/${setBossImage(boss)}`}
@@ -46,7 +46,7 @@ export default function CompactRaidCard({ boss, rank, leader, date, headCount }:
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 
