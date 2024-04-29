@@ -27,11 +27,11 @@ export default function ScheduleList({ schedule }: Ownprops) {
       <div className='h-full grid grid-cols-2 border-t border-inherit text-dark'>
         <div className='flex flex-col border-r border-inherit bg-pink-50'>
           <span className='px-2 py-1 text-center font-semibold bg-pink-100'>Team 1</span>
-          <TeamLists members={schedule.parties.party1} />
+          <TeamLists members={schedule.parties.party1} capacity={capacity} />
         </div>
         <div className='flex flex-col bg-blue-50'>
           <span className='px-2 py-1 text-center font-semibold bg-blue-100'>Team 2</span>
-          <TeamLists members={schedule.parties.party2} />
+          <TeamLists members={schedule.parties.party2} capacity={capacity} />
         </div>
       </div>
     </li>
