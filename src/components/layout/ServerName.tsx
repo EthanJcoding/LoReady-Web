@@ -12,7 +12,7 @@ export default async function ServerName({ id }: Ownprops) {
   if (!data) return
 
   return (
-    <div className='flex w-full justify-between items-center'>
+    <div className='flex w-full items-center'>
       <div className='flex items-center gap-2 text-2xl w-full'>
         <span className='flex-none w-9 h-9 rounded-full border overflow-hidden'>
           <Image
@@ -27,7 +27,6 @@ export default async function ServerName({ id }: Ownprops) {
         </span>
         <span className='truncate'>{data.channelName}</span>
       </div>
-      <AuthButton />
     </div>
   )
 }
