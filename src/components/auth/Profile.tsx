@@ -7,7 +7,7 @@ export default function Profile() {
   const { data: session } = useSession()
 
   return (
-    <div className='flex gap-4 w-full justify-end'>
+    <div className='flex gap-4 w-full justify-center'>
       <Image
         src={session?.user.image}
         width={10}
