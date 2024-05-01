@@ -8,6 +8,7 @@ import { authOptions } from '@/utils/authOptions'
 import { notFound } from 'next/navigation'
 import SignIn from '@/components/auth/SignIn'
 import { validateMember } from '@/utils/validateMember'
+import Menu from '@/components/layout/menu/Menu'
 
 interface Ownprops {
   children: React.ReactNode
@@ -48,6 +49,7 @@ export default async function ChannelLayout({ children, params: { channelId } }:
     <ThemeProvider>
       <div className='h-dvh flex bg-light dark:bg-dark dark:text-light'>
         <SideBar />
+        <Menu />
         <main className='flex-1 flex flex-col gap-5 p-7 pb-5 overflow-hidden'>
           <ServerName id={channelId} />
           <Navigation />
