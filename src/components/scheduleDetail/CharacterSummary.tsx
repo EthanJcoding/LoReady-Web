@@ -3,7 +3,7 @@ import { ProfileInterface } from '@/types/ProfileInterface'
 import Image from 'next/image'
 import EquipmentSummary from './EquipmentSummary'
 import { CardsInterface } from '@/types/CardsInterface'
-import CardGemSummary from './CardGemSummary'
+import CardGemEngSummary from './CardGemEngSummary'
 import { GemsInterface } from '@/types/GemInterface'
 import { EngravingInterface } from '@/types/EngravingInterface'
 import ProfileSummary from './ProfileSummary'
@@ -42,7 +42,7 @@ export default function CharacterSummary({
             <div className='flex flex-wrap w-full gap-8'>
               <ProfileSummary ArmoryProfile={ArmoryProfile} />
               <EquipmentSummary ArmoryEquipment={ArmoryEquipment} />
-              <CardGemSummary ArmoryCard={ArmoryCard} ArmoryGem={ArmoryGem} ArmoryEngraving={ArmoryEngraving} />
+              <CardGemEngSummary ArmoryCard={ArmoryCard} ArmoryGem={ArmoryGem} ArmoryEngraving={ArmoryEngraving} />
             </div>
           </div>
         </div>
