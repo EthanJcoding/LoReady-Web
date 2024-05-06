@@ -2,7 +2,6 @@ import ThemeButton from '../sidebar/ThemeButton'
 import ServerLists from '../sidebar/ServerLists'
 import { MdEmail } from 'react-icons/md'
 import { BsHash } from 'react-icons/bs'
-import AuthButton from '@/components/auth/AuthButton'
 
 export default function MenuContent() {
   return (
@@ -17,7 +16,6 @@ export default function MenuContent() {
               <ThemeButton />
             </div>
           </div>
-          <AuthButton />
         </div>
       </header>
       <div className='flex-1 flex flex-col justify-center px-7 py-14 overflow-hidden'>
