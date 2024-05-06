@@ -51,7 +51,10 @@ export default function ArmoryTab({ ArmoryEquipment, ArmoryCard, ArmoryGem, Armo
             <button
               key={idx}
               onClick={() => handleTabBtn(t)}
-              className={isActiveTab(t) + ` font-semibold text-2xl hover:bg-secondary-gray/50 transition rounded px-1`}
+              className={
+                isActiveTab(t) +
+                ` font-semibold 2xl:text-2xl text-xl hover:bg-secondary-gray/50 transition rounded px-1`
+              }
             >
               {t}
             </button>
