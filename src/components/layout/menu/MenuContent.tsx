@@ -1,11 +1,11 @@
-import ServerLists from './ServerLists'
-import ThemeButton from './ThemeButton'
+import ThemeButton from '../sidebar/ThemeButton'
+import ServerLists from '../sidebar/ServerLists'
 import { MdEmail } from 'react-icons/md'
 import { BsHash } from 'react-icons/bs'
 
-export default function SideBar() {
+export default function MenuContent() {
   return (
-    <aside className='w-72 2xl:flex 2xl:flex-col hidden bg-white border-r border-secondary-gray/50 dark:bg-neutral-900 dark:border-primary-gray/50'>
+    <aside className='z-40 fixed top-0 2xl:left-0 h-screen w-72 bg-white border-r border-secondary-gray/50 shadow-2xl peer-focus:left-0 -left-96 peer:transition ease-out delay-150 duration-200 flex flex-col dark:bg-neutral-900 dark:border-primary-gray/50'>
       <header className='flex items-center p-7'>
         <div className='flex flex-col w-full space-y-8'>
           <div className='flex w-full justify-between'>
