@@ -1,7 +1,6 @@
 import { CardsInterface } from '@/types/CardsInterface'
 import { EngravingInterface } from '@/types/EngravingInterface'
 import { GemsInterface } from '@/types/GemInterface'
-import Image from 'next/image'
 
 interface Ownprops {
   ArmoryCard: CardsInterface
@@ -41,7 +40,6 @@ export default function CardGemEngSummary({ ArmoryCard, ArmoryGem, ArmoryEngravi
       return gemAvg + ' 레벨'
     } else return '보석이 없어요'
   }
-
   const getEngraving = () => {
     const formattedEffects: { name: string; level: string; icon: string }[] = []
 
@@ -61,22 +59,21 @@ export default function CardGemEngSummary({ ArmoryCard, ArmoryGem, ArmoryEngravi
     <>
       <div className='flex flex-col space-y-2'>
         <div className='flex w-full space-x-2 items-center'>
-          <div className='border rounded p-1 text-sm font-semibold'>카드</div>
-          <div className='text-lg font-semibold'>{cardEffect}</div>
+          <div className='border rounded px-1 text-sm font-semibold truncate'>카드</div>
+          <div className='2xl:text-lg text-sm font-semibold truncate'>{cardEffect}</div>
         </div>
         <div className='flex w-full space-x-2 items-center'>
-          <div className='border rounded p-1 text-sm font-semibold'>평균 보석 레벨</div>
-          <div className='text-lg font-semibold'>{getGemAvgLevel()}</div>
+          <div className='border rounded px-1 text-sm font-semibold truncate'>평균 보석 레벨</div>
+          <div className='2xl:text-lg text-sm font-semibold truncate'>{getGemAvgLevel()}</div>
         </div>
-      </div>
-      <div className='text-sm font-semibold space-y-2'>
-        {getEngraving().map((effect, idx) => (
-          <div key={idx} className='flex w-full gap-2 items-center'>
-            <Image src={effect.icon} width={28} height={28} alt='각인 이미지' className='rounded-full' />
-            <div>{effect.name}</div>
-            <div>{effect.level}</div>
+        <div className='flex w-full space-x-2 items-center'>
+          <div className='border rounded px-1 text-sm font-semibold truncate'>각인</div>
+          <div className='flex gap-1 2xl:text-lg text-sm font-semibold truncate '>
+            {getEngraving().map((engrave, idx) => (
+              <div key={idx}>{engrave.level}</div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </>
   )
