@@ -1,17 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useToggleStore } from '@/stores/toggle'
 import { BsCheckCircleFill } from 'react-icons/bs'
 
 export default function ToggleBtn() {
-  const [isActive, setIsActive] = useState(false)
-
-  const handleToggle = () => {
-    setIsActive(!isActive)
-  }
+  const { isActive, setIsActive } = useToggleStore(state => state)
 
   return (
-    <button className='flex items-center gap-1' onClick={handleToggle}>
+    <button className='flex items-center gap-1' onClick={setIsActive}>
       <span className={`${isActive ? 'text-primary-accent' : 'text-gray-300'} text-xl`}>
         <BsCheckCircleFill />
       </span>
