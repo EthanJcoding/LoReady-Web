@@ -1,7 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import { useParams } from 'next/navigation'
 import { FaArrowUp, FaArrowDown, FaRegCaretSquareDown, FaRegCaretSquareUp } from 'react-icons/fa'
+import { savePartyData } from '@/api/firebase/savePartyData/savePartyData'
 
 interface Ownprops {
   parties: { [key: string]: Character[] }
@@ -17,6 +19,9 @@ interface Character {
 export default function TeamAllocator({ parties, setSelectedCharacter, raidType }: Ownprops) {
   const [party1, setParty1] = useState(parties.party1)
   const [party2, setParty2] = useState(parties.party2)
+
+  const params = useParams<{ channelId: string; scheduleId: string }>()
+  const { scheduleId } = params
 
   const moveMemberUp = (partyIndex: number, memberIndex: number) => {
     if (partyIndex === 0 && memberIndex > 0) {
@@ -80,9 +85,22 @@ export default function TeamAllocator({ parties, setSelectedCharacter, raidType 
     setSelectedCharacter(character)
   }
 
+  const handleSave = () => {
+    if (party1.length < 5 && party2.length < 5) {
+      const dataFilteredParty1 = party1.map(el => ({ userId: el.userId, character: el.character }))
+      const dataFilteredParty2 = party2.map(el => ({ userId: el.userId, character: el.character }))
+
+      savePartyData(scheduleId, dataFilteredParty1, dataFilteredParty2)
+
+      window.alert('저장완료')
+    } else {
+      window.alert('한 파티에는 4명까지 참여 가능합니다')
+    }
+  }
+
   if (raidType === '4인레이드') {
     return (
-      <section className='flex flex-col border w-1/3 h-full p-8 rounded-lg shadow-sm space-y-4 '>
+      <section className='flex flex-col border sm:w-1/3 w-full sm:h-full p-8 rounded-lg shadow-sm space-y-4'>
         <div className='w-full h-full space-y-2'>
           <div className='text-xl font-semibold'>공대원 리스트</div>
           {party1.map((member, idx) => {
@@ -90,7 +108,7 @@ export default function TeamAllocator({ parties, setSelectedCharacter, raidType 
               <div key={idx} className='flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition'>
                 <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full'>
                   <div>{idx + 1}.</div>
-                  <div className=''>{member.character}</div>
+                  <div className='truncate'>{member.character}</div>
                 </button>
               </div>
             )
@@ -102,13 +120,13 @@ export default function TeamAllocator({ parties, setSelectedCharacter, raidType 
 
   if (raidType === '8인레이드') {
     return (
-      <section className='flex flex-col border w-1/3 h-full p-8 rounded-lg shadow-sm space-y-4 '>
+      <section className='flex flex-col border sm:w-1/3 w-full sm:h-full p-8 rounded-lg shadow-sm space-y-4 overflow-scroll'>
         <div className='w-full h-full space-y-2'>
           <div className='text-xl font-semibold'>1번 공대</div>
           {party1.map((member, idx) => {
             return (
               <div key={idx} className='flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition'>
-                <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full'>
+                <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full '>
                   <div>{idx + 1}.</div>
                   <div className=''>{member.character}</div>
                 </button>
@@ -152,7 +170,10 @@ export default function TeamAllocator({ parties, setSelectedCharacter, raidType 
           })}
         </div>
         <div className='flex w-full h-full space-x-4 items-end justify-end'>
-          <button className='h-10 px-4 py-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-sm font-semibold'>
+          <button
+            onClick={() => handleSave()}
+            className='h-10 px-4 py-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-sm font-semibold'
+          >
             저장하기
           </button>
         </div>
