@@ -30,22 +30,22 @@ export default function EquipmentSummary({ ArmoryEquipment }: Ownprops) {
   return (
     <div className='flex flex-col space-y-2'>
       <div className='flex w-full space-x-2 items-center'>
-        <div className='border rounded p-1 text-sm font-semibold'>세트옵션</div>
-        <div className='text-lg font-semibold'>{renderedSetLevel}</div>
+        <div className='border rounded px-1 text-sm font-semibold truncate'>세트옵션</div>
+        <div className='2xl:text-lg text-sm font-semibold truncate'>{renderedSetLevel}</div>
       </div>
       <div className='flex w-full space-x-2 items-center'>
-        <div className='border rounded p-1 text-sm font-semibold'>무기</div>
-        <div className='text-lg font-semibold'>
+        <div className='border rounded px-1 text-sm font-semibold truncate'>무기</div>
+        <div className='2xl:text-lg text-sm font-semibold truncate'>
           {renderedWeapon} 강 / {weaponQuality} 품질
         </div>
       </div>
       <div className='flex w-full space-x-2 items-center'>
-        <div className='border rounded p-1 text-sm font-semibold'>특성합</div>
-        <div className='text-lg font-semibold'>{getAccStatSum(accessories)}</div>
+        <div className='border rounded px-1 text-sm font-semibold truncate'>특성합</div>
+        <div className='2xl:text-lg text-sm font-semibold truncate'>{getAccStatSum(accessories)}</div>
       </div>
       <div className='flex w-full space-x-2 items-center'>
-        <div className='border rounded p-1 text-sm font-semibold'>평균 악세 품질</div>
-        <div className='text-lg font-semibold'>{accQualityAvg}</div>
+        <div className='border rounded px-1 text-sm font-semibold truncate'>평균 악세 품질</div>
+        <div className='2xl:text-lg text-sm font-semibold truncate'>{accQualityAvg}</div>
       </div>
     </div>
   )
