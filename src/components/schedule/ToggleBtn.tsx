@@ -11,7 +11,7 @@ export default function ToggleBtn() {
       <span className={`${isActive ? 'text-primary-accent' : 'text-gray-300'} text-xl`}>
         <BsCheckCircleFill />
       </span>
-      <span>내 일정만 보기</span>
+      <span className={`${isActive ? 'font-medium' : 'font-normal'}`}>내 일정만 보기</span>
     </button>
   )
 }
