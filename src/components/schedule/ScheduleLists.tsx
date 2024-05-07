@@ -55,11 +55,17 @@ export default function ScheduleLists({ channelId }: Ownprops) {
 
   return (
     <>
-      <ul className='grid grid-cols-4 gap-5 max-xl:grid-cols-3'>
-        {schedules.map(schedule => (
-          <ScheduleList key={schedule.id} schedule={schedule} />
-        ))}
-      </ul>
+      {schedules.length ? (
+        <ul className='grid grid-cols-4 gap-5 max-xl:grid-cols-3'>
+          {schedules.map(schedule => (
+            <ScheduleList key={schedule.id} schedule={schedule} />
+          ))}
+        </ul>
+      ) : (
+        <div className='py-10 text-center text-xl font-medium text-dark/60 dark:text-light/90'>
+          예정된 레이드가 없습니다.
+        </div>
+      )}
       {isMore && <div ref={targetRef}></div>}
     </>
   )
