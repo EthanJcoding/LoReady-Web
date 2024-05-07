@@ -2,7 +2,7 @@ import { DocumentData, collection, getDocs, limit, orderBy, query, startAfter, w
 import { firestore } from '../config'
 import { Schedule, ScheduleWithId } from '@/types/schedule'
 
-export const getChannelSchedule = async (channelId: string, lastSnap?: DocumentData) => {
+export const getChannelSchedule = async (channelId: string, lastSnap?: DocumentData, userId?: string) => {
   const now = new Date().toISOString()
 
   let scheduleQuery = query(
@@ -12,6 +12,7 @@ export const getChannelSchedule = async (channelId: string, lastSnap?: DocumentD
     orderBy('raidDate', 'asc')
   )
 
+  if (userId) scheduleQuery = query(scheduleQuery, where('participants', 'array-contains', userId))
   if (lastSnap) scheduleQuery = query(scheduleQuery, startAfter(lastSnap))
 
   scheduleQuery = query(scheduleQuery, limit(10))
