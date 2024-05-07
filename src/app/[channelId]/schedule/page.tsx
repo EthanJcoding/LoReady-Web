@@ -1,6 +1,6 @@
 import { getChannelData } from '@/api/firebase'
 import ScheduleLists from '@/components/schedule/ScheduleLists'
-import ToggleBtn from '@/components/schedule/ToggleBtn'
+import MyScheduleToggle from '@/components/schedule/MyScheduleToggle'
 import { authOptions } from '@/utils/authOptions'
 import { validateMember } from '@/utils/validateMember'
 import { getServerSession } from 'next-auth'
@@ -29,7 +29,7 @@ export default async function Schedule({ params: { channelId } }: Ownprops) {
   return (
     <div className='flex-1 flex flex-col gap-5 pr-3 overflow-y-auto'>
       <div className='flex justify-end'>
-        <ToggleBtn />
+        <MyScheduleToggle />
       </div>
       <div className='flex-1'>
         <ScheduleLists channelId={channelId} />

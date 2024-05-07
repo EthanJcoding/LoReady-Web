@@ -3,7 +3,7 @@
 import { useToggleStore } from '@/stores/toggle'
 import { BsCheckCircleFill } from 'react-icons/bs'
 
-export default function ToggleBtn() {
+export default function MyScheduleToggle() {
   const { isActive, setIsActive } = useToggleStore(state => state)
 
   return (
