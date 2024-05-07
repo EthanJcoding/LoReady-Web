@@ -24,7 +24,7 @@ export default function ArmoryTab({ ArmoryEquipment, ArmoryCard, ArmoryGem, Armo
   const isActiveTab = (t: string) => {
     if (t === tab) {
       return 'text-primary-accent font-bold text-2xl'
-    }
+    } else return ''
   }
 
   const handleTabBtn = (t: string) => {
@@ -61,7 +61,7 @@ export default function ArmoryTab({ ArmoryEquipment, ArmoryCard, ArmoryGem, Armo
           )
         })}
       </div>
-      <div className='h-full'>{generateTabContent(tab)}</div>
+      {generateTabContent(tab)}
     </div>
   )
 }
