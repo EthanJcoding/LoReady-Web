@@ -4,10 +4,12 @@ import { useState } from 'react'
 import { useParams } from 'next/navigation'
 import { FaArrowUp, FaArrowDown, FaRegCaretSquareDown, FaRegCaretSquareUp } from 'react-icons/fa'
 import { savePartyData } from '@/api/firebase/savePartyData/savePartyData'
+import { useSession } from 'next-auth/react'
 
 interface Ownprops {
   parties: { [key: string]: Character[] }
   setSelectedCharacter: (character: Character) => void
+  selectedCharacter: Character
   raidType: string
 }
 
@@ -16,12 +18,12 @@ interface Character {
   character: string
 }
 
-export default function TeamAllocator({ parties, setSelectedCharacter, raidType }: Ownprops) {
+export default function TeamAllocator({ parties, setSelectedCharacter, selectedCharacter, raidType }: Ownprops) {
   const [party1, setParty1] = useState(parties.party1)
   const [party2, setParty2] = useState(parties.party2)
-
   const params = useParams<{ channelId: string; scheduleId: string }>()
   const { scheduleId } = params
+  const { data: session } = useSession()
 
   const moveMemberUp = (partyIndex: number, memberIndex: number) => {
     if (partyIndex === 0 && memberIndex > 0) {
@@ -85,6 +87,12 @@ export default function TeamAllocator({ parties, setSelectedCharacter, raidType 
     setSelectedCharacter(character)
   }
 
+  const isSelected = (character: string) => {
+    if (character === selectedCharacter.character) {
+      return true
+    } else return false
+  }
+
   const handleSave = () => {
     if (party1.length < 5 && party2.length < 5) {
       const dataFilteredParty1 = party1.map(el => ({ userId: el.userId, character: el.character }))
@@ -98,6 +106,13 @@ export default function TeamAllocator({ parties, setSelectedCharacter, raidType 
     }
   }
 
+  // 주어진 userId가 데이터에 있는지 확인하는 함수
+  const isUserIdExist = (userId: string) => {
+    return party1.some(member => member.userId === userId) || party2.some(member => member.userId === userId)
+  }
+
+  const handleJoin = () => {}
+
   if (raidType === '4인레이드') {
     return (
       <section className='flex flex-col border sm:w-1/3 w-full sm:h-full p-8 rounded-lg shadow-sm space-y-4'>
@@ -105,7 +120,14 @@ export default function TeamAllocator({ parties, setSelectedCharacter, raidType 
           <div className='text-xl font-semibold'>공대원 리스트</div>
           {party1.map((member, idx) => {
             return (
-              <div key={idx} className='flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition'>
+              <div
+                key={idx}
+                className={
+                  isSelected(member.character)
+                    ? 'bg-secondary-gray/50 flex w-full border p-2 rounded '
+                    : `flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition`
+                }
+              >
                 <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full'>
                   <div>{idx + 1}.</div>
                   <div className='truncate'>{member.character}</div>
@@ -113,6 +135,14 @@ export default function TeamAllocator({ parties, setSelectedCharacter, raidType 
               </div>
             )
           })}
+        </div>
+        <div className='flex w-full h-full space-x-4 items-end justify-end'>
+          <button
+            onClick={() => handleJoin()}
+            className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
+          >
+            {isUserIdExist(session?.user.id) ? '교체하기' : '참여하기'}
+          </button>
         </div>
       </section>
     )
@@ -125,7 +155,14 @@ export default function TeamAllocator({ parties, setSelectedCharacter, raidType 
           <div className='text-xl font-semibold'>1번 공대</div>
           {party1.map((member, idx) => {
             return (
-              <div key={idx} className='flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition'>
+              <div
+                key={idx}
+                className={
+                  isSelected(member.character)
+                    ? 'bg-secondary-gray/50 flex w-full border p-2 rounded '
+                    : `flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition`
+                }
+              >
                 <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full '>
                   <div>{idx + 1}.</div>
                   <div className=''>{member.character}</div>
@@ -149,7 +186,14 @@ export default function TeamAllocator({ parties, setSelectedCharacter, raidType 
           <div className='text-xl font-semibold'>2번 공대</div>
           {party2.map((member, idx) => {
             return (
-              <div key={idx} className='flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition'>
+              <div
+                key={idx}
+                className={
+                  isSelected(member.character)
+                    ? 'bg-secondary-gray/50 flex w-full border p-2 rounded '
+                    : `flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition`
+                }
+              >
                 <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full'>
                   <div>{idx + 1}.</div>
                   <div className='truncate'>{member.character}</div>
@@ -169,10 +213,17 @@ export default function TeamAllocator({ parties, setSelectedCharacter, raidType 
             )
           })}
         </div>
+
         <div className='flex w-full h-full space-x-4 items-end justify-end'>
           <button
+            onClick={() => handleJoin()}
+            className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
+          >
+            {isUserIdExist(session?.user.id) ? '교체하기' : '참여하기'}
+          </button>
+          <button
             onClick={() => handleSave()}
-            className='h-10 px-4 py-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-sm font-semibold'
+            className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
           >
             저장하기
           </button>
