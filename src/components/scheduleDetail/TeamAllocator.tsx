@@ -115,7 +115,7 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
 
   if (raidType === '4인레이드') {
     return (
-      <section className='flex flex-col border sm:w-1/3 w-full sm:h-full p-8 rounded-lg shadow-sm space-y-4'>
+      <section className='flex flex-col border sm:w-1/3 w-full sm:h-full p-8 rounded-lg shadow-sm space-y-4 overflow-scroll'>
         <div className='w-full h-full space-y-2'>
           <div className='text-xl font-semibold'>공대원 리스트</div>
           {party1.map((member, idx) => {
