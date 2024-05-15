@@ -3,10 +3,9 @@ import Member from './Member'
 
 interface Ownprops {
   members: Character[]
-  capacity: string
 }
 
-export default function TeamLists({ members, capacity }: Ownprops) {
+export default function TeamLists({ members }: Ownprops) {
   const blanks: undefined[] = [...Array(4 - members.length)]
 
   return (
@@ -15,7 +14,7 @@ export default function TeamLists({ members, capacity }: Ownprops) {
         <Member key={member.userId} character={member.character} />
       ))}
       {blanks.map((_, idx) => (
-        <Member key={idx} isActive={capacity === '4' ? idx < blanks.length - 2 : true} />
+        <Member key={idx} />
       ))}
     </ul>
   )

@@ -1,15 +1,10 @@
 interface Ownprops {
   character?: string
-  isActive?: boolean
 }
 
-export default function Member({ character, isActive = true }: Ownprops) {
+export default function Member({ character }: Ownprops) {
   return (
-    <li
-      className={`flex justify-center items-center px-2 border-t border-secondary-gray/50 overflow-hidden ${
-        isActive ? '' : 'bg-neutral-300'
-      }`}
-    >
+    <li className='flex justify-center items-center px-2 border-t border-secondary-gray/50 overflow-hidden'>
       <span className='truncate'>{character}</span>
     </li>
   )
