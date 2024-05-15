@@ -11,14 +11,14 @@ export default function Navigation() {
       <ul className='flex'>
         <li
           className={`px-4 py-1 border-dark dark:border-light ${
-            pathname === `/${channelId}/dashboard` ? 'border-b-2 font-bold' : 'font-medium'
+            pathname.includes('dashboard') ? 'border-b-2 font-bold' : 'font-medium'
           }`}
         >
           <Link href={`/${channelId}/dashboard`}>대시보드</Link>
         </li>
         <li
           className={`px-4 py-1 border-dark dark:border-light ${
-            pathname === `/${channelId}/schedule` ? 'border-b-2 font-bold' : 'font-medium'
+            pathname.includes('schedule') ? 'border-b-2 font-bold' : 'font-medium'
           }`}
         >
           <Link href={`/${channelId}/schedule`}>레이드 일정</Link>
