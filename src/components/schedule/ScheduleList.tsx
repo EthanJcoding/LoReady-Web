@@ -29,7 +29,7 @@ export default function ScheduleList({ schedule }: Ownprops) {
             capacity === '4' ? 'grid-cols-1' : 'grid-cols-2'
           } border-t border-inherit text-dark`}
         >
-          <div className='flex flex-col border-r border-inherit bg-blue-50'>
+          <div className={`flex flex-col border-inherit bg-blue-50 ${capacity === '4' ? 'border-none' : 'border-r'}`}>
             <span className='px-2 py-1 text-center font-semibold bg-blue-100'>
               {capacity === '4' ? 'Team' : 'Team 1'}
             </span>

@@ -56,7 +56,7 @@ export default function ScheduleLists({ channelId }: Ownprops) {
   return (
     <>
       {schedules.length ? (
-        <ul className='grid grid-cols-4 gap-5 max-xl:grid-cols-3'>
+        <ul className='grid grid-cols-4 gap-5 max-xl:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1'>
           {schedules.map(schedule => (
             <ScheduleList key={schedule.id} schedule={schedule} />
           ))}
