@@ -1,7 +1,7 @@
 'use client'
 
 import CharacterDetail from './CharacterDetail'
-import TeamAllocator from './TeamAllocator'
+import TeamAllocator from './TeamAllocator/TeamAllocator'
 import { Character } from '@/types/raid'
 import { useState } from 'react'
 
