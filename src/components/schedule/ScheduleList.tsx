@@ -31,13 +31,13 @@ export default function ScheduleList({ schedule }: Ownprops) {
         >
           <div className={`flex flex-col border-inherit bg-blue-50 ${capacity === '4' ? 'border-none' : 'border-r'}`}>
             <span className='px-2 py-1 text-center font-semibold bg-blue-100'>
-              {capacity === '4' ? 'Team' : 'Team 1'}
+              {capacity === '4' ? 'Party' : '1 Party'}
             </span>
             <TeamLists members={schedule.parties.party1} />
           </div>
           {capacity === '8' && (
             <div className='flex flex-col bg-pink-50'>
-              <span className='px-2 py-1 text-center font-semibold bg-pink-100'>Team 2</span>
+              <span className='px-2 py-1 text-center font-semibold bg-pink-100'>2 Party</span>
               <TeamLists members={schedule.parties.party2} />
             </div>
           )}
