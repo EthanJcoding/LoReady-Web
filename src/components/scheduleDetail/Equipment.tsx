@@ -39,28 +39,30 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
   }
 
   const getAbilityStone = (stoneObject: StoneObjectInterface) => {
-    const { Element_000, Element_001, Element_002 } = stoneObject
+    if (stoneObject) {
+      const { Element_000, Element_001, Element_002 } = stoneObject
 
-    const stones = [Element_000, Element_001, Element_002]
+      const stones = [Element_000, Element_001, Element_002]
 
-    const regexString = /<FONT COLOR='#(?:FE2E2E|FFFFAC)'>(.*?)<\/FONT>/
+      const regexString = /<FONT COLOR='#(?:FE2E2E|FFFFAC)'>(.*?)<\/FONT>/
 
-    const regexNumber = /\+(\d+)/
+      const regexNumber = /\+(\d+)/
 
-    return (
-      <div className='flex flex-wrap gap-2 '>
-        {stones.map((stone, idx) => {
-          const value = stone.contentStr.match(regexNumber)
-          const match = stone.contentStr.match(regexString)
+      return (
+        <div className='flex flex-wrap gap-2 '>
+          {stones.map((stone, idx) => {
+            const value = stone.contentStr.match(regexNumber)
+            const match = stone.contentStr.match(regexString)
 
-          return (
-            <div key={idx} className='text-xs font-medium border p-0.5 rounded'>
-              {match && match[1]} {value && value[0]}
-            </div>
-          )
-        })}
-      </div>
-    )
+            return (
+              <div key={idx} className='text-xs font-medium border p-0.5 rounded'>
+                {match && match[1]} {value && value[0]}
+              </div>
+            )
+          })}
+        </div>
+      )
+    } else return <div>돌이없어용</div>
   }
 
   const extractEnhanceValue = (str: string) => {
