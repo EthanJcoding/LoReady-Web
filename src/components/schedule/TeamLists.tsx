@@ -1,4 +1,4 @@
-import { Character } from '@/types/schedule'
+import { Character } from '@/types/Schedule'
 import Member from './Member'
 
 interface Ownprops {
