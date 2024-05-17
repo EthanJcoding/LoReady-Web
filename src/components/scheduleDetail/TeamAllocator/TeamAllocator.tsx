@@ -6,7 +6,6 @@ import { FaArrowUp, FaArrowDown, FaRegCaretSquareDown, FaRegCaretSquareUp } from
 import { FaGear } from 'react-icons/fa6'
 import { savePartyData } from '@/api/firebase/savePartyData/savePartyData'
 import { useSession } from 'next-auth/react'
-import { ChaListInterface } from '@/types/ChaListInterface'
 import Popover from './Popover'
 
 interface Ownprops {
@@ -29,6 +28,8 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
   const { data: session } = useSession()
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [dropdownSelectedCharacter, setDropdownSelectedCharacter] = useState(selectedCharacter)
+  const userId = session?.user.id
+  const [isJoining, setIsJoining] = useState(false)
 
   const moveMemberUp = (partyIndex: number, memberIndex: number) => {
     if (partyIndex === 0 && memberIndex > 0) {
@@ -99,7 +100,7 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
   }
 
   const isUserCharacter = (character: Character) => {
-    return session?.user.id === character.userId ? true : false
+    return userId === character.userId ? true : false
   }
 
   const handleSave = () => {
@@ -117,13 +118,21 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
 
   // 주어진 userId가 데이터에 있는지 확인하는 함수
   const isUserIdExist = (userId: string) => {
-    return party1.some(member => member.userId === userId) || party2.some(member => member.userId === userId)
+    return (
+      parties.party1.some(member => member.userId === userId) || parties.party2.some(member => member.userId === userId)
+    )
   }
 
   const handleCharacterSetting = (character: Character) => {
     setSelectedCharacter(character)
     setDropdownSelectedCharacter(character)
     setIsPopoverOpen(!isPopoverOpen)
+  }
+
+  const handleJoinParty = async () => {
+    setDropdownSelectedCharacter({ character: '캐릭터를 선택해주세요', userId: '0' })
+    setIsPopoverOpen(true)
+    setIsJoining(true)
   }
 
   if (raidType === '4인레이드') {
@@ -162,13 +171,15 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
               onClick={() => handleCharacterSetting(selectedCharacter)}
               className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
             >
-              {isUserIdExist(session?.user.id) ? '교체하기' : '참여하기'}
+              {isUserIdExist(userId) ? '교체하기' : '참여하기'}
             </button>
           </div>
         </section>
 
         <Popover
-          selectedCharacter={selectedCharacter}
+          isJoining={isJoining}
+          setIsJoining={setIsJoining}
+          targetCharacter={selectedCharacter.character}
           isPopoverOpen={isPopoverOpen}
           setIsPopoverOpen={setIsPopoverOpen}
           dropdownSelectedCharacter={dropdownSelectedCharacter}
@@ -257,8 +268,11 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
           </div>
 
           <div className='flex w-full h-full space-x-4 items-end justify-end'>
-            {isUserIdExist(session?.user.id) ? null : (
-              <button className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'>
+            {isUserIdExist(userId) ? null : (
+              <button
+                onClick={() => handleJoinParty()}
+                className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
+              >
                 참여하기
               </button>
             )}
@@ -273,7 +287,9 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
         </section>
 
         <Popover
-          selectedCharacter={selectedCharacter}
+          isJoining={isJoining}
+          setIsJoining={setIsJoining}
+          targetCharacter={selectedCharacter.character}
           isPopoverOpen={isPopoverOpen}
           setIsPopoverOpen={setIsPopoverOpen}
           dropdownSelectedCharacter={dropdownSelectedCharacter}
