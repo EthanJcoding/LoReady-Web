@@ -2,169 +2,165 @@ import { Character } from '@/types/raid'
 import { getCharacterList } from '@/api/lostark/getCharacterList'
 import { ChaListInterface } from '@/types/ChaListInterface'
 import { FaSort, FaCheck } from 'react-icons/fa'
-import { deleteUserFromRaid, editPartyCharacter } from '@/api/firebase'
+import { addUserToRaid, deleteUserFromRaid, editPartyCharacter, getUserData } from '@/api/firebase'
 import { useParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { User } from '@/types/User'
 
-interface Ownprops {
-  selectedCharacter: Character
+interface OwnProps {
+  targetCharacter: string
   isPopoverOpen: boolean
   setIsPopoverOpen: (arg0: boolean) => void
-  dropdownSelectedCharacter: any
-  setDropdownSelectedCharacter: any
+  dropdownSelectedCharacter: Character
+  setDropdownSelectedCharacter: (arg0: Character) => void
   parties: { [key: string]: Character[] }
+  isJoining: boolean
+  setIsJoining: (arg0: boolean) => void
+}
+
+const findParty = (targetCharacter: string, parties: { [key: string]: Character[] }) => {
+  if (parties.party1.some(character => character.character === targetCharacter)) {
+    return 'party1'
+  }
+  if (parties.party2.some(character => character.character === targetCharacter)) {
+    return 'party2'
+  }
+  return null
 }
 
 export default function Popover({
-  selectedCharacter,
+  targetCharacter,
   isPopoverOpen,
   setIsPopoverOpen,
   dropdownSelectedCharacter,
   setDropdownSelectedCharacter,
-  parties
-}: Ownprops) {
+  parties,
+  isJoining,
+  setIsJoining
+}: OwnProps) {
   const params = useParams<{ channelId: string; scheduleId: string }>()
   const { scheduleId } = params
   const { data: session } = useSession()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [charList, setCharList] = useState<ChaListInterface[]>([])
   const userId = session?.user.id
+  const [charactersLoaded, setCharactersLoaded] = useState(false)
 
   const handlePopover = () => {
     setIsPopoverOpen(false)
     setIsDropdownOpen(false)
+    setIsJoining(false)
   }
 
   const handleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen)
-    getCharacters()
   }
 
-  const handleChaSelect = async (character: string) => {
+  const handleChaSelect = (character: string) => {
     const data = { character, userId }
-
     setDropdownSelectedCharacter(data)
-    // selectedCharacter의 파티 위치
-    // 해당 파티 위치에 userId, characterName 으로 업데이트
-    // 업데이트 후 리프레쉬
     setIsDropdownOpen(false)
   }
 
   const handleChaSelectBtn = async () => {
-    function findParty(selectedCharacter: Character) {
-      // party1에서 찾기
-      const isInParty1 = parties.party1.some(character => character.character === selectedCharacter.character)
-      if (isInParty1) {
-        return 'party1'
-      }
-
-      // party2에서 찾기
-      const isInParty2 = parties.party2.some(character => character.character === selectedCharacter.character)
-      if (isInParty2) {
-        return 'party2'
-      }
-
-      // 어느 party에도 속해있지 않으면 null 반환
-      return null
-    }
-
-    const partyIdx = findParty(selectedCharacter)
-
+    const partyIdx = findParty(targetCharacter, parties)
     if (partyIdx) {
-      await editPartyCharacter(scheduleId, partyIdx, dropdownSelectedCharacter, selectedCharacter.character)
+      await editPartyCharacter(scheduleId, partyIdx, dropdownSelectedCharacter, targetCharacter)
       window.location.reload()
     }
-  }
-
-  const getCharacters = async () => {
-    const data = await getCharacterList(selectedCharacter.character)
-    setCharList(data)
   }
 
   const handleDelete = async () => {
-    function findParty(selectedCharacter: Character) {
-      // party1에서 찾기
-      const isInParty1 = parties.party1.some(character => character.character === selectedCharacter.character)
-      if (isInParty1) {
-        return 'party1'
-      }
-
-      // party2에서 찾기
-      const isInParty2 = parties.party2.some(character => character.character === selectedCharacter.character)
-      if (isInParty2) {
-        return 'party2'
-      }
-
-      // 어느 party에도 속해있지 않으면 null 반환
-      return null
-    }
-
-    const partyIdx = findParty(selectedCharacter)
-
+    const partyIdx = findParty(targetCharacter, parties)
     if (partyIdx) {
-      await deleteUserFromRaid(scheduleId, partyIdx, selectedCharacter.character, userId)
+      await deleteUserFromRaid(scheduleId, partyIdx, targetCharacter, userId)
       window.location.reload()
     }
   }
 
+  const handleCharSelectForJoining = (character: string) => {
+    const data = { character, userId }
+    setDropdownSelectedCharacter(data)
+    setIsDropdownOpen(false)
+  }
+
+  const handleSaveJoin = async () => {
+    if (parties.party1.length <= 3) {
+      await addUserToRaid(scheduleId, 'party1', dropdownSelectedCharacter)
+    } else {
+      await addUserToRaid(scheduleId, 'party2', dropdownSelectedCharacter)
+    }
+    window.location.reload()
+  }
+
+  useEffect(() => {
+    if (isDropdownOpen && !charactersLoaded) {
+      const fetchCharacters = async () => {
+        if (isJoining) {
+          const { registeredBy } = (await getUserData(userId)) as User
+          const list = await getCharacterList(registeredBy)
+          setCharList(list)
+        } else {
+          const list = await getCharacterList(targetCharacter)
+          setCharList(list)
+        }
+        setCharactersLoaded(true)
+      }
+      fetchCharacters()
+    }
+  }, [isDropdownOpen, charactersLoaded, isJoining, targetCharacter, userId])
+
   return (
     <>
-      <div
-        className={isPopoverOpen ? 'absolute z-40 w-screen h-full bg-gray-900/30 top-0 left-0' : 'hidden'}
-        onClick={() => handlePopover()}
-      ></div>
-      <div
-        className={
-          isPopoverOpen
-            ? 'z-50 border fixed top-1/2 left-1/2 w-[20rem] bg-light dark:bg-dark transform -translate-x-1/2 -translate-y-1/2 shadow-xl rounded flex flex-col p-4 space-y-4'
-            : 'hidden'
-        }
-      >
-        <button
-          onClick={() => handleDropdown()}
-          className='w-full border p-2 rounded flex justify-between items-center hover:bg-secondary-gray/50 transition'
-        >
-          <div>{dropdownSelectedCharacter.character}</div>
-          <div>
+      {isPopoverOpen && (
+        <div className='absolute z-40 w-screen h-full bg-gray-900/30 top-0 left-0' onClick={handlePopover} />
+      )}
+      {isPopoverOpen && (
+        <div className='z-50 border fixed top-1/2 left-1/2 w-[20rem] bg-light dark:bg-dark transform -translate-x-1/2 -translate-y-1/2 shadow-xl rounded flex flex-col p-4 space-y-4'>
+          <button
+            onClick={handleDropdown}
+            className='w-full border p-2 rounded flex justify-between items-center hover:bg-secondary-gray/50 transition'
+          >
+            <div>{dropdownSelectedCharacter.character}</div>
             <FaSort />
-          </div>
-        </button>
-        <div
-          className={
-            isDropdownOpen
-              ? 'border rounded p-2 overflow-scroll space-y-2 absolute top-12 bg-light dark:bg-dark w-[18rem] h-[18rem]'
-              : 'hidden'
-          }
-        >
-          {charList.map((character, idx) => {
-            return (
+          </button>
+          {isDropdownOpen && (
+            <div className='border rounded p-2 overflow-scroll space-y-2 absolute top-12 bg-light dark:bg-dark w-[18rem] h-[18rem]'>
+              {charList.map((character, idx) => (
+                <button
+                  onClick={() =>
+                    isJoining
+                      ? handleCharSelectForJoining(character.CharacterName)
+                      : handleChaSelect(character.CharacterName)
+                  }
+                  key={idx}
+                  className='flex items-center hover:bg-secondary-gray/50 w-full p-1 rounded transition justify-between'
+                >
+                  <div>{character.CharacterName}</div>
+                  {dropdownSelectedCharacter.character === character.CharacterName && <FaCheck />}
+                </button>
+              ))}
+            </div>
+          )}
+          <div className='flex w-full gap-4 justify-end'>
+            {!isJoining && (
               <button
-                onClick={() => handleChaSelect(character.CharacterName)}
-                key={idx}
-                className='flex items-center hover:bg-secondary-gray/50 w-full p-1 rounded transition justify-between'
+                onClick={handleDelete}
+                className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-secondary-accent hover:bg-secondary-accent/50 text-xs md:text-sm font-semibold text-black'
               >
-                <div>{character.CharacterName}</div>
-                {dropdownSelectedCharacter.character === character.CharacterName ? <FaCheck /> : null}
+                삭제하기
               </button>
-            )
-          })}
+            )}
+            <button
+              onClick={isJoining ? handleSaveJoin : handleChaSelectBtn}
+              className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
+            >
+              {isJoining ? '참여하기' : '저장하기'}
+            </button>
+          </div>
         </div>
-        <div className='flex w-full gap-4 justify-end'>
-          <button
-            onClick={() => handleDelete()}
-            className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-secondary-accent hover:bg-secondary-accent/50 text-xs md:text-sm font-semibold text-black'
-          >
-            삭제하기
-          </button>
-          <button
-            onClick={() => handleChaSelectBtn()}
-            className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
-          >
-            저장하기
-          </button>
-        </div>
-      </div>
+      )}
     </>
   )
 }
