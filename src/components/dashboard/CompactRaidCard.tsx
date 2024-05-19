@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import DifficultyLabel from '../DifficultyLabel'
-import { LuClock3 } from 'react-icons/lu'
+import { LuCalendar } from 'react-icons/lu'
 import { SlPeople } from 'react-icons/sl'
 import dayjs from 'dayjs'
 
@@ -40,12 +40,12 @@ export default function CompactRaidCard({ boss, rank, leader, date, headCount }:
         </div>
         <div className='flex items-center gap-4'>
           <div className='flex items-center gap-2'>
-            <LuClock3 className='flex-none text-primary-gray' />
-            <span>{formattedDate}</span>
+            <LuCalendar className='flex-none text-primary-gray' />
+            <span className='pt-[1px]'>{formattedDate}</span>
           </div>
           <div className='flex items-center gap-2'>
             <SlPeople className='flex-none text-primary-gray' />
-            <span>{headCount}</span>
+            <span className='pt-[1px]'>{headCount}</span>
           </div>
         </div>
       </div>
