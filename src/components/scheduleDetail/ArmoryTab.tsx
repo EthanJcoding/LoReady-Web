@@ -24,7 +24,7 @@ export default function ArmoryTab({ ArmoryEquipment, ArmoryCard, ArmoryGem, Armo
   const isActiveTab = (t: string) => {
     if (t === tab) {
       return 'text-primary-accent font-bold text-2xl'
-    }
+    } else return ''
   }
 
   const handleTabBtn = (t: string) => {
@@ -51,14 +51,17 @@ export default function ArmoryTab({ ArmoryEquipment, ArmoryCard, ArmoryGem, Armo
             <button
               key={idx}
               onClick={() => handleTabBtn(t)}
-              className={isActiveTab(t) + ` font-semibold text-2xl hover:bg-secondary-gray/50 transition rounded px-1`}
+              className={
+                isActiveTab(t) +
+                ` font-semibold 2xl:text-2xl text-xl hover:bg-secondary-gray/50 transition rounded px-1`
+              }
             >
               {t}
             </button>
           )
         })}
       </div>
-      <div className='h-full'>{generateTabContent(tab)}</div>
+      {generateTabContent(tab)}
     </div>
   )
 }

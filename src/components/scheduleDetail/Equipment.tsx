@@ -39,28 +39,30 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
   }
 
   const getAbilityStone = (stoneObject: StoneObjectInterface) => {
-    const { Element_000, Element_001, Element_002 } = stoneObject
+    if (stoneObject) {
+      const { Element_000, Element_001, Element_002 } = stoneObject
 
-    const stones = [Element_000, Element_001, Element_002]
+      const stones = [Element_000, Element_001, Element_002]
 
-    const regexString = /<FONT COLOR='#(?:FE2E2E|FFFFAC)'>(.*?)<\/FONT>/
+      const regexString = /<FONT COLOR='#(?:FE2E2E|FFFFAC)'>(.*?)<\/FONT>/
 
-    const regexNumber = /\+(\d+)/
+      const regexNumber = /\+(\d+)/
 
-    return (
-      <div className='flex flex-wrap gap-2 '>
-        {stones.map((stone, idx) => {
-          const value = stone.contentStr.match(regexNumber)
-          const match = stone.contentStr.match(regexString)
+      return (
+        <div className='flex flex-wrap gap-2 '>
+          {stones.map((stone, idx) => {
+            const value = stone.contentStr.match(regexNumber)
+            const match = stone.contentStr.match(regexString)
 
-          return (
-            <div key={idx} className='text-xs font-medium border p-0.5 rounded'>
-              {match && match[1]} {value && value[0]}
-            </div>
-          )
-        })}
-      </div>
-    )
+            return (
+              <div key={idx} className='text-xs font-medium border p-0.5 rounded'>
+                {match && match[1]} {value && value[0]}
+              </div>
+            )
+          })}
+        </div>
+      )
+    } else return <div>돌이없어용</div>
   }
 
   const extractEnhanceValue = (str: string) => {
@@ -70,8 +72,8 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
   }
 
   return (
-    <div className='flex w-full justify-between gap-12'>
-      <div className='space-y-2'>
+    <div className='flex flex-wrap w-full h-full gap-4 justify-between'>
+      <div className='space-y-1.5'>
         {equipments.map((equipment, idx) => {
           const parsedObject = JSON.parse(equipment.Tooltip)
           const quality = parsedObject.Element_001.value.qualityValue
@@ -93,10 +95,10 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
 
           return (
             <div key={idx} className='flex gap-2'>
-              <div className={getEquipmentGrade(equipment.Grade) + ` rounded min-w-[38px] max-h-[38px] p-0.5`}>
-                <Image src={equipment.Icon} width={38} height={38} alt='장비 이미지' className='w-full' />
+              <div className={getEquipmentGrade(equipment.Grade) + ` rounded min-w-[36px] max-h-[36px] p-0.5`}>
+                <Image src={equipment.Icon} width={36} height={36} alt='장비 이미지' className='w-full' />
               </div>
-              <div className='flex flex-col '>
+              <div className='flex flex-col justify-between'>
                 <div className='text-sm truncate font-medium'>
                   {extractEnhanceValue(equipment.Name) + ' ' + equipment.Type}
                 </div>
@@ -110,7 +112,7 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
                   </div>
                 </div>
               </div>
-              <div className='flex flex-col '>
+              <div className='flex flex-col justify-between'>
                 {elixirArr.map((el, idx) => {
                   return (
                     <div key={idx} className='text-xs font-medium border px-1 rounded truncate'>
@@ -123,7 +125,7 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
           )
         })}
       </div>
-      <div className='space-y-2'>
+      <div className='space-y-1.5 md:w-1/2'>
         {accessories.map((equipment, idx) => {
           const parsedObject = JSON.parse(equipment.Tooltip)
 
@@ -137,11 +139,11 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
 
           return (
             <div key={idx} className='flex gap-2'>
-              <div className={getEquipmentGrade(equipment.Grade) + ` rounded min-w-[38px] max-h-[38px] p-0.5`}>
-                <Image src={equipment.Icon} width={42} height={42} alt='악세 이미지' className='w-full' />
+              <div className={getEquipmentGrade(equipment.Grade) + ` rounded min-w-[36px] max-h-[36px] p-0.5`}>
+                <Image src={equipment.Icon} width={36} height={36} alt='악세 이미지' className='w-full' />
               </div>
-              <div className='flex flex-col w-full justify-between'>
-                <div className='text-sm truncate font-medium'>{equipment.Type}</div>
+              <div className='flex flex-col justify-between '>
+                <div className='text-sm truncate font-medium '>{equipment.Type}</div>
                 <div className='flex items-center'>
                   <div
                     className={
@@ -152,7 +154,7 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
                   </div>
                 </div>
               </div>
-              <div className='flex flex-col gap-1'>
+              <div className='flex flex-col justify-between'>
                 {accessoryStat.map((stat, idx) => {
                   return (
                     <div key={idx} className='text-xs font-medium border px-1 rounded truncate min-w-[64px]'>
@@ -165,7 +167,7 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
           )
         })}
       </div>
-      <div className='space-y-2 '>
+      <div className='space-y-1.5'>
         {braceletAndStone.map((equipment, idx) => {
           const parsedObject = JSON.parse(equipment.Tooltip)
 
@@ -177,10 +179,10 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
 
             return (
               <div key={idx} className='flex gap-2'>
-                <div className={getEquipmentGrade(equipment.Grade) + ` rounded min-w-[42px] max-h-[42px]`}>
-                  <Image src={equipment.Icon} width={38} height={38} alt='장비 이미지' className='w-full' />
+                <div className={getEquipmentGrade(equipment.Grade) + ` rounded min-w-[36px] max-h-[36px] p-0.5`}>
+                  <Image src={equipment.Icon} width={36} height={36} alt='장비 이미지' className='w-full' />
                 </div>
-                <div className='flex flex-col justify-between'>
+                <div className='flex flex-col'>
                   <div className='text-sm truncate font-medium'>{equipment.Name}</div>
                   <div className='flex flex-wrap gap-2'>
                     {bracelet.map((el, idx) => {
@@ -198,8 +200,8 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
 
           return (
             <div key={idx} className='flex gap-2 '>
-              <div className={getEquipmentGrade(equipment.Grade) + ` rounded min-w-[42px] max-h-[42px]`}>
-                <Image src={equipment.Icon} width={42} height={42} alt='악세 이미지' className='w-full' />
+              <div className={getEquipmentGrade(equipment.Grade) + ` rounded min-w-[36px] max-h-[36px] p-0.5`}>
+                <Image src={equipment.Icon} width={36} height={36} alt='악세 이미지' className='w-full' />
               </div>
               <div className='flex flex-col justify-between'>
                 <div className='text-sm truncate font-medium'>{equipment.Type}</div>
