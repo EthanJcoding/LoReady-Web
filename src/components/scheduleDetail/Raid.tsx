@@ -8,9 +8,11 @@ import { useState } from 'react'
 interface Ownprops {
   parties: { [key: string]: Character[] }
   raidType: string
+  raidLeader: Character
+  characters: Character[]
 }
 
-export default function Raid({ parties, raidType }: Ownprops) {
+export default function Raid({ parties, raidType, raidLeader, characters }: Ownprops) {
   const defaultCharacter = parties.party1.length === 0 ? parties.party2[0] : parties.party1[0]
 
   const [selectedCharacter, setSelectedCharacter] = useState(defaultCharacter)
@@ -22,6 +24,8 @@ export default function Raid({ parties, raidType }: Ownprops) {
         setSelectedCharacter={setSelectedCharacter}
         selectedCharacter={selectedCharacter}
         raidType={raidType}
+        raidLeader={raidLeader}
+        characters={characters}
       />
       <CharacterDetail selectedCharacter={selectedCharacter} />
     </div>

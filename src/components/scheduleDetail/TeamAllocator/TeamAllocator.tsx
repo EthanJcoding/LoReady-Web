@@ -7,22 +7,29 @@ import { FaGear } from 'react-icons/fa6'
 import { savePartyData } from '@/api/firebase/savePartyData/savePartyData'
 import { useSession } from 'next-auth/react'
 import Popover from './Popover'
+import { Character } from '@/types/Schedule'
+import RaidLeaderDropdown from './RaidLeaderDropdown'
 
 interface Ownprops {
   parties: { [key: string]: Character[] }
   setSelectedCharacter: (character: Character) => void
   selectedCharacter: Character
   raidType: string
+  raidLeader: Character
+  characters: Character[]
 }
 
-interface Character {
-  userId: string
-  character: string
-}
-
-export default function TeamAllocator({ parties, setSelectedCharacter, selectedCharacter, raidType }: Ownprops) {
+export default function TeamAllocator({
+  parties,
+  setSelectedCharacter,
+  selectedCharacter,
+  raidType,
+  raidLeader,
+  characters
+}: Ownprops) {
   const [party1, setParty1] = useState(parties.party1)
   const [party2, setParty2] = useState(parties.party2)
+  const [frontRaidLeader, setFrontRaidLeader] = useState(raidLeader)
   const params = useParams<{ channelId: string; scheduleId: string }>()
   const { scheduleId } = params
   const { data: session } = useSession()
@@ -193,7 +200,7 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
   if (raidType === '8인레이드') {
     return (
       <>
-        <section className='flex flex-col border sm:w-1/3 w-full sm:h-full p-8 rounded-lg shadow-sm space-y-4 overflow-scroll'>
+        <section className='flex flex-col border sm:w-1/3 w-full sm:h-full p-8 rounded-lg shadow-sm space-y-4 '>
           <div className='w-full h-full space-y-2'>
             <div className='text-xl font-semibold'>1번 공대</div>
             {party1.map((member, idx) => {
@@ -238,8 +245,8 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
                   key={idx}
                   className={
                     isSelected(member.character)
-                      ? 'bg-secondary-gray/50 flex w-full border p-2 rounded border-primary-accent'
-                      : 'flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition'
+                      ? 'bg-secondary-gray/50 flex w-full border p-2 rounded border-primary-accent '
+                      : 'flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition '
                   }
                 >
                   <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full'>
@@ -268,6 +275,12 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
           </div>
 
           <div className='flex w-full h-full space-x-4 items-end justify-end'>
+            <RaidLeaderDropdown
+              scheduleId={scheduleId}
+              frontRaidLeader={frontRaidLeader}
+              setFrontRaidLeader={setFrontRaidLeader}
+              characters={characters}
+            />
             {isUserIdExist(userId) ? null : (
               <button
                 onClick={() => handleJoinParty()}
