@@ -192,6 +192,7 @@ export default function TeamAllocator({
           dropdownSelectedCharacter={dropdownSelectedCharacter}
           setDropdownSelectedCharacter={setDropdownSelectedCharacter}
           parties={parties}
+          scheduleId={scheduleId}
         />
       </>
     )
@@ -308,6 +309,7 @@ export default function TeamAllocator({
           dropdownSelectedCharacter={dropdownSelectedCharacter}
           setDropdownSelectedCharacter={setDropdownSelectedCharacter}
           parties={parties}
+          scheduleId={scheduleId}
         />
       </>
     )
