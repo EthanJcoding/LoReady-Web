@@ -17,6 +17,7 @@ interface OwnProps {
   parties: { [key: string]: Character[] }
   isJoining: boolean
   setIsJoining: (arg0: boolean) => void
+  scheduleId: string
 }
 
 const findParty = (targetCharacter: string, parties: { [key: string]: Character[] }) => {
@@ -37,14 +38,13 @@ export default function Popover({
   setDropdownSelectedCharacter,
   parties,
   isJoining,
-  setIsJoining
+  setIsJoining,
+  scheduleId
 }: OwnProps) {
-  const params = useParams<{ channelId: string; scheduleId: string }>()
-  const { scheduleId } = params
   const { data: session } = useSession()
+  const userId = session?.user.id
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [charList, setCharList] = useState<ChaListInterface[]>([])
-  const userId = session?.user.id
   const [charactersLoaded, setCharactersLoaded] = useState(false)
 
   const handlePopover = () => {
