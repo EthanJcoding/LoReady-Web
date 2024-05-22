@@ -1,5 +1,5 @@
-import { EquipmentInterface } from '@/types/EquipmentInterface'
-import { StoneObjectInterface } from '@/types/EquipmentInterface'
+import { EquipmentInterface } from '@/types/Equipments/equipments'
+import { StoneObjectInterface } from '@/types/Equipments/equipments'
 import { getBraceletAbility } from '@/utils/getBraceletAbility'
 import { getElixir } from '@/utils/getElixir'
 import Image from 'next/image'

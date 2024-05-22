@@ -1,4 +1,4 @@
-import { EquipmentInterface } from '@/types/EquipmentInterface'
+import { EquipmentInterface } from '@/types/Equipments/equipments'
 
 export const getEquipmentAndAccessories = (ArmoryEquipment: EquipmentInterface[]) => {
   const equipments = []

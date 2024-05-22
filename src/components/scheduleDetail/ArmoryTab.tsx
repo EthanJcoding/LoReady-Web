@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { CardsInterface } from '@/types/CardsInterface'
-import { EquipmentInterface } from '@/types/EquipmentInterface'
-import { GemsInterface } from '@/types/GemInterface'
+import { CardsInterface } from '@/types/Equipments/cards'
+import { EquipmentInterface } from '@/types/Equipments/equipments'
+import { GemsInterface } from '@/types/Equipments/gems'
 import Equipment from './Equipment'
 import Card from './Card'
 import Gem from './Gem'

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { CardsInterface } from '@/types/CardsInterface'
+import { CardsInterface } from '@/types/Equipments/cards'
 
 interface Ownprops {
   ArmoryCard: CardsInterface
