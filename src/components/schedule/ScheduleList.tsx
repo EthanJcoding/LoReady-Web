@@ -1,4 +1,4 @@
-import { ScheduleWithId } from '@/types/Schedule'
+import { ScheduleWithId } from '@/types/schedule'
 import CompactRaidCard from '../dashboard/CompactRaidCard'
 import TeamLists from './TeamLists'
 import { extractBossRank } from '@/utils/extractBossRank'

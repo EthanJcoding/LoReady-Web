@@ -1,6 +1,6 @@
 import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { firestore } from '../config'
-import { Character } from '@/types/Schedule'
+import { Character } from '@/types/schedule'
 
 interface characterData {
   userId: string
