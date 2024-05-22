@@ -1,7 +1,7 @@
 import { updateRaidLeader } from '@/api/firebase'
 import { Character } from '@/types/schedule'
 import { useState } from 'react'
-import { FaCheck, FaSpinner } from 'react-icons/fa'
+import { FaCheck } from 'react-icons/fa'
 
 interface Ownprops {
   scheduleId: string

@@ -9,6 +9,7 @@ import { useSession } from 'next-auth/react'
 import Popover from './Popover'
 import { Character } from '@/types/schedule'
 import RaidLeaderDropdown from './RaidLeaderDropdown'
+import { PiCrownSimpleFill } from 'react-icons/pi'
 
 interface Ownprops {
   parties: { [key: string]: Character[] }
@@ -158,8 +159,9 @@ export default function TeamAllocator({
                       : 'flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition'
                   }
                 >
-                  <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full'>
+                  <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full items-center'>
                     <div>{idx + 1}.</div>
+                    {frontRaidLeader.character === member.character && <PiCrownSimpleFill color='#FCD34D' />}
                     <div className='truncate'>{member.character}</div>
                   </button>
                   <div className='flex space-x-2'>
@@ -174,6 +176,12 @@ export default function TeamAllocator({
             })}
           </div>
           <div className='flex w-full h-full space-x-4 items-end justify-end'>
+            <RaidLeaderDropdown
+              scheduleId={scheduleId}
+              frontRaidLeader={frontRaidLeader}
+              setFrontRaidLeader={setFrontRaidLeader}
+              characters={characters}
+            />
             <button
               onClick={() => handleCharacterSetting(selectedCharacter)}
               className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
@@ -214,8 +222,9 @@ export default function TeamAllocator({
                       : 'flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition'
                   }
                 >
-                  <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full '>
+                  <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full items-center'>
                     <div>{idx + 1}.</div>
+                    {frontRaidLeader.character === member.character && <PiCrownSimpleFill color='#FCD34D' />}
                     <div className=''>{member.character}</div>
                   </button>
                   <div className='flex space-x-2'>
@@ -252,6 +261,7 @@ export default function TeamAllocator({
                 >
                   <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full'>
                     <div>{idx + 1}.</div>
+                    {frontRaidLeader.character === member.character && <PiCrownSimpleFill color='#FCD34D' />}
                     <div className='truncate'>{member.character}</div>
                   </button>
                   <div className='flex space-x-2'>
