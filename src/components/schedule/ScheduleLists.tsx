@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import ScheduleList from './ScheduleList'
 import { getChannelSchedule } from '@/api/firebase'
-import { ScheduleWithId } from '@/types/Schedule'
+import { ScheduleWithId } from '@/types/schedule'
 import { DocumentData } from 'firebase/firestore'
 import { useToggleStore } from '@/stores/toggle'
 import { useSession } from 'next-auth/react'

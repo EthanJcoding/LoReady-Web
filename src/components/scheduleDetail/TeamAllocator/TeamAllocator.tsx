@@ -7,7 +7,7 @@ import { FaGear } from 'react-icons/fa6'
 import { savePartyData } from '@/api/firebase/savePartyData/savePartyData'
 import { useSession } from 'next-auth/react'
 import Popover from './Popover'
-import { Character } from '@/types/Schedule'
+import { Character } from '@/types/schedule'
 import RaidLeaderDropdown from './RaidLeaderDropdown'
 
 interface Ownprops {

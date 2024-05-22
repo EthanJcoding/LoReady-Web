@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import RaidList from './RaidList'
 import { DocumentData } from 'firebase/firestore'
-import { ScheduleWithId } from '@/types/Schedule'
+import { ScheduleWithId } from '@/types/schedule'
 import { getChannelSchedule } from '@/api/firebase'
 
 interface Ownprops {

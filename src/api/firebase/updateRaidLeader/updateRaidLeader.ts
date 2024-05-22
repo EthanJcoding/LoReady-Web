@@ -1,6 +1,6 @@
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore'
 import { firestore } from '../config'
-import { Character } from '@/types/Schedule'
+import { Character } from '@/types/schedule'
 
 async function updateRaidLeader(scheduleId: string, newRaidLeader: Character) {
   const scheduleRef = doc(firestore, 'schedules', scheduleId)

@@ -1,5 +1,5 @@
 import { updateRaidLeader } from '@/api/firebase'
-import { Character } from '@/types/Schedule'
+import { Character } from '@/types/schedule'
 import { useState } from 'react'
 import { FaCheck, FaSpinner } from 'react-icons/fa'
 
