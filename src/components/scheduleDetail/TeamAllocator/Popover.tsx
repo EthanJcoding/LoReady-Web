@@ -1,6 +1,6 @@
 import { Character } from '@/types/raid'
 import { getCharacterList } from '@/api/lostark/getCharacterList'
-import { ChaListInterface } from '@/types/ChaListInterface'
+import { ChaListInterface } from '@/types/Equipments/characterList'
 import { FaSort, FaCheck } from 'react-icons/fa'
 import { addUserToRaid, deleteUserFromRaid, editPartyCharacter, getUserData } from '@/api/firebase'
 import { useParams } from 'next/navigation'

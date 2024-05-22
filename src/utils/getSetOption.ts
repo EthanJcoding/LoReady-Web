@@ -1,4 +1,4 @@
-import { EquipmentInterface } from '@/types/EquipmentInterface'
+import { EquipmentInterface } from '@/types/Equipments/equipments'
 
 interface Result {
   [key: string]: number[]

@@ -1,4 +1,4 @@
-import { EquipmentInterface } from '@/types/EquipmentInterface'
+import { EquipmentInterface } from '@/types/Equipments/equipments'
 
 export const getAccStatSum = (accessories: EquipmentInterface[]) => {
   let sum = 0

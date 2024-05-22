@@ -1,6 +1,6 @@
-import { CardsInterface } from '@/types/CardsInterface'
-import { EngravingInterface } from '@/types/EngravingInterface'
-import { GemsInterface } from '@/types/GemInterface'
+import { CardsInterface } from '@/types/Equipments/cards'
+import { EngravingInterface } from '@/types/Equipments/engravings'
+import { GemsInterface } from '@/types/Equipments/gems'
 
 interface Ownprops {
   ArmoryCard: CardsInterface
