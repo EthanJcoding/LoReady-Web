@@ -1,4 +1,4 @@
-import { ProfileInterface } from '@/types/ProfileInterface'
+import { ProfileInterface } from '@/types/gameProfile'
 
 interface Ownprops {
   ArmoryProfile: ProfileInterface

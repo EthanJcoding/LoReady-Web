@@ -1,5 +1,5 @@
 import { EquipmentInterface } from '@/types/Equipments/equipments'
-import { ProfileInterface } from '@/types/ProfileInterface'
+import { ProfileInterface } from '@/types/gameProfile'
 import Image from 'next/image'
 import EquipmentSummary from './EquipmentSummary'
 import { CardsInterface } from '@/types/Equipments/cards'
