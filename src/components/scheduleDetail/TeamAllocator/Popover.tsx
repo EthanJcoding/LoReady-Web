@@ -1,12 +1,11 @@
 import { Character } from '@/types/raid'
 import { getCharacterList } from '@/api/lostark/getCharacterList'
-import { ChaListInterface } from '@/types/Equipments/characterList'
+import { ChaListInterface } from '@/types/characterList'
 import { FaSort, FaCheck } from 'react-icons/fa'
 import { addUserToRaid, deleteUserFromRaid, editPartyCharacter, getUserData } from '@/api/firebase'
-import { useParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { useState, useEffect } from 'react'
-import { User } from '@/types/User'
+import { User } from '@/types/users'
 
 interface OwnProps {
   targetCharacter: string
