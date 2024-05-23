@@ -24,15 +24,23 @@ export default function ScheduleList({ schedule }: Ownprops) {
           date={schedule.raidDate}
           headCount={`${participant} / ${capacity}`}
         />
-        <div className='h-full grid grid-cols-2 border-t border-inherit text-dark'>
-          <div className='flex flex-col border-r border-inherit bg-pink-50'>
-            <span className='px-2 py-1 text-center font-semibold bg-pink-100'>Team 1</span>
-            <TeamLists members={schedule.parties.party1} capacity={capacity} />
+        <div
+          className={`h-full grid ${
+            capacity === '4' ? 'grid-cols-1' : 'grid-cols-2'
+          } border-t border-inherit text-dark`}
+        >
+          <div className={`flex flex-col border-inherit bg-blue-50 ${capacity === '4' ? 'border-none' : 'border-r'}`}>
+            <span className='px-2 py-1 text-center font-semibold bg-blue-100'>
+              {capacity === '4' ? 'Party' : '1 Party'}
+            </span>
+            <TeamLists members={schedule.parties.party1} />
           </div>
-          <div className='flex flex-col bg-blue-50'>
-            <span className='px-2 py-1 text-center font-semibold bg-blue-100'>Team 2</span>
-            <TeamLists members={schedule.parties.party2} capacity={capacity} />
-          </div>
+          {capacity === '8' && (
+            <div className='flex flex-col bg-pink-50'>
+              <span className='px-2 py-1 text-center font-semibold bg-pink-100'>2 Party</span>
+              <TeamLists members={schedule.parties.party2} />
+            </div>
+          )}
         </div>
       </Link>
     </li>

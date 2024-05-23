@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import DifficultyLabel from '../DifficultyLabel'
-import { LuClock3 } from 'react-icons/lu'
+import { LuCalendar } from 'react-icons/lu'
 import { SlPeople } from 'react-icons/sl'
+import dayjs from 'dayjs'
 
 interface Ownprops {
   boss: string
@@ -12,6 +13,8 @@ interface Ownprops {
 }
 
 export default function CompactRaidCard({ boss, rank, leader, date, headCount }: Ownprops) {
+  const formattedDate = dayjs(date).format('YYYY.MM.DD HH:mm')
+
   return (
     <div className='relative flex bg-white text-dark p-3'>
       <div className='absolute w-full h-full inset-0 clip-path-polygon overflow-hidden'>
@@ -37,12 +40,12 @@ export default function CompactRaidCard({ boss, rank, leader, date, headCount }:
         </div>
         <div className='flex items-center gap-4'>
           <div className='flex items-center gap-2'>
-            <LuClock3 className='flex-none text-primary-gray' />
-            <span>{date}</span>
+            <LuCalendar className='flex-none text-primary-gray' />
+            <span className='pt-[1px]'>{formattedDate}</span>
           </div>
           <div className='flex items-center gap-2'>
             <SlPeople className='flex-none text-primary-gray' />
-            <span>{headCount}</span>
+            <span className='pt-[1px]'>{headCount}</span>
           </div>
         </div>
       </div>

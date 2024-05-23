@@ -2,6 +2,8 @@ import ServerLists from './ServerLists'
 import ThemeButton from './ThemeButton'
 import { MdEmail } from 'react-icons/md'
 import { BsHash } from 'react-icons/bs'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function SideBar() {
   return (
@@ -9,9 +11,16 @@ export default function SideBar() {
       <header className='flex items-center p-7'>
         <div className='flex flex-col w-full space-y-8'>
           <div className='flex w-full justify-between'>
-            <a className='text-2xl text-blue-700' href='/'>
-              LoReady
-            </a>
+            <Link className='w-28 pt-0.5' href='/'>
+              <Image
+                className='w-full h-full'
+                src='/images/logo.svg'
+                alt='로레디 로고'
+                width={100}
+                height={50}
+                priority
+              />
+            </Link>
             <div className='flex items-center'>
               <ThemeButton />
             </div>
