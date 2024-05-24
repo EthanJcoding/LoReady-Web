@@ -17,6 +17,8 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
         return 'bg-gradient-to-br from-[#3d3325] to-[#dcc999]'
       case '유물':
         return 'bg-gradient-to-br from-[#341a09] to-[#a24006]'
+      case '에스더':
+        return 'bg-gradient-to-br from-[#0c2e2c] to-[#2faba8]'
       default:
         return ''
     }
@@ -78,13 +80,42 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
           const parsedObject = JSON.parse(equipment.Tooltip)
           const quality = parsedObject.Element_001.value.qualityValue
           const elixirArr: string[] = []
+          const indentStringGroup = []
+
+          for (const key in parsedObject) {
+            if (parsedObject[key].type === 'IndentStringGroup') {
+              indentStringGroup.push(parsedObject[key].value)
+            }
+            if (parsedObject[key].type === 'SingleTextBox') {
+              if (parsedObject[key].value.includes('[상급 재련]')) {
+                indentStringGroup.push(parsedObject[key])
+              }
+            }
+          }
+
+          if (idx === 5) {
+            console.log(indentStringGroup)
+          }
 
           if (equipment.Type !== '무기') {
             // only 엘릭서
             let elixirJson = parsedObject.Element_008.value.Element_000?.contentStr
+            // console.log(Object.keys(parsedObject).length, equipment.Type)
+
+            // 초월 + 상재 + 엘릭서 경우의 수
+            if (Object.keys(parsedObject).length === 17 && (equipment.Type === '투구' || equipment.Type === '장갑')) {
+              elixirJson = parsedObject.Element_009.value.Element_000.contentStr
+            }
+
+            if (
+              Object.keys(parsedObject).length === 16 &&
+              (equipment.Type === '상의' || equipment.Type === '하의' || equipment.Type === '어깨')
+            ) {
+              elixirJson = parsedObject.Element_009.value.Element_000.contentStr
+            }
 
             // parsedObject의 길이가 다른 경우 (초월 + 상재 때문에 Element의 수가 더 많은 경우)
-            if (elixirJson === undefined) {
+            else if (elixirJson === undefined) {
               elixirJson = parsedObject.Element_010.value.Element_000.contentStr
             }
 
@@ -93,9 +124,11 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
             })
           }
 
+          // console.log(equipment.Type, parsedObject)
+
           return (
             <div key={idx} className='flex gap-2'>
-              <div className={getEquipmentGrade(equipment.Grade) + ` rounded min-w-[36px] max-h-[36px] p-0.5`}>
+              <div className={getEquipmentGrade(equipment.Grade) + ` rounded min-w-[36px] max-h-[36px] `}>
                 <Image src={equipment.Icon} width={36} height={36} alt='장비 이미지' className='w-full' />
               </div>
               <div className='flex flex-col justify-between'>
