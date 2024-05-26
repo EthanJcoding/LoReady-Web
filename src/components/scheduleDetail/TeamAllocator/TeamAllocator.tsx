@@ -259,7 +259,7 @@ export default function TeamAllocator({
                       : 'flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition '
                   }
                 >
-                  <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full'>
+                  <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full items-center'>
                     <div>{idx + 1}.</div>
                     {frontRaidLeader.character === member.character && <PiCrownSimpleFill color='#FCD34D' />}
                     <div className='truncate'>{member.character}</div>
