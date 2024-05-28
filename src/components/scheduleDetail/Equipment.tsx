@@ -140,11 +140,11 @@ const EquipmentDetails = ({ equipment }: { equipment: EquipmentInterface }) => {
       <EquipmentIcon grade={equipment.Grade} iconSrc={equipment.Icon} />
       <div className='flex flex-col justify-between w-full'>
         <div className='text-sm truncate font-medium flex w-full gap-2 items-center'>
-          <div className={equipment.Grade === '에스더' ? 'text-[#3CF2E6]' : ''}>
+          <div className={equipment.Grade === '에스더' ? 'dark:text-[#3CF2E6] text-[#1AB9B6]' : ''}>
             {extractEnhanceValue(equipment.Name) + ' ' + equipment.Type}
           </div>
           {상급재련 && <div className='text-[#d95959] underline underline-offset-2'>{'x' + 상급재련}</div>}
-          {엘라 && <div className='text-[#3CF2E6] text-xs font-medium'>{엘라}</div>}
+          {엘라 && <div className='dark:text-[#3CF2E6] text-[#1AB9B6] text-xs font-medium'>{엘라}</div>}
         </div>
         <div className='flex items-center gap-2'>
           <div
@@ -152,7 +152,7 @@ const EquipmentDetails = ({ equipment }: { equipment: EquipmentInterface }) => {
           >
             {quality}
           </div>
-          {초월 && <div className='text-[#EDDAB3] text-xs'>초월 Lv.{초월}</div>}
+          {초월 && <div className='text-[#997B3B] dark:text-[#EDDAB3] text-xs '>초월 Lv.{초월}</div>}
         </div>
       </div>
       <div className='flex flex-col justify-between'>
