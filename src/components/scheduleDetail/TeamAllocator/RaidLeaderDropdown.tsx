@@ -28,7 +28,7 @@ export default function RaidLeaderDropdown({ scheduleId, frontRaidLeader, setFro
     <div className='relative inline-block'>
       <button
         onClick={handleRaidLeaderDropdownOpen}
-        className='w-[12rem] truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
+        className='max-w-[12rem] truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
       >
         공대장: {frontRaidLeader.character}
       </button>
