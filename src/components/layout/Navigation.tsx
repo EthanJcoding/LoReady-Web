@@ -6,7 +6,7 @@ import { useState } from 'react'
 import DeleteModal from '../scheduleDetail/ScheduleDelete/DeleteModal'
 
 export default function Navigation() {
-  const { channelId } = useParams()
+  const { channelId, scheduleId } = useParams()
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -28,8 +28,14 @@ export default function Navigation() {
           <Link href={`/${channelId}/schedule`}>레이드 일정</Link>
         </li>
       </ul>
-      <ScheduleDeleteBtn setIsOpen={setIsOpen} />
-      {isOpen && <DeleteModal setIsOpen={setIsOpen} />}
+      {pathname.includes(scheduleId as string) && (
+        <>
+          <ScheduleDeleteBtn setIsOpen={setIsOpen} />
+          {isOpen && (
+            <DeleteModal setIsOpen={setIsOpen} channelId={channelId as string} scheduleId={scheduleId as string} />
+          )}
+        </>
+      )}
     </nav>
   )
 }

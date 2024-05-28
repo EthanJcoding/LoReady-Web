@@ -7,6 +7,7 @@ import { editPartyCharacter } from './editPartyCharacter/editPartyCharacter'
 import { deleteUserFromRaid } from './deleteUserFromRaid/deleteUserFromRaid'
 import { addUserToRaid } from './addUserToRaid/addUserToRaid'
 import { updateRaidLeader } from './updateRaidLeader/updateRaidLeader'
+import { deleteRaid } from './deleteRaid/deleteRaid'
 
 export {
   getChannelData,
@@ -17,5 +18,6 @@ export {
   editPartyCharacter,
   deleteUserFromRaid,
   addUserToRaid,
-  updateRaidLeader
+  updateRaidLeader,
+  deleteRaid
 }

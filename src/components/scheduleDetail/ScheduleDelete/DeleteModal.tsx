@@ -1,8 +1,21 @@
+import { deleteRaid } from '@/api/firebase'
+import { useRouter } from 'next/navigation'
+
 interface Ownprops {
   setIsOpen: (arg0: boolean) => void
+  channelId: string
+  scheduleId: string
 }
 
-export default function DeleteModal({ setIsOpen }: Ownprops) {
+export default function DeleteModal({ setIsOpen, channelId, scheduleId }: Ownprops) {
+  const router = useRouter()
+
+  const handleDeleteBtn = async () => {
+    await deleteRaid(channelId, scheduleId)
+    setIsOpen(false)
+    router.push(`http://localhost:3000/${channelId}/dashboard`)
+  }
+
   return (
     <>
       <div className='absolute z-40 w-screen h-full bg-gray-900/30 top-0 left-0' onClick={() => setIsOpen(false)} />
@@ -15,7 +28,10 @@ export default function DeleteModal({ setIsOpen }: Ownprops) {
           >
             취소
           </button>
-          <button className='truncate px-2 py-1 transition rounded border bg-secondary-accent hover:bg-secondary-accent/80 text-sm font-medium text-dark'>
+          <button
+            onClick={() => handleDeleteBtn()}
+            className='truncate px-2 py-1 transition rounded border bg-secondary-accent hover:bg-secondary-accent/80 text-sm font-medium text-dark'
+          >
             삭제하기
           </button>
         </div>
