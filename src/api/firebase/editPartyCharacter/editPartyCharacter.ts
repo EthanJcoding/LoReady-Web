@@ -31,7 +31,17 @@ async function editPartyCharacter(
 
       characters.push(pushingData)
 
-      await updateDoc(scheduleRef, { parties, updated: serverTimestamp(), characters })
+      const raidLeader = scheduleData.raidLeader.character
+
+      if (raidLeader === removingCharacterName) {
+        const newRaidLeader = pushingData
+
+        await updateDoc(scheduleRef, { parties, updated: serverTimestamp(), characters, raidLeader: newRaidLeader })
+      } else {
+        await updateDoc(scheduleRef, { parties, updated: serverTimestamp(), characters })
+      }
+
+      // 스케쥴에 인원이 한명이고 그 인원이 본인의 캐릭터를 수정하면 공대장도 이에 따라서 업데이트
     } else {
       return null
     }
