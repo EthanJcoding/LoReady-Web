@@ -182,12 +182,14 @@ export default function TeamAllocator({
               setFrontRaidLeader={setFrontRaidLeader}
               characters={characters}
             />
-            <button
-              onClick={() => handleCharacterSetting(selectedCharacter)}
-              className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
-            >
-              {isUserIdExist(userId) ? '교체하기' : '참여하기'}
-            </button>
+            {isUserIdExist(userId) ? null : (
+              <button
+                onClick={() => handleJoinParty()}
+                className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
+              >
+                참여하기
+              </button>
+            )}
           </div>
         </section>
 
