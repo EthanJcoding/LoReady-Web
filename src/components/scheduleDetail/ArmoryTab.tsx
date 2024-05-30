@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react'
 import { CardsInterface } from '@/types/Equipments/cards'
 import { EquipmentInterface } from '@/types/Equipments/equipments'
