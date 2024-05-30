@@ -3,6 +3,7 @@ import localFont from 'next/font/local'
 import './globals.css'
 import SessionProvider from '@/components/providers/SessionProvider'
 import { getServerSession } from 'next-auth'
+import Toast from '@/components/Toast'
 
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
@@ -19,10 +20,12 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const session = await getServerSession()
+
   return (
     <html lang='ko' className='max-sm:text-sm'>
-      <body className={`${pretendard.variable} font-pretendard text-[#272727] font-normal`}>
+      <body className={`relative ${pretendard.variable} font-pretendard text-[#272727] font-normal`}>
         <SessionProvider session={session}>{children}</SessionProvider>
+        <Toast />
       </body>
     </html>
   )
