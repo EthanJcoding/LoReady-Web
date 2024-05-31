@@ -25,6 +25,16 @@ const config: Config = {
         'secondary-blue': '#edfcff',
         'primary-accent': '#00a4e8',
         'secondary-accent': '#ffd2d6'
+      },
+      keyframes: {
+        upward: {
+          '0%': { top: '4rem' },
+          '50%': { top: '1rem' },
+          '100%': { top: '2.5rem' }
+        }
+      },
+      animation: {
+        toast: 'upward .3s ease-in-out'
       }
     }
   },
