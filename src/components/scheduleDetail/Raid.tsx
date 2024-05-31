@@ -18,7 +18,7 @@ export default function Raid({ parties, raidType, raidLeader, characters }: Ownp
   const [selectedCharacter, setSelectedCharacter] = useState(defaultCharacter)
 
   return (
-    <div className='flex-1 flex flex-col gap-4 sm:flex-row overflow-scroll'>
+    <>
       <TeamAllocator
         parties={parties}
         setSelectedCharacter={setSelectedCharacter}
@@ -28,6 +28,6 @@ export default function Raid({ parties, raidType, raidLeader, characters }: Ownp
         characters={characters}
       />
       <CharacterDetail selectedCharacter={selectedCharacter} />
-    </div>
+    </>
   )
 }

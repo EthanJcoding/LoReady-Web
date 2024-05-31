@@ -73,8 +73,8 @@ export default async function ScheduleDetail({ params }: Ownprops) {
   const parties = await fetchCharacterData(scheduleData)
 
   return (
-    <>
+    <div className='flex-1 flex flex-col gap-4 sm:flex-row overflow-scroll'>
       <Raid parties={parties} raidType={raidType} raidLeader={raidLeader} characters={characters} />
-    </>
+    </div>
   )
 }

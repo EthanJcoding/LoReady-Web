@@ -10,8 +10,8 @@ export default function Profile() {
     <div className='flex gap-4 justify-center'>
       <Image
         src={session?.user.image}
-        width={10}
-        height={10}
+        width={150}
+        height={150}
         className='w-10 h-10 rounded-full'
         alt='user profile image'
       />

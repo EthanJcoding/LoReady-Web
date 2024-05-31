@@ -27,6 +27,13 @@ export default function Navigation() {
         >
           <Link href={`/${channelId}/schedule`}>레이드 일정</Link>
         </li>
+        <li
+          className={`px-4 py-1 border-dark dark:border-light  ${
+            pathname.includes('members') ? 'border-b-2 font-bold' : 'font-medium'
+          }`}
+        >
+          <Link href={`/${channelId}/members`}>채널 맴버</Link>
+        </li>
       </ul>
       {pathname.includes(scheduleId as string) && (
         <>

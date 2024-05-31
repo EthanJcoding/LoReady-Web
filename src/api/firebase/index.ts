@@ -8,6 +8,7 @@ import { deleteUserFromRaid } from './deleteUserFromRaid/deleteUserFromRaid'
 import { addUserToRaid } from './addUserToRaid/addUserToRaid'
 import { updateRaidLeader } from './updateRaidLeader/updateRaidLeader'
 import { deleteRaid } from './deleteRaid/deleteRaid'
+import { updateRegisteredChar } from './updateRegisteredChar/updateRegisteredChar'
 
 export {
   getChannelData,
@@ -19,5 +20,6 @@ export {
   deleteUserFromRaid,
   addUserToRaid,
   updateRaidLeader,
-  deleteRaid
+  deleteRaid,
+  updateRegisteredChar
 }

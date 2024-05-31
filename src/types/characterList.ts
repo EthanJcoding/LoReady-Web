@@ -5,4 +5,9 @@ export interface ChaListInterface {
   ItemAvgLevel: string
   ItemMaxLevel: string
   ServerName: string
+  CharacterImage: string
+  ExpeditionLevel?: number
+  TownName: string
+  GuildName: string
+  Title: string
 }
