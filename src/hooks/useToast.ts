@@ -1,17 +1,31 @@
 import { useToastStore } from '@/stores/toast'
+import { useEffect, useRef } from 'react'
 
 export const useToast = () => {
-  const { isShow, setIsShow, setMessage } = useToastStore(state => state)
+  const { setIsShow, setMessage, setToastElKey } = useToastStore(state => state)
+  const timer = useRef<NodeJS.Timeout | null>(null)
 
   const toast = (message: string) => {
-    // if (isShow) return
+    if (timer.current) clearTimeout(timer.current)
 
     setIsShow(true)
     setMessage(message)
-    setTimeout(() => {
+    setToastElKey()
+
+    timer.current = setTimeout(() => {
       setIsShow(false)
+      timer.current = null
     }, 3000)
   }
+
+  useEffect(() => {
+    return () => {
+      if (timer.current) {
+        clearTimeout(timer.current)
+        setIsShow(false)
+      }
+    }
+  }, [])
 
   return toast
 }
