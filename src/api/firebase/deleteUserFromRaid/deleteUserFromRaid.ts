@@ -26,7 +26,23 @@ async function deleteUserFromRaid(
 
       const participants = [...scheduleData.participants].filter(userId => userId !== selectedUserId)
 
-      await updateDoc(scheduleRef, { parties, updated: serverTimestamp(), characters, participants })
+      if (removingCharacterName === scheduleData.raidLeader.character) {
+        const newRaidLeader = characters[0]
+        await updateDoc(scheduleRef, {
+          parties,
+          updated: serverTimestamp(),
+          characters,
+          participants,
+          raidLeader: newRaidLeader
+        })
+      } else {
+        await updateDoc(scheduleRef, {
+          parties,
+          updated: serverTimestamp(),
+          characters,
+          participants
+        })
+      }
     } else {
       return null
     }

@@ -1,4 +1,4 @@
-import { EngravingInterface } from '@/types/EngravingInterface'
+import { EngravingInterface } from '@/types/Equipments/engravings'
 import Image from 'next/image'
 
 interface Ownprops {

@@ -1,5 +1,3 @@
-'use client'
-
 import { Character } from '@/types/raid'
 import CharacterSummary from './CharacterSummary'
 import ArmoryTab from './ArmoryTab'

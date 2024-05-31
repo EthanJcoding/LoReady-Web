@@ -6,29 +6,38 @@ import { FaArrowUp, FaArrowDown, FaRegCaretSquareDown, FaRegCaretSquareUp } from
 import { FaGear } from 'react-icons/fa6'
 import { savePartyData } from '@/api/firebase/savePartyData/savePartyData'
 import { useSession } from 'next-auth/react'
-import { ChaListInterface } from '@/types/ChaListInterface'
 import Popover from './Popover'
+import { Character } from '@/types/schedule'
+import RaidLeaderDropdown from './RaidLeaderDropdown'
+import { PiCrownSimpleFill } from 'react-icons/pi'
 
 interface Ownprops {
   parties: { [key: string]: Character[] }
   setSelectedCharacter: (character: Character) => void
   selectedCharacter: Character
   raidType: string
+  raidLeader: Character
+  characters: Character[]
 }
 
-interface Character {
-  userId: string
-  character: string
-}
-
-export default function TeamAllocator({ parties, setSelectedCharacter, selectedCharacter, raidType }: Ownprops) {
+export default function TeamAllocator({
+  parties,
+  setSelectedCharacter,
+  selectedCharacter,
+  raidType,
+  raidLeader,
+  characters
+}: Ownprops) {
   const [party1, setParty1] = useState(parties.party1)
   const [party2, setParty2] = useState(parties.party2)
+  const [frontRaidLeader, setFrontRaidLeader] = useState(raidLeader)
   const params = useParams<{ channelId: string; scheduleId: string }>()
   const { scheduleId } = params
   const { data: session } = useSession()
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [dropdownSelectedCharacter, setDropdownSelectedCharacter] = useState(selectedCharacter)
+  const userId = session?.user.id
+  const [isJoining, setIsJoining] = useState(false)
 
   const moveMemberUp = (partyIndex: number, memberIndex: number) => {
     if (partyIndex === 0 && memberIndex > 0) {
@@ -99,7 +108,7 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
   }
 
   const isUserCharacter = (character: Character) => {
-    return session?.user.id === character.userId ? true : false
+    return userId === character.userId ? true : false
   }
 
   const handleSave = () => {
@@ -117,13 +126,21 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
 
   // 주어진 userId가 데이터에 있는지 확인하는 함수
   const isUserIdExist = (userId: string) => {
-    return party1.some(member => member.userId === userId) || party2.some(member => member.userId === userId)
+    return (
+      parties.party1.some(member => member.userId === userId) || parties.party2.some(member => member.userId === userId)
+    )
   }
 
   const handleCharacterSetting = (character: Character) => {
     setSelectedCharacter(character)
     setDropdownSelectedCharacter(character)
     setIsPopoverOpen(!isPopoverOpen)
+  }
+
+  const handleJoinParty = async () => {
+    setDropdownSelectedCharacter({ character: '캐릭터를 선택해주세요', userId: '0' })
+    setIsPopoverOpen(true)
+    setIsJoining(true)
   }
 
   if (raidType === '4인레이드') {
@@ -142,8 +159,9 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
                       : 'flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition'
                   }
                 >
-                  <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full'>
+                  <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full items-center'>
                     <div>{idx + 1}.</div>
+                    {frontRaidLeader.character === member.character && <PiCrownSimpleFill color='#FCD34D' />}
                     <div className='truncate'>{member.character}</div>
                   </button>
                   <div className='flex space-x-2'>
@@ -158,22 +176,33 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
             })}
           </div>
           <div className='flex w-full h-full space-x-4 items-end justify-end'>
-            <button
-              onClick={() => handleCharacterSetting(selectedCharacter)}
-              className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
-            >
-              {isUserIdExist(session?.user.id) ? '교체하기' : '참여하기'}
-            </button>
+            <RaidLeaderDropdown
+              scheduleId={scheduleId}
+              frontRaidLeader={frontRaidLeader}
+              setFrontRaidLeader={setFrontRaidLeader}
+              characters={characters}
+            />
+            {isUserIdExist(userId) ? null : (
+              <button
+                onClick={() => handleJoinParty()}
+                className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
+              >
+                참여하기
+              </button>
+            )}
           </div>
         </section>
 
         <Popover
-          selectedCharacter={selectedCharacter}
+          isJoining={isJoining}
+          setIsJoining={setIsJoining}
+          targetCharacter={selectedCharacter.character}
           isPopoverOpen={isPopoverOpen}
           setIsPopoverOpen={setIsPopoverOpen}
           dropdownSelectedCharacter={dropdownSelectedCharacter}
           setDropdownSelectedCharacter={setDropdownSelectedCharacter}
           parties={parties}
+          scheduleId={scheduleId}
         />
       </>
     )
@@ -182,7 +211,7 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
   if (raidType === '8인레이드') {
     return (
       <>
-        <section className='flex flex-col border sm:w-1/3 w-full sm:h-full p-8 rounded-lg shadow-sm space-y-4 overflow-scroll'>
+        <section className='flex flex-col border sm:w-1/3 w-full sm:h-full p-8 rounded-lg shadow-sm space-y-4 '>
           <div className='w-full h-full space-y-2'>
             <div className='text-xl font-semibold'>1번 공대</div>
             {party1.map((member, idx) => {
@@ -195,8 +224,9 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
                       : 'flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition'
                   }
                 >
-                  <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full '>
+                  <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full items-center'>
                     <div>{idx + 1}.</div>
+                    {frontRaidLeader.character === member.character && <PiCrownSimpleFill color='#FCD34D' />}
                     <div className=''>{member.character}</div>
                   </button>
                   <div className='flex space-x-2'>
@@ -227,12 +257,13 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
                   key={idx}
                   className={
                     isSelected(member.character)
-                      ? 'bg-secondary-gray/50 flex w-full border p-2 rounded border-primary-accent'
-                      : 'flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition'
+                      ? 'bg-secondary-gray/50 flex w-full border p-2 rounded border-primary-accent '
+                      : 'flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition '
                   }
                 >
-                  <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full'>
+                  <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full items-center'>
                     <div>{idx + 1}.</div>
+                    {frontRaidLeader.character === member.character && <PiCrownSimpleFill color='#FCD34D' />}
                     <div className='truncate'>{member.character}</div>
                   </button>
                   <div className='flex space-x-2'>
@@ -257,8 +288,17 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
           </div>
 
           <div className='flex w-full h-full space-x-4 items-end justify-end'>
-            {isUserIdExist(session?.user.id) ? null : (
-              <button className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'>
+            <RaidLeaderDropdown
+              scheduleId={scheduleId}
+              frontRaidLeader={frontRaidLeader}
+              setFrontRaidLeader={setFrontRaidLeader}
+              characters={characters}
+            />
+            {isUserIdExist(userId) ? null : (
+              <button
+                onClick={() => handleJoinParty()}
+                className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
+              >
                 참여하기
               </button>
             )}
@@ -273,12 +313,15 @@ export default function TeamAllocator({ parties, setSelectedCharacter, selectedC
         </section>
 
         <Popover
-          selectedCharacter={selectedCharacter}
+          isJoining={isJoining}
+          setIsJoining={setIsJoining}
+          targetCharacter={selectedCharacter.character}
           isPopoverOpen={isPopoverOpen}
           setIsPopoverOpen={setIsPopoverOpen}
           dropdownSelectedCharacter={dropdownSelectedCharacter}
           setDropdownSelectedCharacter={setDropdownSelectedCharacter}
           parties={parties}
+          scheduleId={scheduleId}
         />
       </>
     )

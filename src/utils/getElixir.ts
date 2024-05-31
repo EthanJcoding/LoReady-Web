@@ -21,12 +21,13 @@ export const getElixir = (elixirObj: Equipment) => {
         if (j % 2 === 0) {
           const textContent = element.nextSibling?.textContent?.trim()
           if (textContent) {
-            result.push(textContent + ' ' + elements[j + 1].textContent)
+            result.push(elements[j + 1].textContent + ' ' + textContent)
           }
         }
       }
     }
   }
+
   return result
 
   //   for (let e = 0; e < 1; e++) {

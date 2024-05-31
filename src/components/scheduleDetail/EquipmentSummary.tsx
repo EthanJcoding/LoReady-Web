@@ -1,4 +1,4 @@
-import { EquipmentInterface } from '@/types/EquipmentInterface'
+import { EquipmentInterface } from '@/types/Equipments/equipments'
 import { getAccQualityAvg } from '@/utils/getAccQualityAvg'
 import { getAccStatSum } from '@/utils/getAccStatSum'
 import { getEquipmentAndAccessories } from '@/utils/getEquipmentAndAccessories'
