@@ -1,4 +1,4 @@
-import { getChannelData } from '@/api/firebase'
+import { getChannelData, getChannelSchedule } from '@/api/firebase'
 import ScheduleLists from '@/components/schedule/ScheduleLists'
 import MyScheduleToggle from '@/components/schedule/MyScheduleToggle'
 import { authOptions } from '@/utils/authOptions'
@@ -26,13 +26,15 @@ export async function generateMetadata({ params: { channelId } }: Ownprops) {
 }
 
 export default async function Schedule({ params: { channelId } }: Ownprops) {
+  const { data, lastSnap } = await getChannelSchedule(channelId)
+
   return (
     <div className='flex-1 flex flex-col gap-5 overflow-y-auto'>
       <div className='flex justify-end'>
         <MyScheduleToggle />
       </div>
       <div className='flex-1'>
-        <ScheduleLists channelId={channelId} />
+        <ScheduleLists channelId={channelId} schedulesData={data} initialSnapshotData={lastSnap} />
       </div>
     </div>
   )
