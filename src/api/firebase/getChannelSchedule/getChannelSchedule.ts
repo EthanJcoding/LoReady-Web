@@ -22,7 +22,7 @@ export const getChannelSchedule = async (channelId: string, lastSnap?: DocumentD
 
     if (snapshot.empty) return { data: [], lastSnap: undefined }
 
-    const lastSnap = snapshot.docs[snapshot.docs.length - 1]
+    const lastSnap = snapshot.docs[snapshot.docs.length - 1].data() as Schedule
     const data: ScheduleWithId[] = snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Schedule) }))
 
     return { data, lastSnap }

@@ -1,6 +1,7 @@
 import { getChannelData, getChannelSchedule } from '@/api/firebase'
 import AdditionalConts from '@/components/dashboard/AdditionalConts'
 import UpcomingRaid from '@/components/dashboard/UpcomingRaid'
+import { Schedule } from '@/types/schedule'
 import { authOptions } from '@/utils/authOptions'
 import { validateMember } from '@/utils/validateMember'
 import { getServerSession } from 'next-auth'
@@ -27,9 +28,11 @@ export async function generateMetadata({ params: { channelId } }: Ownprops) {
 }
 
 export default async function Dashboard({ params: { channelId } }: Ownprops) {
+  const { data, lastSnap } = await getChannelSchedule(channelId)
+
   return (
     <div className='flex-1 flex gap-5 overflow-hidden'>
-      <UpcomingRaid channelId={channelId} />
+      <UpcomingRaid channelId={channelId} schedulesData={data} initialSnapshotData={lastSnap} />
       <AdditionalConts />
     </div>
   )

@@ -3,16 +3,18 @@
 import { useEffect, useRef, useState } from 'react'
 import RaidList from './RaidList'
 import { DocumentData } from 'firebase/firestore'
-import { ScheduleWithId } from '@/types/schedule'
+import { Schedule, ScheduleWithId } from '@/types/schedule'
 import { getChannelSchedule } from '@/api/firebase'
 
 interface Ownprops {
   channelId: string
+  schedulesData: ScheduleWithId[]
+  initialSnapshotData: Schedule | undefined
 }
 
-export default function UpcomingRaid({ channelId }: Ownprops) {
-  const [schedules, setSchedules] = useState<ScheduleWithId[]>([])
-  const [lastSnapshot, setLastSnapshot] = useState<DocumentData>()
+export default function UpcomingRaid({ channelId, schedulesData, initialSnapshotData }: Ownprops) {
+  const [schedules, setSchedules] = useState<ScheduleWithId[]>(schedulesData)
+  const [lastSnapshot, setLastSnapshot] = useState<DocumentData | undefined>(initialSnapshotData)
   const [isMore, setIsMore] = useState(true)
   const targetRef = useRef<HTMLDivElement>(null)
   const rootRef = useRef<HTMLDivElement>(null)
@@ -54,9 +56,9 @@ export default function UpcomingRaid({ channelId }: Ownprops) {
         </div>
         <ul className='flex flex-col gap-3 px-5 pb-5'>
           {schedules.length ? (
-            schedules.map(schedule => (
+            schedules.map((schedule, idx) => (
               <RaidList
-                key={schedule.id}
+                key={idx}
                 scheduleId={schedule.id}
                 channelId={schedule.channel}
                 raidName={schedule.raidName}

@@ -3,18 +3,20 @@
 import { useEffect, useRef, useState } from 'react'
 import ScheduleList from './ScheduleList'
 import { getChannelSchedule } from '@/api/firebase'
-import { ScheduleWithId } from '@/types/schedule'
+import { Schedule, ScheduleWithId } from '@/types/schedule'
 import { DocumentData } from 'firebase/firestore'
 import { useToggleStore } from '@/stores/toggle'
 import { useSession } from 'next-auth/react'
 
 interface Ownprops {
   channelId: string
+  schedulesData: ScheduleWithId[]
+  initialSnapshotData: Schedule | undefined
 }
 
-export default function ScheduleLists({ channelId }: Ownprops) {
-  const [schedules, setSchedules] = useState<ScheduleWithId[]>([])
-  const [lastSnapshot, setLastSnapshot] = useState<DocumentData>()
+export default function ScheduleLists({ channelId, schedulesData, initialSnapshotData }: Ownprops) {
+  const [schedules, setSchedules] = useState<ScheduleWithId[]>(schedulesData)
+  const [lastSnapshot, setLastSnapshot] = useState<DocumentData | undefined>(initialSnapshotData)
   const [isMore, setIsMore] = useState(true)
   const [isFiltered, setIsFiltered] = useState(false)
   const targetRef = useRef<HTMLDivElement>(null)
