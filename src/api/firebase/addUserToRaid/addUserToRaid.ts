@@ -1,5 +1,6 @@
-import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore'
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { firestore } from '../config'
+import { customDateString } from '@/utils/customDateString'
 
 interface characterData {
   userId: string
@@ -25,7 +26,7 @@ async function addUserToRaid(scheduleId: string, partyIdx: string, pushingData: 
 
       await updateDoc(scheduleRef, {
         parties: updatedParties,
-        updated: serverTimestamp(),
+        updated: customDateString(),
         characters: updatedCharacters,
         participants: updatedParticipants
       })

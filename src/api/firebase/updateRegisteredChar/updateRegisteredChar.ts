@@ -1,5 +1,6 @@
-import { doc, serverTimestamp, updateDoc } from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore'
 import { firestore } from '../config'
+import { customDateString } from '@/utils/customDateString'
 
 async function updateRegisteredChar(userId: string, updatedRegistered: string) {
   const userRef = doc(firestore, 'users', userId)
@@ -7,7 +8,7 @@ async function updateRegisteredChar(userId: string, updatedRegistered: string) {
   try {
     await updateDoc(userRef, {
       registeredBy: updatedRegistered,
-      updated: serverTimestamp()
+      updated: customDateString()
     })
   } catch (err) {
     console.log(err)

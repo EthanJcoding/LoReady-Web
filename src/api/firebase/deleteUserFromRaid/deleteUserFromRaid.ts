@@ -1,6 +1,7 @@
-import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore'
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { firestore } from '../config'
 import { Character } from '@/types/schedule'
+import { customDateString } from '@/utils/customDateString'
 
 async function deleteUserFromRaid(
   scheduleId: string,
@@ -30,7 +31,7 @@ async function deleteUserFromRaid(
         const newRaidLeader = characters[0]
         await updateDoc(scheduleRef, {
           parties,
-          updated: serverTimestamp(),
+          updated: customDateString(),
           characters,
           participants,
           raidLeader: newRaidLeader
@@ -38,7 +39,7 @@ async function deleteUserFromRaid(
       } else {
         await updateDoc(scheduleRef, {
           parties,
-          updated: serverTimestamp(),
+          updated: customDateString(),
           characters,
           participants
         })

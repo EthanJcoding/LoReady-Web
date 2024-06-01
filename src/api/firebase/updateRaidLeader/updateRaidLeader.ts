@@ -1,6 +1,7 @@
-import { doc, serverTimestamp, updateDoc } from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore'
 import { firestore } from '../config'
 import { Character } from '@/types/schedule'
+import { customDateString } from '@/utils/customDateString'
 
 async function updateRaidLeader(scheduleId: string, newRaidLeader: Character) {
   const scheduleRef = doc(firestore, 'schedules', scheduleId)
@@ -8,7 +9,7 @@ async function updateRaidLeader(scheduleId: string, newRaidLeader: Character) {
   try {
     await updateDoc(scheduleRef, {
       raidLeader: newRaidLeader,
-      updated: serverTimestamp()
+      updated: customDateString()
     })
   } catch (err) {
     console.log(err)

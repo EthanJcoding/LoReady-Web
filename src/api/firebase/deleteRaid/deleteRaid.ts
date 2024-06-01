@@ -1,5 +1,6 @@
-import { deleteDoc, doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore'
+import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { firestore } from '../config'
+import { customDateString } from '@/utils/customDateString'
 
 async function deleteRaid(channelId: string, scheduleId: string) {
   // 해당 채널에서 schedules 배열 업데이트
@@ -28,7 +29,7 @@ async function deleteRaid(channelId: string, scheduleId: string) {
           const userData = data.data()
           const newScheduleArrForUser = [...userData.schedules].filter(schId => schId !== scheduleId)
 
-          await updateDoc(userRef, { schedules: newScheduleArrForUser, updated: serverTimestamp() })
+          await updateDoc(userRef, { schedules: newScheduleArrForUser, updated: customDateString() })
         }
       }
     }
