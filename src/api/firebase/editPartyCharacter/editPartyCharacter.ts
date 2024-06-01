@@ -1,6 +1,7 @@
-import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore'
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { firestore } from '../config'
 import { Character } from '@/types/schedule'
+import { customDateString } from '@/utils/customDateString'
 
 interface characterData {
   userId: string
@@ -36,9 +37,9 @@ async function editPartyCharacter(
       if (raidLeader === removingCharacterName) {
         const newRaidLeader = pushingData
 
-        await updateDoc(scheduleRef, { parties, updated: serverTimestamp(), characters, raidLeader: newRaidLeader })
+        await updateDoc(scheduleRef, { parties, updated: customDateString(), characters, raidLeader: newRaidLeader })
       } else {
-        await updateDoc(scheduleRef, { parties, updated: serverTimestamp(), characters })
+        await updateDoc(scheduleRef, { parties, updated: customDateString(), characters })
       }
 
       // 스케쥴에 인원이 한명이고 그 인원이 본인의 캐릭터를 수정하면 공대장도 이에 따라서 업데이트
