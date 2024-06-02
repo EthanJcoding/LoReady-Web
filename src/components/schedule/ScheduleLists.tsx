@@ -16,7 +16,7 @@ interface Ownprops {
 
 export default function ScheduleLists({ channelId, schedulesData, initialSnapshotData }: Ownprops) {
   const [schedules, setSchedules] = useState<ScheduleWithId[]>(schedulesData)
-  const [lastSnapshot, setLastSnapshot] = useState<DocumentData | undefined>(initialSnapshotData)
+  const [lastSnapshot, setLastSnapshot] = useState<Schedule | undefined>(initialSnapshotData)
   const [isMore, setIsMore] = useState(true)
   const [isFiltered, setIsFiltered] = useState(false)
   const targetRef = useRef<HTMLDivElement>(null)
