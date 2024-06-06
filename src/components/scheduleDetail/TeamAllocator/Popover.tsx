@@ -153,7 +153,7 @@ export default function Popover({
             )}
             <button
               onClick={isJoining ? handleSaveJoin : handleChaSelectBtn}
-              className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
+              className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-primary-accent/70 text-xs md:text-sm font-semibold'
             >
               {isJoining ? '참여하기' : '저장하기'}
             </button>
