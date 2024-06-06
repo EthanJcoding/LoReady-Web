@@ -68,13 +68,20 @@ export default async function ScheduleDetail({ params }: Ownprops) {
 
   if (scheduleData?.channel !== channelId) notFound()
 
-  const { raidType, raidLeader, characters } = scheduleData
+  const { raidType, raidLeader, characters, raidName, raidDate } = scheduleData
 
   const parties = await fetchCharacterData(scheduleData)
 
   return (
     <div className='flex-1 flex flex-col gap-4 sm:flex-row overflow-scroll'>
-      <Raid parties={parties} raidType={raidType} raidLeader={raidLeader} characters={characters} />
+      <Raid
+        parties={parties}
+        raidType={raidType}
+        raidLeader={raidLeader}
+        characters={characters}
+        raidName={raidName}
+        raidDate={raidDate}
+      />
     </div>
   )
 }

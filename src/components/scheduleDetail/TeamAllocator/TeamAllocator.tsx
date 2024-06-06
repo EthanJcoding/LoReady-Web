@@ -10,6 +10,7 @@ import Popover from './Popover'
 import { Character } from '@/types/schedule'
 import RaidLeaderDropdown from './RaidLeaderDropdown'
 import { PiCrownSimpleFill } from 'react-icons/pi'
+import dayjs from 'dayjs'
 
 interface Ownprops {
   parties: { [key: string]: Character[] }
@@ -18,6 +19,8 @@ interface Ownprops {
   raidType: string
   raidLeader: Character
   characters: Character[]
+  raidName: string
+  raidDate: string
 }
 
 export default function TeamAllocator({
@@ -26,7 +29,9 @@ export default function TeamAllocator({
   selectedCharacter,
   raidType,
   raidLeader,
-  characters
+  characters,
+  raidName,
+  raidDate
 }: Ownprops) {
   const [party1, setParty1] = useState(parties.party1)
   const [party2, setParty2] = useState(parties.party2)
@@ -148,7 +153,11 @@ export default function TeamAllocator({
       <>
         <section className='flex flex-col border sm:w-1/3 w-full sm:h-full p-8 rounded-lg shadow-sm space-y-4 overflow-scroll'>
           <div className='w-full h-full space-y-2'>
-            <div className='text-xl font-semibold'>공대원 리스트</div>
+            <h1 className='font-semibold 2xl:text-2xl text-xl border-b'>
+              <span>{raidName}</span>
+              <span> | {dayjs(raidDate).format('MM월 DD일')}</span>
+            </h1>
+            <div className='text-lg font-semibold'>파티 리스트</div>
             {party1.map((member, idx) => {
               return (
                 <div
@@ -175,7 +184,7 @@ export default function TeamAllocator({
               )
             })}
           </div>
-          <div className='flex w-full h-full space-x-4 items-end justify-end'>
+          <div className='flex w-full space-x-4 items-end justify-end'>
             <RaidLeaderDropdown
               scheduleId={scheduleId}
               frontRaidLeader={frontRaidLeader}
@@ -185,7 +194,7 @@ export default function TeamAllocator({
             {isUserIdExist(userId) ? null : (
               <button
                 onClick={() => handleJoinParty()}
-                className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
+                className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-primary-accent/70 text-xs md:text-sm font-semibold'
               >
                 참여하기
               </button>
@@ -211,9 +220,13 @@ export default function TeamAllocator({
   if (raidType === '8인레이드') {
     return (
       <>
-        <section className='flex flex-col border sm:w-1/3 w-full sm:h-full p-8 rounded-lg shadow-sm space-y-4 '>
-          <div className='w-full h-full space-y-2'>
-            <div className='text-xl font-semibold'>1번 공대</div>
+        <section className='flex flex-col border sm:w-1/3 w-full h-full p-8 rounded-lg shadow-sm space-y-4 overflow-scroll'>
+          <div className='w-full sm:h-1/2 space-y-2'>
+            <h1 className='font-semibold 2xl:text-2xl text-xl border-b'>
+              <span>{raidName}</span>
+              <span> | {dayjs(raidDate).format('MM월 DD일')}</span>
+            </h1>
+            <div className='text-lg font-semibold '>1번 파티</div>
             {party1.map((member, idx) => {
               return (
                 <div
@@ -249,8 +262,9 @@ export default function TeamAllocator({
               )
             })}
           </div>
-          <div className='w-full h-full space-y-2'>
-            <div className='text-xl font-semibold'>2번 공대</div>
+          <div className='w-full sm:h-1/2 space-y-2'>
+            <span className='text-lg font-semibold'>2번 파티</span>
+
             {party2.map((member, idx) => {
               return (
                 <div
@@ -258,7 +272,7 @@ export default function TeamAllocator({
                   className={
                     isSelected(member.character)
                       ? 'bg-secondary-gray/50 flex w-full border p-2 rounded border-primary-accent '
-                      : 'flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition '
+                      : 'flex w-full border p-2 rounded hover:bg-secondary-gray/50 transition'
                   }
                 >
                   <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full items-center'>
@@ -287,7 +301,7 @@ export default function TeamAllocator({
             })}
           </div>
 
-          <div className='flex w-full h-full space-x-4 items-end justify-end'>
+          <div className='flex w-full space-x-4 items-end justify-end'>
             <RaidLeaderDropdown
               scheduleId={scheduleId}
               frontRaidLeader={frontRaidLeader}
@@ -297,7 +311,7 @@ export default function TeamAllocator({
             {isUserIdExist(userId) ? null : (
               <button
                 onClick={() => handleJoinParty()}
-                className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
+                className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-primary-accent/70 text-xs md:text-sm font-semibold'
               >
                 참여하기
               </button>
