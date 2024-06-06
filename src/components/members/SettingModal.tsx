@@ -68,7 +68,7 @@ export default function SettingModal({ setIsOpen, registeredBy }: Ownprops) {
         )}
         <button
           onClick={() => handleEdit()}
-          className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
+          className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-primary-accent/70 text-xs md:text-sm font-semibold'
         >
           대표캐릭터 수정하기
         </button>
