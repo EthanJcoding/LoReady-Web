@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import RaidList from './RaidList'
-import { DocumentData } from 'firebase/firestore'
 import { Schedule, ScheduleWithId } from '@/types/schedule'
 import { getChannelSchedule } from '@/api/firebase'
 
@@ -14,7 +13,7 @@ interface Ownprops {
 
 export default function UpcomingRaid({ channelId, schedulesData, initialSnapshotData }: Ownprops) {
   const [schedules, setSchedules] = useState<ScheduleWithId[]>(schedulesData)
-  const [lastSnapshot, setLastSnapshot] = useState<DocumentData | undefined>(initialSnapshotData)
+  const [lastSnapshot, setLastSnapshot] = useState<Schedule | undefined>(initialSnapshotData)
   const [isMore, setIsMore] = useState(true)
   const targetRef = useRef<HTMLDivElement>(null)
   const rootRef = useRef<HTMLDivElement>(null)
