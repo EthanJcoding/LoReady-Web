@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
-import Link from 'next/link'
+import Header from '@/components/landing/header/Header'
+import Hero from '@/components/landing/hero/Hero'
 
 export const metadata: Metadata = {
   title: '로레디 - 로스트아크 레이드 일정 관리, 공대 편성',
@@ -8,13 +9,9 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className='w-full h-full flex flex-col justify-center items-center space-y-10'>
-      <Link href={'/1050686760373469234/dashboard'}>
-        <button className='border p-10 rounded-lg'>대쉬보드 개발 페이지로 이동</button>
-      </Link>
-      <Link href={'/1050686760373469234/schedule'}>
-        <button className='border p-10 rounded-lg'>스케줄 개발 페이지로 이동</button>
-      </Link>
+    <div className='w-full p-7 space-y-4 h-dvh flex flex-col bg-light dark:bg-dark dark:text-light'>
+      <Header />
+      <Hero />
     </div>
   )
 }
