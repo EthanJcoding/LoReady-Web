@@ -19,8 +19,15 @@ interface Ownprops {
 
 export async function generateMetadata({ params: { channelId } }: Ownprops) {
   const session = await getServerSession(authOptions)
+
+  if (!session)
+    return {
+      title: 'Login - 로레디',
+      description: '로그인이 필요합니다.'
+    }
+
   const channelData = await getChannelData(channelId)
-  const isValidMember = validateMember(session?.user.id, channelData?.memberIds)
+  const isValidMember = validateMember(session.user.id, channelData?.memberIds)
 
   if (!isValidMember)
     return {
@@ -38,10 +45,13 @@ export async function generateMetadata({ params: { channelId } }: Ownprops) {
 
 export default async function ChannelLayout({ children, params: { channelId } }: Ownprops) {
   const session = await getServerSession(authOptions)
-  const channelData = await getChannelData(channelId)
-  const isValidMember = validateMember(session?.user.id, channelData?.memberIds)
 
-  if (!session) return <SignIn />
+  if (!session) {
+    return <SignIn />
+  }
+
+  const channelData = await getChannelData(channelId)
+  const isValidMember = validateMember(session.user.id, channelData?.memberIds)
 
   if (!isValidMember) notFound()
 
