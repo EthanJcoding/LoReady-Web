@@ -19,6 +19,7 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
+    "react-lottie-player": "^2.0.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
