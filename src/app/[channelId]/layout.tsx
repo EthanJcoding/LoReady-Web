@@ -2,7 +2,6 @@ import { getChannelData } from '@/api/firebase'
 import Navigation from '@/components/layout/Navigation'
 import ServerName from '@/components/layout/ServerName'
 import SideBar from '@/components/layout/sidebar/SideBar'
-import ThemeProvider from '@/components/providers/ThemeProvider'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/utils/authOptions'
 import { notFound } from 'next/navigation'
@@ -46,16 +45,14 @@ export default async function ChannelLayout({ children, params: { channelId } }:
   if (!isValidMember) notFound()
 
   return (
-    <ThemeProvider>
-      <div className='h-dvh flex bg-light dark:bg-dark dark:text-light'>
-        <SideBar />
-        <Menu />
-        <main className='flex-1 flex flex-col gap-5 p-7 pb-5 overflow-hidden max-sm:px-3 max-sm:py-5'>
-          <ServerName id={channelId} />
-          <Navigation />
-          {children}
-        </main>
-      </div>
-    </ThemeProvider>
+    <div className='h-dvh flex bg-light dark:bg-dark dark:text-light'>
+      <SideBar />
+      <Menu />
+      <main className='flex-1 flex flex-col gap-5 p-7 pb-5 overflow-hidden max-sm:px-3 max-sm:py-5'>
+        <ServerName id={channelId} />
+        <Navigation />
+        {children}
+      </main>
+    </div>
   )
 }
