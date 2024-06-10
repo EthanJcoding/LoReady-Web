@@ -153,9 +153,9 @@ export default function TeamAllocator({
       <>
         <section className='flex flex-col border sm:w-1/3 w-full sm:h-full p-8 rounded-lg shadow-sm space-y-4 overflow-scroll'>
           <div className='w-full h-full space-y-2'>
-            <h1 className='font-semibold 2xl:text-2xl text-xl border-b'>
-              <span>{raidName}</span>
-              <span> | {dayjs(raidDate).format('MM월 DD일')}</span>
+            <h1 className='font-semibold border-b flex justify-between w-full items-center'>
+              <span className='2xl:text-2xl text-xl truncate'>{raidName}</span>
+              <span className='hidden lg:flex truncate'>{dayjs(raidDate).format('MM월 DD일')}</span>
             </h1>
             <div className='text-lg font-semibold'>파티 리스트</div>
             {party1.map((member, idx) => {
@@ -222,9 +222,9 @@ export default function TeamAllocator({
       <>
         <section className='flex flex-col border sm:w-1/3 w-full h-full p-8 rounded-lg shadow-sm space-y-4 overflow-scroll'>
           <div className='w-full sm:h-1/2 space-y-2'>
-            <h1 className='font-semibold 2xl:text-2xl text-xl border-b'>
-              <span>{raidName}</span>
-              <span> | {dayjs(raidDate).format('MM월 DD일')}</span>
+            <h1 className='font-semibold border-b flex justify-between w-full items-center'>
+              <span className='2xl:text-2xl text-xl truncate'>{raidName}</span>
+              <span className='hidden lg:flex truncate'>{dayjs(raidDate).format('MM월 DD일')}</span>
             </h1>
             <div className='text-lg font-semibold '>1번 파티</div>
             {party1.map((member, idx) => {
