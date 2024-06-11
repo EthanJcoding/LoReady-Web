@@ -10,9 +10,11 @@ interface Ownprops {
   raidType: string
   raidLeader: Character
   characters: Character[]
+  raidName: string
+  raidDate: string
 }
 
-export default function Raid({ parties, raidType, raidLeader, characters }: Ownprops) {
+export default function Raid({ parties, raidType, raidLeader, characters, raidName, raidDate }: Ownprops) {
   const defaultCharacter = parties.party1.length === 0 ? parties.party2[0] : parties.party1[0]
 
   const [selectedCharacter, setSelectedCharacter] = useState(defaultCharacter)
@@ -26,6 +28,8 @@ export default function Raid({ parties, raidType, raidLeader, characters }: Ownp
         raidType={raidType}
         raidLeader={raidLeader}
         characters={characters}
+        raidName={raidName}
+        raidDate={raidDate}
       />
       <CharacterDetail selectedCharacter={selectedCharacter} />
     </>
