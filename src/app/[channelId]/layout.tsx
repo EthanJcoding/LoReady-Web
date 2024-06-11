@@ -4,10 +4,10 @@ import ServerName from '@/components/layout/ServerName'
 import SideBar from '@/components/layout/sidebar/SideBar'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/utils/authOptions'
-import { notFound } from 'next/navigation'
-import SignIn from '@/components/auth/SignIn'
+import { notFound, redirect } from 'next/navigation'
 import { validateMember } from '@/utils/validateMember'
 import Menu from '@/components/layout/menu/Menu'
+import { headers } from 'next/headers'
 
 interface Ownprops {
   children: React.ReactNode
@@ -18,15 +18,10 @@ interface Ownprops {
 
 export async function generateMetadata({ params: { channelId } }: Ownprops) {
   const session = await getServerSession(authOptions)
-
-  if (!session)
-    return {
-      title: 'Login - 로레디',
-      description: '로그인이 필요합니다.'
-    }
-
   const channelData = await getChannelData(channelId)
-  const isValidMember = validateMember(session.user.id, channelData?.memberIds)
+  const isValidMember = validateMember(session?.user.id, channelData?.memberIds)
+
+  if (!session) return
 
   if (!isValidMember)
     return {
@@ -46,7 +41,8 @@ export default async function ChannelLayout({ children, params: { channelId } }:
   const session = await getServerSession(authOptions)
 
   if (!session) {
-    return <SignIn />
+    const currentUrl = headers().get('x-pathname') || ''
+    redirect(`/login?redirect_url=${encodeURIComponent(currentUrl)}`)
   }
 
   const channelData = await getChannelData(channelId)
