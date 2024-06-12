@@ -6,7 +6,7 @@ export default function SignIn() {
     <div className='flex flex-col items-center gap-10 mb-20'>
       <div className='w-[25rem] flex flex-col justify-start gap-2 text-4xl font-semibold text-dark dark:text-light'>
         <div className='flex items-center gap-2 overflow-hidden'>
-          <span className='text-primary-accent font-bold'>LoReady</span>
+          <span className='text-primary-accent font-bold'>로레디</span>
           <span>서비스는</span>
         </div>
         <div className='w-0 overflow-hidden border-r-4 border-primary-accent whitespace-nowrap animate-typed-out'>
