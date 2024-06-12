@@ -24,7 +24,10 @@ export const getChallengeAbyss = async (): Promise<ChallengeAbyss[]> => {
         authorization: `bearer ${process.env.LOSTARK_API_KEY}`
       }
     }
-    const res = await fetch(`${process.env.LOSTARK_BASE_URL}/gamecontents/challenge-abyss-dungeons`, options)
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_LOSTARK_BASE_URL}/gamecontents/challenge-abyss-dungeons`,
+      options
+    )
     const data: ChallengeAbyss[] = await res.json()
 
     return data
