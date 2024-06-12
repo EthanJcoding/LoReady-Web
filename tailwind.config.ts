@@ -31,10 +31,18 @@ const config: Config = {
           '0%': { top: '4rem' },
           '50%': { top: '1rem' },
           '100%': { top: '2.5rem' }
+        },
+        typing: {
+          from: { width: '0' },
+          to: { width: '100%' }
+        },
+        blink: {
+          '50%': { 'border-color': 'transparent' }
         }
       },
       animation: {
-        toast: 'upward .3s ease-in-out'
+        toast: 'upward .3s ease-in-out',
+        'typed-out': 'typing 1.5s steps(20, end) .5s forwards, blink .5s step-end 2.5s infinite alternate'
       }
     }
   },
