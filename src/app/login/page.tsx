@@ -13,5 +13,9 @@ export default async function () {
 
   if (session) redirect('/')
 
-  return <SignIn />
+  return (
+    <div className='h-dvh flex justify-center items-center bg-light dark:bg-dark'>
+      <SignIn />
+    </div>
+  )
 }
