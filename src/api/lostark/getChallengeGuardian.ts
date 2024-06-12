@@ -29,7 +29,7 @@ export const getChallengeGuardian = async (): Promise<ChallengeGuardian> => {
   try {
     const options = {
       headers: {
-        authorization: `bearer ${process.env.LOSTARK_API_KEY}`
+        authorization: `bearer ${process.env.NEXT_PUBLIC_LOSTARK_API_KEY}`
       }
     }
     const res = await fetch(
