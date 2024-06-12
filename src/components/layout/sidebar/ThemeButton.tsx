@@ -12,14 +12,10 @@ export default function ThemeButton() {
 
   return (
     <button
-      className='w-9 h-9 p-1 border border-secondary-gray/50 rounded-md bg-transparent text-primary-gray hover:bg-light dark:border-primary-gray/50 dark:text-light hover:dark:bg-dark'
+      className='flex-none flex justify-center items-center w-10 h-10 border border-secondary-gray/50 rounded-md bg-transparent text-primary-gray hover:bg-secondary-gray/20 dark:border-primary-gray/50 dark:text-light transition-colors'
       onClick={handleClick}
     >
-      {currentTheme === 'dark' ? (
-        <MdOutlineDarkMode className='w-full h-full' />
-      ) : (
-        <MdOutlineLightMode className='w-full h-full' />
-      )}
+      {currentTheme === 'dark' ? <MdOutlineDarkMode className='w-7 h-7' /> : <MdOutlineLightMode className='w-7 h-7' />}
     </button>
   )
 }
