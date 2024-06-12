@@ -17,11 +17,11 @@ export default function AuthButton() {
 
   return (
     <button
-      className='bg-indigo-500 inline-flex items-center justify-center whitespace-nowrap space-x-4 px-4 py-2 h-10 rounded-lg hover:bg-indigo-500/75 transition'
+      className='w-full bg-indigo-500 inline-flex items-center justify-center whitespace-nowrap space-x-2 px-4 h-10 rounded-lg hover:bg-indigo-500/90 transition'
       onClick={() => signIn('discord', { callbackUrl })}
     >
-      <FaDiscord color='white' className='w-8 h-8' />
-      <div className='text-sm text-white font-semibold'>디스코드로 로그인</div>
+      <FaDiscord color='white' className='w-6 h-6' />
+      <div className='text-sm text-white font-semibold'>Discord로 로그인</div>
     </button>
   )
 }
