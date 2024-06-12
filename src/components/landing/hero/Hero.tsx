@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Animation from '../animation/animation'
 
 export default function Hero() {
@@ -10,12 +11,18 @@ export default function Hero() {
           </h1>
           <p className='sm:text-xl mb-8'>디스코드에서 레이드 스케줄을 만들고 공유하세요 !</p>
           <div className='flex gap-4 mb-8'>
-            <button className='text-light bg-primary-accent hover:bg-primary-accent/70 font-medium py-2 px-4 rounded transition'>
+            <Link
+              className='text-light bg-primary-accent hover:bg-primary-accent/70 font-medium py-2 px-4 rounded transition'
+              href={process.env.NEXT_PUBLIC_DOCUMENT_LINK as string}
+            >
               사용법
-            </button>
-            <button className='text-light bg-primary-accent hover:bg-primary-accent/70 font-medium py-2 px-4 rounded transition'>
+            </Link>
+            <Link
+              className='text-light bg-primary-accent hover:bg-primary-accent/70 font-medium py-2 px-4 rounded transition'
+              href={process.env.NEXT_PUBLIC_ADDBOT_LINK as string}
+            >
               봇 추가하기
-            </button>
+            </Link>
           </div>
         </div>
         <Animation />
