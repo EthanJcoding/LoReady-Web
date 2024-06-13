@@ -1,7 +1,6 @@
 import { getChannelData, getChannelSchedule } from '@/api/firebase'
 import AdditionalConts from '@/components/dashboard/AdditionalConts'
 import UpcomingRaid from '@/components/dashboard/UpcomingRaid'
-import { Schedule } from '@/types/schedule'
 import { authOptions } from '@/utils/authOptions'
 import { validateMember } from '@/utils/validateMember'
 import { getServerSession } from 'next-auth'
