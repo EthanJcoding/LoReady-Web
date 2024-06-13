@@ -7,7 +7,7 @@ export const getCharacterData = async (chaName: string) => {
       {
         headers: {
           accept: 'application/json',
-          Authorization: `bearer ${process.env.LOSTARK_API_KEY}`
+          Authorization: `bearer ${process.env.NEXT_PUBLIC_LOSTARK_API_KEY}`
         }
       }
     )
