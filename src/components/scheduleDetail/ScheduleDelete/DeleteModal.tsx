@@ -13,7 +13,7 @@ export default function DeleteModal({ setIsOpen, channelId, scheduleId }: Ownpro
   const handleDeleteBtn = async () => {
     await deleteRaid(channelId, scheduleId)
     setIsOpen(false)
-    router.push(`http://localhost:3000/${channelId}/dashboard`)
+    router.push(`https://loready.vercel.app/${channelId}/dashboard`)
   }
 
   return (
