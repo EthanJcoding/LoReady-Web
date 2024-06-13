@@ -32,7 +32,7 @@ export default function Navigation() {
             pathname.includes('members') ? 'border-b-2 font-bold' : 'font-medium'
           }`}
         >
-          <Link href={`/${channelId}/members`}>채널 맴버</Link>
+          <Link href={`/${channelId}/members`}>채널 멤버</Link>
         </li>
       </ul>
       {pathname.includes(scheduleId as string) && (
