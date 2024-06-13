@@ -1,23 +1,12 @@
-'use client'
-
-import { useSession } from 'next-auth/react'
+import { Session, getServerSession } from 'next-auth'
 import ServerList from './ServerList'
-import { useEffect, useState } from 'react'
-import { Channel } from '@/types/channel'
 import { getUserChannels } from '@/api/firebase'
+import { authOptions } from '@/utils/authOptions'
 
-export default function ServerLists() {
-  const [lists, setLists] = useState<Channel[]>([])
-  const { data } = useSession()
-  const userId: string = data?.user.id
+export default async function ServerLists() {
+  const userData = (await getServerSession(authOptions)) as Session
 
-  useEffect(() => {
-    if (userId) {
-      getUserChannels(userId)
-        .then(data => setLists([...lists, ...data]))
-        .catch(error => console.log(error))
-    }
-  }, [userId])
+  const lists = await getUserChannels(userData.user.id)
 
   return (
     <ul className='flex flex-col gap-3'>
