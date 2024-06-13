@@ -4,10 +4,10 @@ import ServerName from '@/components/layout/ServerName'
 import SideBar from '@/components/layout/sidebar/SideBar'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/utils/authOptions'
-import { notFound } from 'next/navigation'
-import SignIn from '@/components/auth/SignIn'
+import { notFound, redirect } from 'next/navigation'
 import { validateMember } from '@/utils/validateMember'
 import Menu from '@/components/layout/menu/Menu'
+import { headers } from 'next/headers'
 
 interface Ownprops {
   children: React.ReactNode
@@ -20,6 +20,8 @@ export async function generateMetadata({ params: { channelId } }: Ownprops) {
   const session = await getServerSession(authOptions)
   const channelData = await getChannelData(channelId)
   const isValidMember = validateMember(session?.user.id, channelData?.memberIds)
+
+  if (!session) return
 
   if (!isValidMember)
     return {
@@ -37,10 +39,14 @@ export async function generateMetadata({ params: { channelId } }: Ownprops) {
 
 export default async function ChannelLayout({ children, params: { channelId } }: Ownprops) {
   const session = await getServerSession(authOptions)
-  const channelData = await getChannelData(channelId)
-  const isValidMember = validateMember(session?.user.id, channelData?.memberIds)
 
-  if (!session) return <SignIn />
+  if (!session) {
+    const currentUrl = headers().get('x-pathname') || ''
+    redirect(`/login?redirect_url=${encodeURIComponent(currentUrl)}`)
+  }
+
+  const channelData = await getChannelData(channelId)
+  const isValidMember = validateMember(session.user.id, channelData?.memberIds)
 
   if (!isValidMember) notFound()
 
