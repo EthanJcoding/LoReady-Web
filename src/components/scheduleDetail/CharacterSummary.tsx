@@ -24,7 +24,7 @@ export default function CharacterSummary({
   ArmoryEngraving
 }: Ownprops) {
   return (
-    <div className='w-full h-full flex flex-col space-y-4'>
+    <div className='w-full h-max flex flex-col space-y-4'>
       <h1 className='font-semibold 2xl:text-2xl text-xl border-b '>요약</h1>
       <div className='flex space-x-8 w-full h-full'>
         <div className='flex gap-4 w-full h-full'>
