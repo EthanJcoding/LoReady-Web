@@ -5,12 +5,12 @@ import { useParams } from 'next/navigation'
 import { FaArrowUp, FaArrowDown, FaRegCaretSquareDown, FaRegCaretSquareUp } from 'react-icons/fa'
 import { FaGear } from 'react-icons/fa6'
 import { savePartyData } from '@/api/firebase/savePartyData/savePartyData'
-import { useSession } from 'next-auth/react'
 import Popover from './Popover'
 import { Character } from '@/types/schedule'
 import RaidLeaderDropdown from './RaidLeaderDropdown'
 import { PiCrownSimpleFill } from 'react-icons/pi'
 import dayjs from 'dayjs'
+import { Session } from 'next-auth'
 
 interface Ownprops {
   parties: { [key: string]: Character[] }
@@ -21,6 +21,7 @@ interface Ownprops {
   characters: Character[]
   raidName: string
   raidDate: string
+  userData: Session | null
 }
 
 export default function TeamAllocator({
@@ -31,18 +32,18 @@ export default function TeamAllocator({
   raidLeader,
   characters,
   raidName,
-  raidDate
+  raidDate,
+  userData
 }: Ownprops) {
   const [party1, setParty1] = useState(parties.party1)
   const [party2, setParty2] = useState(parties.party2)
   const [frontRaidLeader, setFrontRaidLeader] = useState(raidLeader)
   const params = useParams<{ channelId: string; scheduleId: string }>()
   const { scheduleId } = params
-  const { data: session } = useSession()
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [dropdownSelectedCharacter, setDropdownSelectedCharacter] = useState(selectedCharacter)
-  const userId = session?.user.id
   const [isJoining, setIsJoining] = useState(false)
+  const userId = userData?.user.id
 
   const moveMemberUp = (partyIndex: number, memberIndex: number) => {
     if (partyIndex === 0 && memberIndex > 0) {
