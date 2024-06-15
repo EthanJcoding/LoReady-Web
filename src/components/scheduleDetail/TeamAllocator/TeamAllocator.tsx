@@ -151,8 +151,8 @@ export default function TeamAllocator({
   if (raidType === '4인레이드') {
     return (
       <>
-        <section className='flex flex-col border sm:w-1/3 w-full sm:h-full p-8 rounded-lg shadow-sm space-y-4 overflow-scroll'>
-          <div className='w-full h-full space-y-2'>
+        <section className='flex flex-col border sm:w-1/3 w-full h-full p-8 rounded-lg shadow-sm space-y-4 overflow-scroll justify-between'>
+          <div className='w-full sm:h-1/2 space-y-2'>
             <h1 className='font-semibold border-b flex justify-between w-full items-center'>
               <span className='2xl:text-2xl text-xl truncate'>{raidName}</span>
               <span className='hidden lg:flex truncate'>{dayjs(raidDate).format('MM월 DD일')}</span>
@@ -194,7 +194,7 @@ export default function TeamAllocator({
             {isUserIdExist(userId) ? null : (
               <button
                 onClick={() => handleJoinParty()}
-                className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-primary-accent/70 text-xs md:text-sm font-semibold'
+                className='truncate text-light bg-primary-accent hover:bg-primary-accent/70 font-medium h-10 md:px-4 md:py-2 px-2 rounded transition text-xs sm:text-base'
               >
                 참여하기
               </button>
@@ -220,7 +220,7 @@ export default function TeamAllocator({
   if (raidType === '8인레이드') {
     return (
       <>
-        <section className='flex flex-col border sm:w-1/3 w-full h-full p-8 rounded-lg shadow-sm space-y-4 overflow-scroll'>
+        <section className='flex flex-col border sm:w-1/3 w-full h-full p-8 rounded-lg shadow-sm space-y-4 overflow-scroll justify-between'>
           <div className='w-full sm:h-1/2 space-y-2'>
             <h1 className='font-semibold border-b flex justify-between w-full items-center'>
               <span className='2xl:text-2xl text-xl truncate'>{raidName}</span>
@@ -310,7 +310,7 @@ export default function TeamAllocator({
             {isUserIdExist(userId) ? null : (
               <button
                 onClick={() => handleJoinParty()}
-                className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-primary-accent/70 text-xs md:text-sm font-semibold'
+                className='truncate text-light bg-primary-accent hover:bg-primary-accent/70 font-medium h-10 md:px-4 md:py-2 px-2 rounded transition text-xs sm:text-base'
               >
                 참여하기
               </button>
@@ -318,7 +318,7 @@ export default function TeamAllocator({
 
             <button
               onClick={() => handleSave()}
-              className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-transparent hover:bg-secondary-gray/50 text-xs md:text-sm font-semibold'
+              className='truncate text-light bg-transparent hover:bg-secondary-gray/50 font-medium h-10 md:px-4 md:py-2 px-2 border rounded transition text-xs sm:text-base'
             >
               저장하기
             </button>
