@@ -1,5 +1,6 @@
 'use client'
 
+import { Session } from 'next-auth'
 import CharacterDetail from './CharacterDetail'
 import TeamAllocator from './TeamAllocator/TeamAllocator'
 import { Character } from '@/types/raid'
@@ -12,9 +13,10 @@ interface Ownprops {
   characters: Character[]
   raidName: string
   raidDate: string
+  userData: Session | null
 }
 
-export default function Raid({ parties, raidType, raidLeader, characters, raidName, raidDate }: Ownprops) {
+export default function Raid({ parties, raidType, raidLeader, characters, raidName, raidDate, userData }: Ownprops) {
   const defaultCharacter = parties.party1.length === 0 ? parties.party2[0] : parties.party1[0]
 
   const [selectedCharacter, setSelectedCharacter] = useState(defaultCharacter)
@@ -30,6 +32,7 @@ export default function Raid({ parties, raidType, raidLeader, characters, raidNa
         characters={characters}
         raidName={raidName}
         raidDate={raidDate}
+        userData={userData}
       />
       <CharacterDetail selectedCharacter={selectedCharacter} />
     </>

@@ -71,6 +71,8 @@ export default async function ScheduleDetail({ params }: Ownprops) {
 
   const parties = await fetchCharacterData(scheduleData)
 
+  const userData = await getServerSession(authOptions)
+
   return (
     <div className='flex-1 flex flex-col gap-4 sm:flex-row overflow-scroll h-full'>
       <Raid
@@ -80,6 +82,7 @@ export default async function ScheduleDetail({ params }: Ownprops) {
         characters={characters}
         raidName={raidName}
         raidDate={raidDate}
+        userData={userData}
       />
     </div>
   )
