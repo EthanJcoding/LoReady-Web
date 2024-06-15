@@ -319,7 +319,7 @@ export default function TeamAllocator({
 
             <button
               onClick={() => handleSave()}
-              className='truncate text-light bg-transparent hover:bg-secondary-gray/50 font-medium h-10 md:px-4 md:py-2 px-2 border rounded transition text-xs sm:text-base'
+              className='truncate text-dark dark:text-light bg-transparent hover:bg-secondary-gray/50 font-medium h-10 md:px-4 md:py-2 px-2 border rounded transition text-xs sm:text-base'
             >
               저장하기
             </button>
