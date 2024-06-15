@@ -5,6 +5,7 @@ import SessionProvider from '@/components/providers/SessionProvider'
 import { getServerSession } from 'next-auth'
 import Toast from '@/components/Toast'
 import ThemeProvider from '@/components/providers/ThemeProvider'
+import { Analytics } from '@vercel/analytics/react'
 
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
@@ -29,6 +30,7 @@ export default async function RootLayout({
           <SessionProvider session={session}>{children}</SessionProvider>
           <Toast />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
