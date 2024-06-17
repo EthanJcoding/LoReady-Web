@@ -28,7 +28,7 @@ function extractTextWithRegex(htmlString: string) {
 
 const EquipmentIcon = ({ grade, iconSrc }: { grade: string; iconSrc: string }) => (
   <div className={`${getEquipmentGrade(grade)} rounded min-w-[36px] max-h-[36px]`}>
-    <Image src={iconSrc} width={36} height={36} alt='장비 이미지' className='w-full' />
+    <Image src={iconSrc} width={36} height={36} alt='장비 이미지' className='w-full' priority={true} />
   </div>
 )
 
