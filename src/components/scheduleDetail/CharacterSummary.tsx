@@ -35,7 +35,7 @@ export default function CharacterSummary({
               height={200}
               alt='캐릭터 프로필사진'
               className='rounded w-[150px] h-[250px] object-cover flex-none aspect-[3/4]'
-              priority
+              priority={true}
             />
           </div>
           <div className='flex flex-col w-full'>
