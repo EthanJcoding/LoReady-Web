@@ -152,7 +152,7 @@ export default function TeamAllocator({
   if (raidType === '4인레이드') {
     return (
       <>
-        <section className='flex flex-col border sm:w-1/3 w-full h-full p-8 rounded-lg shadow-sm space-y-4 overflow-scroll justify-between'>
+        <section className='flex flex-col border sm:w-1/3 w-full sm:h-full h-1/2 p-8 rounded-lg shadow-sm space-y-4 overflow-y-scroll sm:overflow-auto justify-between'>
           <div className='w-full sm:h-1/2 space-y-2'>
             <h1 className='font-semibold border-b flex justify-between w-full items-center'>
               <span className='2xl:text-2xl text-xl truncate'>{raidName}</span>
@@ -221,7 +221,7 @@ export default function TeamAllocator({
   if (raidType === '8인레이드') {
     return (
       <>
-        <section className='flex flex-col border sm:w-1/3 w-full h-full p-8 rounded-lg shadow-sm space-y-4 overflow-scroll justify-between'>
+        <section className='flex flex-col border sm:w-1/3 w-full sm:h-full h-1/2 p-8 rounded-lg shadow-sm space-y-4 overflow-y-scroll sm:overflow-auto justify-between'>
           <div className='w-full sm:h-1/2 space-y-2'>
             <h1 className='font-semibold border-b flex justify-between w-full items-center'>
               <span className='2xl:text-2xl text-xl truncate'>{raidName}</span>
