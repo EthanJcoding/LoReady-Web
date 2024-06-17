@@ -9,7 +9,7 @@ export const useToast = () => {
   const toast = (message: string, option?: ToastOption) => {
     const toastOption: ToastOption = {
       type: option?.type || 'success',
-      duraition: option?.duraition || 3000
+      duration: option?.duration || 3000
     }
 
     if (timer.current) clearTimeout(timer.current)
@@ -22,7 +22,7 @@ export const useToast = () => {
     timer.current = setTimeout(() => {
       setIsShow(false)
       timer.current = null
-    }, toastOption.duraition)
+    }, toastOption.duration)
   }
 
   useEffect(() => {
