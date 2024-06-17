@@ -126,7 +126,7 @@ export default function Popover({
             <FaSort />
           </button>
           {isDropdownOpen && (
-            <div className='border rounded p-2 overflow-scroll space-y-2 absolute top-12 bg-light dark:bg-dark w-[18rem] h-[18rem]'>
+            <div className='border rounded p-2 overflow-y-scroll space-y-2 absolute top-12 bg-light dark:bg-dark w-[18rem] h-[12rem]'>
               {charList.map((character, idx) => (
                 <button
                   onClick={() =>
@@ -135,10 +135,13 @@ export default function Popover({
                       : handleChaSelect(character.CharacterName)
                   }
                   key={idx}
-                  className='flex items-center hover:bg-secondary-gray/50 w-full p-1 rounded transition justify-between'
+                  className='flex items-center hover:bg-secondary-gray/50 w-full p-1 rounded transition justify-between gap-2'
                 >
-                  <div>{character.CharacterName}</div>
-                  {dropdownSelectedCharacter.character === character.CharacterName && <FaCheck />}
+                  {dropdownSelectedCharacter.character === character.CharacterName && <FaCheck color='#00a4e8' />}
+                  <div className='flex justify-between w-full items-center'>
+                    <span className='text-sm'>{character.CharacterName}</span>
+                    <span className='text-xs'>{character.ItemAvgLevel}</span>
+                  </div>
                 </button>
               ))}
             </div>
@@ -147,14 +150,14 @@ export default function Popover({
             {!isJoining && (
               <button
                 onClick={handleDelete}
-                className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-secondary-accent hover:bg-secondary-accent/50 text-xs md:text-sm font-semibold text-black'
+                className='truncate text-dark bg-secondary-accent hover:bg-secondary-accent/70 font-medium h-10 md:px-4 md:py-2 px-2 rounded transition text-xs sm:text-base'
               >
                 삭제하기
               </button>
             )}
             <button
               onClick={isJoining ? handleSaveJoin : handleChaSelectBtn}
-              className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-primary-accent/70 text-xs md:text-sm font-semibold'
+              className='truncate text-light bg-primary-accent hover:bg-primary-accent/70 font-medium h-10 md:px-4 md:py-2 px-2 rounded transition text-xs sm:text-base'
             >
               {isJoining ? '참여하기' : '저장하기'}
             </button>
