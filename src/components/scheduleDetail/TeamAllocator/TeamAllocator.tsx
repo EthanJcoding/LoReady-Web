@@ -213,6 +213,7 @@ export default function TeamAllocator({
           setDropdownSelectedCharacter={setDropdownSelectedCharacter}
           parties={parties}
           scheduleId={scheduleId}
+          userData={userData}
         />
       </>
     )
@@ -336,6 +337,7 @@ export default function TeamAllocator({
           setDropdownSelectedCharacter={setDropdownSelectedCharacter}
           parties={parties}
           scheduleId={scheduleId}
+          userData={userData}
         />
       </>
     )

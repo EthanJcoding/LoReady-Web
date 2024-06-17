@@ -3,9 +3,9 @@ import { getCharacterList } from '@/api/lostark/getCharacterList'
 import { ChaListInterface } from '@/types/characterList'
 import { FaSort, FaCheck } from 'react-icons/fa'
 import { addUserToRaid, deleteUserFromRaid, editPartyCharacter, getUserData } from '@/api/firebase'
-import { useSession } from 'next-auth/react'
 import { useState, useEffect } from 'react'
 import { User } from '@/types/users'
+import { Session } from 'next-auth'
 
 interface OwnProps {
   targetCharacter: string
@@ -17,6 +17,7 @@ interface OwnProps {
   isJoining: boolean
   setIsJoining: (arg0: boolean) => void
   scheduleId: string
+  userData: Session | null
 }
 
 const findParty = (targetCharacter: string, parties: { [key: string]: Character[] }) => {
@@ -38,13 +39,30 @@ export default function Popover({
   parties,
   isJoining,
   setIsJoining,
-  scheduleId
+  scheduleId,
+  userData
 }: OwnProps) {
-  const { data: session } = useSession()
-  const userId = session?.user.id
+  const userId = userData?.user.id
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [charList, setCharList] = useState<ChaListInterface[]>([])
   const [charactersLoaded, setCharactersLoaded] = useState(false)
+
+  useEffect(() => {
+    if (isDropdownOpen && !charactersLoaded) {
+      const fetchCharacters = async () => {
+        if (isJoining) {
+          const { registeredBy } = (await getUserData(userId)) as User
+          const list = await getCharacterList(registeredBy)
+          setCharList(list)
+        } else {
+          const list = await getCharacterList(targetCharacter)
+          setCharList(list)
+        }
+        setCharactersLoaded(true)
+      }
+      fetchCharacters()
+    }
+  }, [isDropdownOpen, charactersLoaded, isJoining, targetCharacter, userId])
 
   const handlePopover = () => {
     setIsPopoverOpen(false)
@@ -92,23 +110,6 @@ export default function Popover({
     }
     window.location.reload()
   }
-
-  useEffect(() => {
-    if (isDropdownOpen && !charactersLoaded) {
-      const fetchCharacters = async () => {
-        if (isJoining) {
-          const { registeredBy } = (await getUserData(userId)) as User
-          const list = await getCharacterList(registeredBy)
-          setCharList(list)
-        } else {
-          const list = await getCharacterList(targetCharacter)
-          setCharList(list)
-        }
-        setCharactersLoaded(true)
-      }
-      fetchCharacters()
-    }
-  }, [isDropdownOpen, charactersLoaded, isJoining, targetCharacter, userId])
 
   return (
     <>
