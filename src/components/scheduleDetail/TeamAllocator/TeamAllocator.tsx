@@ -37,74 +37,90 @@ export default function TeamAllocator({
   userData,
   scheduleId
 }: Ownprops) {
-  const [party1, setParty1] = useState(parties.party1)
-  const [party2, setParty2] = useState(parties.party2)
+  const [partyData, setPartyData] = useState(parties)
   const [frontRaidLeader, setFrontRaidLeader] = useState(raidLeader)
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [dropdownSelectedCharacter, setDropdownSelectedCharacter] = useState(selectedCharacter)
   const [isJoining, setIsJoining] = useState(false)
   const userId = userData?.user.id
   const [isUserIdExist, setIsUserIdExist] = useState(
-    parties.party1.some(member => member.userId === userId) || parties.party2.some(member => member.userId === userId)
+    partyData.party1.some(member => member.userId === userId) ||
+      partyData.party2.some(member => member.userId === userId)
   )
+
+  console.log(partyData)
+
   const toast = useToast()
 
   const moveMemberUp = (partyIndex: number, memberIndex: number) => {
-    if (partyIndex === 0 && memberIndex > 0) {
-      const newParty1 = [...party1]
-      ;[newParty1[memberIndex - 1], newParty1[memberIndex]] = [newParty1[memberIndex], newParty1[memberIndex - 1]]
-      setParty1(newParty1)
-    } else if (partyIndex === 1 && party1.length === 0) {
-      const newParty2 = [...party2]
-      const movedMember = newParty2.shift()!
-      setParty2(newParty2)
-      setParty1([movedMember])
-    } else if (partyIndex === 1 && memberIndex > 0) {
-      const newParty2 = [...party2]
-      ;[newParty2[memberIndex - 1], newParty2[memberIndex]] = [newParty2[memberIndex], newParty2[memberIndex - 1]]
-      setParty2(newParty2)
-    } else if (partyIndex === 1 && memberIndex === 0 && party1.length > 0) {
-      const newParty1 = [...party1]
-      const newParty2 = [...party2]
-      const movedMember = newParty2.shift()!
-      setParty2(newParty2)
-      setParty1([...newParty1, movedMember])
-    }
+    setPartyData(prevPartyData => {
+      const newPartyData = { ...prevPartyData }
+      const targetParty = partyIndex === 0 ? [...newPartyData.party1] : [...newPartyData.party2]
+
+      if (memberIndex > 0) {
+        ;[targetParty[memberIndex - 1], targetParty[memberIndex]] = [
+          targetParty[memberIndex],
+          targetParty[memberIndex - 1]
+        ]
+      } else if (partyIndex === 1 && newPartyData.party1.length > 0) {
+        const movedMember = targetParty.shift()
+        newPartyData.party1 = [...newPartyData.party1, movedMember!]
+      }
+
+      if (partyIndex === 0) {
+        newPartyData.party1 = targetParty
+      } else {
+        newPartyData.party2 = targetParty
+      }
+
+      return newPartyData
+    })
   }
 
   const moveMemberDown = (partyIndex: number, memberIndex: number) => {
-    if (partyIndex === 0 && memberIndex < party1.length - 1) {
-      const newParty1 = [...party1]
-      ;[newParty1[memberIndex], newParty1[memberIndex + 1]] = [newParty1[memberIndex + 1], newParty1[memberIndex]]
-      setParty1(newParty1)
-    } else if (partyIndex === 1 && memberIndex < party2.length - 1) {
-      const newParty2 = [...party2]
-      ;[newParty2[memberIndex], newParty2[memberIndex + 1]] = [newParty2[memberIndex + 1], newParty2[memberIndex]]
-      setParty2(newParty2)
-    } else if (partyIndex === 0 && memberIndex === party1.length - 1 && party1.length > 0) {
-      const newParty1 = [...party1]
-      const movedMember = newParty1.pop()!
-      setParty1(newParty1)
-      setParty2([movedMember, ...party2])
-    }
+    setPartyData(prevPartyData => {
+      const newPartyData = { ...prevPartyData }
+      const targetParty = partyIndex === 0 ? [...newPartyData.party1] : [...newPartyData.party2]
+
+      if (memberIndex < targetParty.length - 1) {
+        ;[targetParty[memberIndex], targetParty[memberIndex + 1]] = [
+          targetParty[memberIndex + 1],
+          targetParty[memberIndex]
+        ]
+      } else if (partyIndex === 0 && newPartyData.party1.length > 0) {
+        const movedMember = targetParty.pop()
+        newPartyData.party2 = [movedMember!, ...newPartyData.party2]
+      }
+
+      if (partyIndex === 0) {
+        newPartyData.party1 = targetParty
+      } else {
+        newPartyData.party2 = targetParty
+      }
+
+      return newPartyData
+    })
   }
 
   const moveMember = (partyIndex: number, memberIndex: number) => {
-    if (partyIndex === 0) {
-      const newParty1 = party1.filter(el => el !== party1[memberIndex])
-      const newParty2 = [...party2, party1[memberIndex]]
+    setPartyData(prevPartyData => {
+      const newPartyData = { ...prevPartyData }
+      const fromParty = partyIndex === 0 ? [...newPartyData.party1] : [...newPartyData.party2]
+      const toParty = partyIndex === 0 ? [...newPartyData.party2] : [...newPartyData.party1]
+      const [movedMember] = fromParty.splice(memberIndex, 1)
 
-      setParty1(newParty1)
-      setParty2(newParty2)
-    }
+      toParty.push(movedMember)
 
-    if (partyIndex === 1) {
-      const newParty2 = party2.filter(el => el !== party2[memberIndex])
-      const newParty1 = [...party1, party2[memberIndex]]
+      if (partyIndex === 0) {
+        newPartyData.party1 = fromParty
+        newPartyData.party2 = toParty
+      } else {
+        newPartyData.party1 = toParty
+        newPartyData.party2 = fromParty
+      }
 
-      setParty1(newParty1)
-      setParty2(newParty2)
-    }
+      return newPartyData
+    })
   }
 
   const handleSelect = (character: Character) => {
@@ -122,9 +138,9 @@ export default function TeamAllocator({
   }
 
   const handleSave = () => {
-    if (party1.length < 5 && party2.length < 5) {
-      const dataFilteredParty1 = party1.map(el => ({ userId: el.userId, character: el.character }))
-      const dataFilteredParty2 = party2.map(el => ({ userId: el.userId, character: el.character }))
+    if (partyData.party1.length < 5 && partyData.party2.length < 5) {
+      const dataFilteredParty1 = partyData.party1.map(el => ({ userId: el.userId, character: el.character }))
+      const dataFilteredParty2 = partyData.party2.map(el => ({ userId: el.userId, character: el.character }))
       savePartyData(scheduleId, dataFilteredParty1, dataFilteredParty2)
 
       toast('저장되었습니다.', { type: 'success', duration: 5000 })
@@ -155,7 +171,7 @@ export default function TeamAllocator({
               <span className='hidden lg:flex truncate'>{dayjs(raidDate).format('MM월 DD일')}</span>
             </h1>
             <div className='text-lg font-semibold'>파티 리스트</div>
-            {party1.map((member, idx) => {
+            {partyData.party1.map((member, idx) => {
               return (
                 <div
                   key={idx}
@@ -207,14 +223,12 @@ export default function TeamAllocator({
           setIsPopoverOpen={setIsPopoverOpen}
           dropdownSelectedCharacter={dropdownSelectedCharacter}
           setDropdownSelectedCharacter={setDropdownSelectedCharacter}
-          parties={parties}
+          partyData={partyData}
+          setPartyData={setPartyData}
           scheduleId={scheduleId}
           userData={userData}
-          party1={party1}
-          party2={party2}
-          setParty1={setParty1}
-          setParty2={setParty2}
           setIsUserIdExist={setIsUserIdExist}
+          setSelectedCharacter={setSelectedCharacter}
         />
       </>
     )
@@ -230,7 +244,7 @@ export default function TeamAllocator({
               <span className='hidden lg:flex truncate'>{dayjs(raidDate).format('MM월 DD일')}</span>
             </h1>
             <div className='text-lg font-semibold '>1번 파티</div>
-            {party1.map((member, idx) => {
+            {partyData.party1.map((member, idx) => {
               return (
                 <div
                   key={idx}
@@ -267,7 +281,7 @@ export default function TeamAllocator({
           </div>
           <div className='w-full sm:h-1/2 space-y-2'>
             <span className='text-lg font-semibold'>2번 파티</span>
-            {party2.map((member, idx) => {
+            {partyData.party2.map((member, idx) => {
               return (
                 <div
                   key={idx}
@@ -336,14 +350,12 @@ export default function TeamAllocator({
           setIsPopoverOpen={setIsPopoverOpen}
           dropdownSelectedCharacter={dropdownSelectedCharacter}
           setDropdownSelectedCharacter={setDropdownSelectedCharacter}
-          parties={parties}
+          partyData={partyData}
+          setPartyData={setPartyData}
           scheduleId={scheduleId}
           userData={userData}
-          party1={party1}
-          party2={party2}
-          setParty1={setParty1}
-          setParty2={setParty2}
           setIsUserIdExist={setIsUserIdExist}
+          setSelectedCharacter={setSelectedCharacter}
         />
       </>
     )

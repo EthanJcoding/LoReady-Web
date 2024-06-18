@@ -1,4 +1,5 @@
 import { updateRaidLeader } from '@/api/firebase'
+import { useToast } from '@/hooks/useToast'
 import { Character } from '@/types/schedule'
 import { useState } from 'react'
 import { FaCheck } from 'react-icons/fa'
@@ -12,6 +13,7 @@ interface Ownprops {
 
 export default function RaidLeaderDropdown({ scheduleId, frontRaidLeader, setFrontRaidLeader, characters }: Ownprops) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const toast = useToast()
 
   const handleRaidLeaderDropdownOpen = () => {
     setIsDropdownOpen(!isDropdownOpen)
@@ -21,6 +23,7 @@ export default function RaidLeaderDropdown({ scheduleId, frontRaidLeader, setFro
     setFrontRaidLeader(character)
     await updateRaidLeader(scheduleId, character)
     setIsDropdownOpen(false)
+    toast('수정되었습니다.', { type: 'success', duration: 5000 })
     // toast
   }
 
