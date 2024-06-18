@@ -33,7 +33,7 @@ export default function RaidLeaderDropdown({ scheduleId, frontRaidLeader, setFro
         공대장: {frontRaidLeader.character}
       </button>
       {isDropdownOpen && (
-        <div className='absolute bottom-full mb-2 w-full rounded shadow bg-transparent border max-h-[8rem] overflow-scroll'>
+        <div className='absolute bottom-full mb-2 w-full rounded shadow bg-transparent border max-h-[8rem] overflow-y-scroll'>
           <div className='py-1' role='menu' aria-orientation='vertical' aria-labelledby='options-menu'>
             {characters.map((char, idx) => (
               <button
