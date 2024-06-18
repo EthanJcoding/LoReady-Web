@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useParams } from 'next/navigation'
 import { FaArrowUp, FaArrowDown, FaRegCaretSquareDown, FaRegCaretSquareUp } from 'react-icons/fa'
 import { FaGear } from 'react-icons/fa6'
 import { savePartyData } from '@/api/firebase/savePartyData/savePartyData'
@@ -11,6 +10,7 @@ import RaidLeaderDropdown from './RaidLeaderDropdown'
 import { PiCrownSimpleFill } from 'react-icons/pi'
 import dayjs from 'dayjs'
 import { Session } from 'next-auth'
+import { useToast } from '@/hooks/useToast'
 
 interface Ownprops {
   parties: { [key: string]: Character[] }
@@ -22,6 +22,7 @@ interface Ownprops {
   raidName: string
   raidDate: string
   userData: Session | null
+  scheduleId: string
 }
 
 export default function TeamAllocator({
@@ -33,17 +34,20 @@ export default function TeamAllocator({
   characters,
   raidName,
   raidDate,
-  userData
+  userData,
+  scheduleId
 }: Ownprops) {
   const [party1, setParty1] = useState(parties.party1)
   const [party2, setParty2] = useState(parties.party2)
   const [frontRaidLeader, setFrontRaidLeader] = useState(raidLeader)
-  const params = useParams<{ channelId: string; scheduleId: string }>()
-  const { scheduleId } = params
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [dropdownSelectedCharacter, setDropdownSelectedCharacter] = useState(selectedCharacter)
   const [isJoining, setIsJoining] = useState(false)
   const userId = userData?.user.id
+  const [isUserIdExist, setIsUserIdExist] = useState(
+    parties.party1.some(member => member.userId === userId) || parties.party2.some(member => member.userId === userId)
+  )
+  const toast = useToast()
 
   const moveMemberUp = (partyIndex: number, memberIndex: number) => {
     if (partyIndex === 0 && memberIndex > 0) {
@@ -121,20 +125,12 @@ export default function TeamAllocator({
     if (party1.length < 5 && party2.length < 5) {
       const dataFilteredParty1 = party1.map(el => ({ userId: el.userId, character: el.character }))
       const dataFilteredParty2 = party2.map(el => ({ userId: el.userId, character: el.character }))
-
       savePartyData(scheduleId, dataFilteredParty1, dataFilteredParty2)
 
-      window.alert('저장완료')
+      toast('저장되었습니다.', { type: 'success', duration: 5000 })
     } else {
-      window.alert('한 파티에는 4명까지 참여 가능합니다')
+      toast('한 파티에는 4명까지 참여 가능합니다.', { type: 'fail', duration: 5000 })
     }
-  }
-
-  // 주어진 userId가 데이터에 있는지 확인하는 함수
-  const isUserIdExist = (userId: string) => {
-    return (
-      parties.party1.some(member => member.userId === userId) || parties.party2.some(member => member.userId === userId)
-    )
   }
 
   const handleCharacterSetting = (character: Character) => {
@@ -192,7 +188,7 @@ export default function TeamAllocator({
               setFrontRaidLeader={setFrontRaidLeader}
               characters={characters}
             />
-            {isUserIdExist(userId) ? null : (
+            {isUserIdExist ? null : (
               <button
                 onClick={() => handleJoinParty()}
                 className='truncate text-light bg-primary-accent hover:bg-primary-accent/70 font-medium h-10 md:px-4 md:py-2 px-2 rounded transition text-xs sm:text-base'
@@ -214,6 +210,11 @@ export default function TeamAllocator({
           parties={parties}
           scheduleId={scheduleId}
           userData={userData}
+          party1={party1}
+          party2={party2}
+          setParty1={setParty1}
+          setParty2={setParty2}
+          setIsUserIdExist={setIsUserIdExist}
         />
       </>
     )
@@ -309,7 +310,7 @@ export default function TeamAllocator({
               setFrontRaidLeader={setFrontRaidLeader}
               characters={characters}
             />
-            {isUserIdExist(userId) ? null : (
+            {isUserIdExist ? null : (
               <button
                 onClick={() => handleJoinParty()}
                 className='truncate text-light bg-primary-accent hover:bg-primary-accent/70 font-medium h-10 md:px-4 md:py-2 px-2 rounded transition text-xs sm:text-base'
@@ -338,6 +339,11 @@ export default function TeamAllocator({
           parties={parties}
           scheduleId={scheduleId}
           userData={userData}
+          party1={party1}
+          party2={party2}
+          setParty1={setParty1}
+          setParty2={setParty2}
+          setIsUserIdExist={setIsUserIdExist}
         />
       </>
     )
