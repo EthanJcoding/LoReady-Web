@@ -83,6 +83,7 @@ export default async function ScheduleDetail({ params }: Ownprops) {
         raidName={raidName}
         raidDate={raidDate}
         userData={userData}
+        scheduleId={scheduleId}
       />
     </div>
   )

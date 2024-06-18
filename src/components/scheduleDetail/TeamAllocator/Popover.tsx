@@ -6,6 +6,8 @@ import { addUserToRaid, deleteUserFromRaid, editPartyCharacter, getUserData } fr
 import { useState, useEffect } from 'react'
 import { User } from '@/types/users'
 import { Session } from 'next-auth'
+import { useToast } from '@/hooks/useToast'
+import { getCharacterData } from '@/api/lostark/getCharacterData'
 
 interface OwnProps {
   targetCharacter: string
@@ -18,6 +20,11 @@ interface OwnProps {
   setIsJoining: (arg0: boolean) => void
   scheduleId: string
   userData: Session | null
+  party1: Character[]
+  party2: Character[]
+  setParty1: (arg0: Character[]) => void
+  setParty2: (arg0: Character[]) => void
+  setIsUserIdExist: (arg0: boolean) => void
 }
 
 const findParty = (targetCharacter: string, parties: { [key: string]: Character[] }) => {
@@ -40,12 +47,18 @@ export default function Popover({
   isJoining,
   setIsJoining,
   scheduleId,
-  userData
+  userData,
+  party1,
+  party2,
+  setParty1,
+  setParty2,
+  setIsUserIdExist
 }: OwnProps) {
   const userId = userData?.user.id
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [charList, setCharList] = useState<ChaListInterface[]>([])
   const [charactersLoaded, setCharactersLoaded] = useState(false)
+  const toast = useToast()
 
   useEffect(() => {
     if (isDropdownOpen && !charactersLoaded) {
@@ -84,31 +97,51 @@ export default function Popover({
     const partyIdx = findParty(targetCharacter, parties)
     if (partyIdx) {
       await editPartyCharacter(scheduleId, partyIdx, dropdownSelectedCharacter, targetCharacter)
-      window.location.reload()
+      toast('저장되었습니다.', { type: 'success', duration: 5000 })
+      setIsPopoverOpen(false)
     }
   }
 
   const handleDelete = async () => {
     const partyIdx = findParty(targetCharacter, parties)
-    if (partyIdx) {
+    if (partyIdx === 'party1') {
+      const copyArr = [...party1].filter((char: Character) => char.character !== targetCharacter)
+      setParty1(copyArr)
       await deleteUserFromRaid(scheduleId, partyIdx, targetCharacter, userId)
-      window.location.reload()
+      toast('삭제되었습니다.', { type: 'success', duration: 5000 })
+      setIsPopoverOpen(false)
+      setIsUserIdExist(false)
+    }
+    if (partyIdx === 'party2') {
+      const copyArr = [...party2].filter((char: Character) => char.character !== targetCharacter)
+      setParty2(copyArr)
+      await deleteUserFromRaid(scheduleId, partyIdx, targetCharacter, userId)
+      toast('삭제되었습니다.', { type: 'success', duration: 5000 })
+      setIsPopoverOpen(false)
+      setIsUserIdExist(false)
     }
   }
 
-  const handleCharSelectForJoining = (character: string) => {
-    const data = { character, userId }
-    setDropdownSelectedCharacter(data)
+  const handleCharSelectForJoining = async (character: string) => {
+    const data = await getCharacterData(character)
+    const charData = { character, userId, data }
+
+    setDropdownSelectedCharacter(charData)
     setIsDropdownOpen(false)
   }
 
   const handleSaveJoin = async () => {
     if (parties.party1.length <= 3) {
       await addUserToRaid(scheduleId, 'party1', dropdownSelectedCharacter)
+      setParty1([...party1, dropdownSelectedCharacter])
     } else {
       await addUserToRaid(scheduleId, 'party2', dropdownSelectedCharacter)
+      setParty2([...party2, dropdownSelectedCharacter])
     }
-    window.location.reload()
+    toast('저장되었습니다.', { type: 'success', duration: 5000 })
+    setIsPopoverOpen(false)
+    setIsJoining(false)
+    setIsUserIdExist(true)
   }
 
   return (
