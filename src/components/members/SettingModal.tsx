@@ -53,15 +53,18 @@ export default function SettingModal({ setIsOpen, registeredBy }: Ownprops) {
         </button>
 
         {isDropdownOpen && (
-          <div className='border rounded p-2 overflow-scroll space-y-2 absolute top-12 bg-light dark:bg-dark w-[13rem] h-[18rem]'>
+          <div className='border rounded p-2 overflow-y-scroll space-y-2 absolute top-12 bg-light dark:bg-dark w-[13rem] h-[12rem]'>
             {charList.map((character, idx) => (
               <button
                 onClick={() => handleDropdownClick(character.CharacterName)}
                 key={idx}
-                className='flex items-center hover:bg-secondary-gray/50 w-full p-1 rounded transition justify-between'
+                className='flex items-center hover:bg-secondary-gray/50 w-full p-1 rounded transition justify-between gap-2'
               >
-                <div>{character.CharacterName}</div>
-                {selected === character.CharacterName && <FaCheck />}
+                {selected === character.CharacterName && <FaCheck color='#00a4e8' />}
+                <div className='flex justify-between w-full items-center'>
+                  <span className='text-sm'>{character.CharacterName}</span>
+                  <span className='text-xs'>{character.ItemAvgLevel}</span>
+                </div>
               </button>
             ))}
           </div>
