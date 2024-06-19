@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Animation from '../animation/animation'
+import DemoAuthButton from '@/components/auth/DemoAuthButton'
 
 export default function Hero() {
   return (
@@ -10,19 +11,22 @@ export default function Hero() {
             친구들, 길드원들과 <div className='mb-2' /> 레이드 스케줄을 편하게 관리하세요
           </h1>
           <p className='sm:text-xl mb-8'>디스코드에서 레이드 스케줄을 만들고 공유하세요 !</p>
-          <div className='flex gap-4 mb-8'>
-            <Link
-              className='text-light bg-primary-accent hover:bg-primary-accent/70 font-medium py-2 px-4 rounded transition'
-              href={process.env.NEXT_PUBLIC_DOCUMENT_LINK as string}
-            >
-              사용법
-            </Link>
-            <Link
-              className='text-light bg-primary-accent hover:bg-primary-accent/70 font-medium py-2 px-4 rounded transition'
-              href={process.env.NEXT_PUBLIC_ADDBOT_LINK as string}
-            >
-              봇 추가하기
-            </Link>
+          <div className='flex items-center gap-4 mb-8'>
+            <div className='flex gap-4'>
+              <Link
+                className='text-light bg-primary-accent hover:bg-primary-accent/70 font-medium py-2 px-4 rounded transition'
+                href={process.env.NEXT_PUBLIC_DOCUMENT_LINK as string}
+              >
+                사용법
+              </Link>
+              <Link
+                className='text-light bg-primary-accent hover:bg-primary-accent/70 font-medium py-2 px-4 rounded transition'
+                href={process.env.NEXT_PUBLIC_ADDBOT_LINK as string}
+              >
+                봇 추가하기
+              </Link>
+            </div>
+            <DemoAuthButton />
           </div>
         </div>
         <Animation />
