@@ -10,7 +10,7 @@ export default function CharacterDetail({ selectedCharacter }: Ownprops) {
   const { ArmoryEquipment, ArmoryProfile, ArmoryCard, ArmoryEngraving, ArmoryGem } = selectedCharacter.data
 
   return (
-    <section className='flex flex-col border sm:w-2/3 w-full h-full p-8 rounded-lg shadow-sm gap-4 overflow-scroll'>
+    <section className='flex flex-col border sm:w-2/3 w-full h-full p-8 rounded-lg shadow-sm gap-4 overflow-y-auto'>
       <CharacterSummary
         ArmoryProfile={ArmoryProfile}
         ArmoryEquipment={ArmoryEquipment}

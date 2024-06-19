@@ -9,6 +9,7 @@ interface characterData {
 
 async function addUserToRaid(scheduleId: string, partyIdx: string, pushingData: characterData) {
   const scheduleRef = doc(firestore, 'schedules', scheduleId)
+  const characterAndUserId = { userId: pushingData.userId, character: pushingData.character }
 
   try {
     const data = await getDoc(scheduleRef)
@@ -16,13 +17,13 @@ async function addUserToRaid(scheduleId: string, partyIdx: string, pushingData: 
     if (data.exists()) {
       const scheduleData = data.data()
       const updatedParties = { ...scheduleData.parties }
-      updatedParties[partyIdx].push(pushingData)
+      updatedParties[partyIdx].push(characterAndUserId)
 
       const updatedCharacters = [...scheduleData.characters]
-      updatedCharacters.push(pushingData)
+      updatedCharacters.push(characterAndUserId)
 
       const updatedParticipants = [...scheduleData.participants]
-      updatedParticipants.push(pushingData.userId)
+      updatedParticipants.push(characterAndUserId.userId)
 
       await updateDoc(scheduleRef, {
         parties: updatedParties,

@@ -3,9 +3,11 @@ import { getCharacterList } from '@/api/lostark/getCharacterList'
 import { ChaListInterface } from '@/types/characterList'
 import { FaSort, FaCheck } from 'react-icons/fa'
 import { addUserToRaid, deleteUserFromRaid, editPartyCharacter, getUserData } from '@/api/firebase'
-import { useSession } from 'next-auth/react'
 import { useState, useEffect } from 'react'
 import { User } from '@/types/users'
+import { Session } from 'next-auth'
+import { useToast } from '@/hooks/useToast'
+import { getCharacterData } from '@/api/lostark/getCharacterData'
 
 interface OwnProps {
   targetCharacter: string
@@ -13,10 +15,14 @@ interface OwnProps {
   setIsPopoverOpen: (arg0: boolean) => void
   dropdownSelectedCharacter: Character
   setDropdownSelectedCharacter: (arg0: Character) => void
-  parties: { [key: string]: Character[] }
+  partyData: { [key: string]: Character[] }
+  setPartyData: (arg0: { [key: string]: Character[] }) => void
   isJoining: boolean
   setIsJoining: (arg0: boolean) => void
   scheduleId: string
+  userData: Session | null
+  setIsUserIdExist: (arg0: boolean) => void
+  setSelectedCharacter: (arg0: Character) => void
 }
 
 const findParty = (targetCharacter: string, parties: { [key: string]: Character[] }) => {
@@ -35,63 +41,20 @@ export default function Popover({
   setIsPopoverOpen,
   dropdownSelectedCharacter,
   setDropdownSelectedCharacter,
-  parties,
+  partyData,
+  setPartyData,
   isJoining,
   setIsJoining,
-  scheduleId
+  scheduleId,
+  userData,
+  setIsUserIdExist,
+  setSelectedCharacter
 }: OwnProps) {
-  const { data: session } = useSession()
-  const userId = session?.user.id
+  const userId = userData?.user.id
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [charList, setCharList] = useState<ChaListInterface[]>([])
   const [charactersLoaded, setCharactersLoaded] = useState(false)
-
-  const handlePopover = () => {
-    setIsPopoverOpen(false)
-    setIsDropdownOpen(false)
-    setIsJoining(false)
-  }
-
-  const handleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen)
-  }
-
-  const handleChaSelect = (character: string) => {
-    const data = { character, userId }
-    setDropdownSelectedCharacter(data)
-    setIsDropdownOpen(false)
-  }
-
-  const handleChaSelectBtn = async () => {
-    const partyIdx = findParty(targetCharacter, parties)
-    if (partyIdx) {
-      await editPartyCharacter(scheduleId, partyIdx, dropdownSelectedCharacter, targetCharacter)
-      window.location.reload()
-    }
-  }
-
-  const handleDelete = async () => {
-    const partyIdx = findParty(targetCharacter, parties)
-    if (partyIdx) {
-      await deleteUserFromRaid(scheduleId, partyIdx, targetCharacter, userId)
-      window.location.reload()
-    }
-  }
-
-  const handleCharSelectForJoining = (character: string) => {
-    const data = { character, userId }
-    setDropdownSelectedCharacter(data)
-    setIsDropdownOpen(false)
-  }
-
-  const handleSaveJoin = async () => {
-    if (parties.party1.length <= 3) {
-      await addUserToRaid(scheduleId, 'party1', dropdownSelectedCharacter)
-    } else {
-      await addUserToRaid(scheduleId, 'party2', dropdownSelectedCharacter)
-    }
-    window.location.reload()
-  }
+  const toast = useToast()
 
   useEffect(() => {
     if (isDropdownOpen && !charactersLoaded) {
@@ -110,6 +73,89 @@ export default function Popover({
     }
   }, [isDropdownOpen, charactersLoaded, isJoining, targetCharacter, userId])
 
+  const handlePopover = () => {
+    setIsPopoverOpen(false)
+    setIsDropdownOpen(false)
+    setIsJoining(false)
+  }
+
+  const handleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen)
+  }
+
+  const handleCharSelectForJoining = async (character: string) => {
+    const data = await getCharacterData(character)
+    const charData = { character, userId, data }
+
+    setDropdownSelectedCharacter(charData)
+    setIsDropdownOpen(false)
+  }
+
+  const handleDelete = async () => {
+    const partyIdx = findParty(targetCharacter, partyData)
+
+    if (partyIdx === 'party1') {
+      const copyArr = [...partyData.party1].filter((char: Character) => char.character !== targetCharacter)
+      setPartyData({ party1: copyArr, party2: partyData.party2 })
+      await deleteUserFromRaid(scheduleId, partyIdx, targetCharacter, userId)
+      toast('삭제되었습니다.', { type: 'success', duration: 5000 })
+      setIsPopoverOpen(false)
+      setIsUserIdExist(false)
+
+      if (partyData[partyIdx].length > 0) {
+        setSelectedCharacter(partyData[partyIdx][0])
+      }
+    }
+    if (partyIdx === 'party2') {
+      const copyArr = [...partyData.party2].filter((char: Character) => char.character !== targetCharacter)
+      setPartyData({ party2: copyArr, party1: partyData.party1 })
+      await deleteUserFromRaid(scheduleId, partyIdx, targetCharacter, userId)
+      toast('삭제되었습니다.', { type: 'success', duration: 5000 })
+      setIsPopoverOpen(false)
+      setIsUserIdExist(false)
+
+      if (partyData[partyIdx].length > 0) {
+        setSelectedCharacter(partyData[partyIdx][0])
+      }
+    }
+  }
+
+  const handleChaSelectBtn = async () => {
+    const partyIdx = findParty(targetCharacter, partyData)
+    if (partyIdx) {
+      const copyObj = { ...partyData }
+      const filteredArr = copyObj[partyIdx].filter((char: Character) => char.character !== targetCharacter)
+      filteredArr.push(dropdownSelectedCharacter)
+
+      copyObj[partyIdx] = filteredArr
+
+      const pushingData = { userId: dropdownSelectedCharacter.userId, character: dropdownSelectedCharacter.character }
+
+      await editPartyCharacter(scheduleId, partyIdx, pushingData, targetCharacter)
+      toast('저장되었습니다.', { type: 'success', duration: 5000 })
+      setIsPopoverOpen(false)
+      setPartyData(copyObj)
+      setSelectedCharacter(dropdownSelectedCharacter)
+    }
+  }
+
+  const handleSaveJoin = async () => {
+    if (partyData.party1.length <= 3) {
+      await addUserToRaid(scheduleId, 'party1', dropdownSelectedCharacter)
+      const pushingData = [...partyData.party1, dropdownSelectedCharacter]
+      setPartyData({ party1: pushingData, party2: partyData.party2 })
+    } else {
+      await addUserToRaid(scheduleId, 'party2', dropdownSelectedCharacter)
+      const pushingData = [...partyData.party2, dropdownSelectedCharacter]
+      setPartyData({ party2: pushingData, party1: partyData.party1 })
+    }
+    toast('저장되었습니다.', { type: 'success', duration: 5000 })
+    setIsPopoverOpen(false)
+    setIsJoining(false)
+    setIsUserIdExist(true)
+    setSelectedCharacter(dropdownSelectedCharacter)
+  }
+
   return (
     <>
       {isPopoverOpen && (
@@ -125,19 +171,18 @@ export default function Popover({
             <FaSort />
           </button>
           {isDropdownOpen && (
-            <div className='border rounded p-2 overflow-scroll space-y-2 absolute top-12 bg-light dark:bg-dark w-[18rem] h-[18rem]'>
+            <div className='border rounded p-2 overflow-y-scroll space-y-2 absolute top-12 bg-light dark:bg-dark w-[18rem] h-[12rem]'>
               {charList.map((character, idx) => (
                 <button
-                  onClick={() =>
-                    isJoining
-                      ? handleCharSelectForJoining(character.CharacterName)
-                      : handleChaSelect(character.CharacterName)
-                  }
+                  onClick={() => handleCharSelectForJoining(character.CharacterName)}
                   key={idx}
-                  className='flex items-center hover:bg-secondary-gray/50 w-full p-1 rounded transition justify-between'
+                  className='flex items-center hover:bg-secondary-gray/50 w-full p-1 rounded transition justify-between gap-2'
                 >
-                  <div>{character.CharacterName}</div>
-                  {dropdownSelectedCharacter.character === character.CharacterName && <FaCheck />}
+                  {dropdownSelectedCharacter.character === character.CharacterName && <FaCheck color='#00a4e8' />}
+                  <div className='flex justify-between w-full items-center'>
+                    <span className='text-sm'>{character.CharacterName}</span>
+                    <span className='text-xs'>{character.ItemAvgLevel}</span>
+                  </div>
                 </button>
               ))}
             </div>
@@ -146,14 +191,14 @@ export default function Popover({
             {!isJoining && (
               <button
                 onClick={handleDelete}
-                className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-secondary-accent hover:bg-secondary-accent/50 text-xs md:text-sm font-semibold text-black'
+                className='truncate text-dark bg-secondary-accent hover:bg-secondary-accent/70 font-medium h-10 md:px-4 md:py-2 px-2 rounded transition text-xs sm:text-base'
               >
                 삭제하기
               </button>
             )}
             <button
               onClick={isJoining ? handleSaveJoin : handleChaSelectBtn}
-              className='truncate h-10 md:px-4 md:py-2 px-2 transition rounded border bg-primary-accent hover:bg-primary-accent/70 text-xs md:text-sm font-semibold'
+              className='truncate text-light bg-primary-accent hover:bg-primary-accent/70 font-medium h-10 md:px-4 md:py-2 px-2 rounded transition text-xs sm:text-base'
             >
               {isJoining ? '참여하기' : '저장하기'}
             </button>

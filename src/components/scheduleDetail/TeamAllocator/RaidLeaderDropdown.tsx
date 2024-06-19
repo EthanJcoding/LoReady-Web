@@ -1,4 +1,5 @@
 import { updateRaidLeader } from '@/api/firebase'
+import { useToast } from '@/hooks/useToast'
 import { Character } from '@/types/schedule'
 import { useState } from 'react'
 import { FaCheck } from 'react-icons/fa'
@@ -12,6 +13,7 @@ interface Ownprops {
 
 export default function RaidLeaderDropdown({ scheduleId, frontRaidLeader, setFrontRaidLeader, characters }: Ownprops) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const toast = useToast()
 
   const handleRaidLeaderDropdownOpen = () => {
     setIsDropdownOpen(!isDropdownOpen)
@@ -21,6 +23,7 @@ export default function RaidLeaderDropdown({ scheduleId, frontRaidLeader, setFro
     setFrontRaidLeader(character)
     await updateRaidLeader(scheduleId, character)
     setIsDropdownOpen(false)
+    toast('수정되었습니다.', { type: 'success', duration: 5000 })
     // toast
   }
 
@@ -33,7 +36,7 @@ export default function RaidLeaderDropdown({ scheduleId, frontRaidLeader, setFro
         공대장: {frontRaidLeader.character}
       </button>
       {isDropdownOpen && (
-        <div className='absolute bottom-full mb-2 w-full rounded shadow bg-transparent border max-h-[8rem] overflow-scroll'>
+        <div className='absolute bottom-full mb-2 w-full rounded shadow bg-transparent border max-h-[8rem] overflow-y-scroll'>
           <div className='py-1' role='menu' aria-orientation='vertical' aria-labelledby='options-menu'>
             {characters.map((char, idx) => (
               <button
