@@ -48,8 +48,6 @@ export default function TeamAllocator({
       partyData.party2.some(member => member.userId === userId)
   )
 
-  console.log(partyData)
-
   const toast = useToast()
 
   const moveMemberUp = (partyIndex: number, memberIndex: number) => {

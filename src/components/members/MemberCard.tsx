@@ -29,11 +29,9 @@ const moveUsernameToFront = (members: User[], targetUsername: string) => {
 export default async function MemberCard({ members, session }: Ownprops) {
   const sortedMembers = moveUsernameToFront(members, session.user.name)
 
-  const handleClickSetting = () => {}
-
   return (
     <>
-      <ul className='flex gap-4 w-full h-full flex-wrap justify-center sm:justify-normal overflow-scroll'>
+      <ul className='flex gap-4 w-full h-full flex-wrap justify-center sm:justify-normal overflow-y-scroll'>
         {sortedMembers.map(async m => {
           const data = (await getCharacterProfile(m.registeredBy)) as ChaListInterface
 
