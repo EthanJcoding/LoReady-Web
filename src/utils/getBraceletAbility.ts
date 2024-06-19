@@ -128,13 +128,13 @@ export const getBraceletAbility = (htmlString: string) => {
       }
 
       if (textContent === '비수') {
-        if (elements[i + 2].textContent === '1.8%') {
+        if (elements[i + 1].textContent === '1.8%') {
           result.push('비수 하')
         }
-        if (elements[i + 2].textContent === '2.1%') {
+        if (elements[i + 1].textContent === '2.1%') {
           result.push('비수 중')
         }
-        if (elements[i + 2].textContent === '2.5%') {
+        if (elements[i + 1].textContent === '2.5%') {
           result.push('비수 상')
         }
       }
