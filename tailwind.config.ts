@@ -42,7 +42,8 @@ const config: Config = {
       },
       animation: {
         toast: 'upward .3s ease-in-out',
-        'typed-out': 'typing 1.5s steps(20, end) .5s forwards, blink .5s step-end 2.5s infinite alternate'
+        'typed-out': 'typing 1.5s steps(20, end) .5s forwards, blink .5s step-end 2.5s infinite alternate',
+        'slow-ping': 'ping 1.2s cubic-bezier(0, 0, 0.2, 1) infinite'
       }
     }
   },
