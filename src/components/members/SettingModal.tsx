@@ -1,20 +1,20 @@
 import { updateRegisteredChar } from '@/api/firebase'
 import { getCharacterList } from '@/api/lostark/getCharacterList'
 import { ChaListInterface } from '@/types/characterList'
-import { useSession } from 'next-auth/react'
+import { Session } from 'next-auth'
 import { useState, useEffect } from 'react'
 import { FaCheck, FaSort } from 'react-icons/fa'
 
 interface Ownprops {
   setIsOpen: (arg0: boolean) => void
   registeredBy: string
+  session: Session | null
 }
 
-export default function SettingModal({ setIsOpen, registeredBy }: Ownprops) {
+export default function SettingModal({ setIsOpen, registeredBy, session }: Ownprops) {
   const [selected, setSelected] = useState(registeredBy)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [charList, setCharList] = useState<ChaListInterface[]>([])
-  const { data: session } = useSession()
 
   useEffect(() => {
     const fetchCharacters = async () => {
