@@ -3,7 +3,6 @@ import { ChaListInterface } from '@/types/characterList'
 import { User } from '@/types/users'
 import { Session } from 'next-auth'
 import Image from 'next/image'
-import { FaGear } from 'react-icons/fa6'
 import Setting from './Setting'
 
 interface Ownprops {
