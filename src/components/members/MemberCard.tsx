@@ -53,7 +53,7 @@ export default async function MemberCard({ members, session }: Ownprops) {
                       className='w-24 h-24 object-none object-top rounded-full shadow'
                     />
                   </div>
-                  {session?.user.name === m.username && <Setting registeredBy={m.registeredBy} />}
+                  {session?.user.name === m.username && <Setting registeredBy={m.registeredBy} session={session} />}
                 </div>
 
                 <span className='text-primary-accent text-xl font-medium text-center'>{m.registeredBy}</span>
