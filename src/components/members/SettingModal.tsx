@@ -53,7 +53,7 @@ export default function SettingModal({ setIsOpen, registeredBy, session }: Ownpr
         </button>
 
         {isDropdownOpen && (
-          <div className='border rounded p-2 overflow-y-scroll space-y-2 absolute top-12 bg-light dark:bg-dark w-[18rem] max-h-[12rem]'>
+          <div className='border rounded p-2 overflow-y-auto space-y-2 absolute top-12 bg-light dark:bg-dark w-[18rem] max-h-[12rem]'>
             {charList.map((character, idx) => (
               <button
                 onClick={() => handleDropdownClick(character.CharacterName)}

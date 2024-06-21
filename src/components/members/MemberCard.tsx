@@ -30,7 +30,7 @@ export default async function MemberCard({ members, session }: Ownprops) {
 
   return (
     <>
-      <ul className='flex gap-4 w-full h-full flex-wrap justify-center sm:justify-normal overflow-y-scroll'>
+      <ul className='flex gap-4 w-full h-full flex-wrap justify-center sm:justify-normal overflow-y-auto'>
         {sortedMembers.map(async m => {
           const data = (await getCharacterProfile(m.registeredBy)) as ChaListInterface
 
