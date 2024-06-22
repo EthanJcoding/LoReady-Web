@@ -47,6 +47,7 @@ export default function TeamAllocator({
     partyData.party1.some(member => member.userId === userId) ||
       partyData.party2.some(member => member.userId === userId)
   )
+  const [characterList, setCharacterList] = useState(characters)
 
   const toast = useToast()
 
@@ -200,7 +201,7 @@ export default function TeamAllocator({
               scheduleId={scheduleId}
               frontRaidLeader={frontRaidLeader}
               setFrontRaidLeader={setFrontRaidLeader}
-              characters={characters}
+              characterList={characterList}
             />
             {isUserIdExist ? null : (
               <button
@@ -227,6 +228,8 @@ export default function TeamAllocator({
           userData={userData}
           setIsUserIdExist={setIsUserIdExist}
           setSelectedCharacter={setSelectedCharacter}
+          characterList={characterList}
+          setCharacterList={setCharacterList}
         />
       </>
     )
@@ -320,7 +323,7 @@ export default function TeamAllocator({
               scheduleId={scheduleId}
               frontRaidLeader={frontRaidLeader}
               setFrontRaidLeader={setFrontRaidLeader}
-              characters={characters}
+              characterList={characterList}
             />
             {isUserIdExist ? null : (
               <button
@@ -354,6 +357,8 @@ export default function TeamAllocator({
           userData={userData}
           setIsUserIdExist={setIsUserIdExist}
           setSelectedCharacter={setSelectedCharacter}
+          characterList={characterList}
+          setCharacterList={setCharacterList}
         />
       </>
     )

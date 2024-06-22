@@ -8,10 +8,15 @@ interface Ownprops {
   scheduleId: string
   frontRaidLeader: Character
   setFrontRaidLeader: (arg0: Character) => void
-  characters: Character[]
+  characterList: Character[]
 }
 
-export default function RaidLeaderDropdown({ scheduleId, frontRaidLeader, setFrontRaidLeader, characters }: Ownprops) {
+export default function RaidLeaderDropdown({
+  scheduleId,
+  frontRaidLeader,
+  setFrontRaidLeader,
+  characterList
+}: Ownprops) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const toast = useToast()
 
@@ -38,7 +43,7 @@ export default function RaidLeaderDropdown({ scheduleId, frontRaidLeader, setFro
       {isDropdownOpen && (
         <div className='absolute bottom-full mb-2 w-full rounded shadow bg-transparent border max-h-[8rem] overflow-y-scroll'>
           <div className='py-1' role='menu' aria-orientation='vertical' aria-labelledby='options-menu'>
-            {characters.map((char, idx) => (
+            {characterList.map((char, idx) => (
               <button
                 onClick={() => handleSelection(char)}
                 key={idx}
