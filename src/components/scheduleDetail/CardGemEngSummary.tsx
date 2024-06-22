@@ -31,6 +31,9 @@ export default function CardGemEngSummary({ ArmoryCard, ArmoryGem, ArmoryEngravi
     case '너는 계획이 다 있구나 6세트 (30각성합계)':
       cardEffect = '너계다 30각'
       break
+    case '남겨진 바람의 절벽 6세트 (30각성합계)':
+      cardEffect = '남바절 30각'
+      break
     default:
       break
   }
