@@ -23,6 +23,8 @@ interface OwnProps {
   userData: Session | null
   setIsUserIdExist: (arg0: boolean) => void
   setSelectedCharacter: (arg0: Character) => void
+  characterList: Character[]
+  setCharacterList: (arg0: Character[]) => void
 }
 
 const findParty = (targetCharacter: string, parties: { [key: string]: Character[] }) => {
@@ -48,7 +50,9 @@ export default function Popover({
   scheduleId,
   userData,
   setIsUserIdExist,
-  setSelectedCharacter
+  setSelectedCharacter,
+  characterList,
+  setCharacterList
 }: OwnProps) {
   const userId = userData?.user.id
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -118,6 +122,10 @@ export default function Popover({
         setSelectedCharacter(partyData[partyIdx][0])
       }
     }
+
+    const copiedList = [...characterList].filter(char => char.character !== targetCharacter)
+
+    setCharacterList(copiedList)
   }
 
   const handleChaSelectBtn = async () => {
@@ -154,6 +162,13 @@ export default function Popover({
     setIsJoining(false)
     setIsUserIdExist(true)
     setSelectedCharacter(dropdownSelectedCharacter)
+
+    const copiedList = [
+      ...characterList,
+      { character: dropdownSelectedCharacter.character, userId: dropdownSelectedCharacter.userId }
+    ]
+
+    setCharacterList(copiedList)
   }
 
   return (
