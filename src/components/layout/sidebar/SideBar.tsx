@@ -44,7 +44,7 @@ export default function SideBar() {
             <span>
               <MdEmail size='20' />
             </span>
-            Contact us
+            Contact us (준비중)
           </li>
         </ul>
         <div className='text-xs text-primary-gray'>&copy; 2024. LoReady. All rights reserved.</div>
