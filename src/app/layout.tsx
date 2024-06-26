@@ -24,7 +24,7 @@ export default async function RootLayout({
   const session = await getServerSession()
 
   return (
-    <html lang='ko' className='max-sm:text-sm'>
+    <html lang='ko' className='text-sm sm:text-base min-[2560px]:text-lg min-[3840px]:text-xl'>
       <body className={`relative ${pretendard.variable} font-pretendard text-[#272727] font-normal`}>
         <ThemeProvider>
           <SessionProvider session={session}>{children}</SessionProvider>
