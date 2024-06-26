@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { savePartyData } from '@/api/firebase/savePartyData/savePartyData'
 import Popover from './Popover'
 import RaidLeaderDropdown from './RaidLeaderDropdown'
@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/useToast'
 import { useScheduleStore } from '@/stores/scheduleStore'
 import useDropdonwStore from '@/stores/dropdownStore'
 import PartyList from './PartyList'
+import { useSearchParams } from 'next/navigation'
 
 interface Ownprops {
   userData: Session | null
@@ -19,7 +20,7 @@ interface Ownprops {
 
 export default function TeamAllocator({ userData, scheduleId, isLoading }: Ownprops) {
   const userId = userData?.user.id
-
+  const searchParams = useSearchParams()
   const { schedule } = useScheduleStore()
   const { setDropdownSelectedCharacter } = useDropdonwStore()
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -49,6 +50,12 @@ export default function TeamAllocator({ userData, scheduleId, isLoading }: Ownpr
       setIsPopoverOpen(true)
       setIsJoining(true)
     }
+
+    useEffect(() => {
+      if (searchParams.get('join') === 'true' && !isUserIdExist) {
+        handleJoinParty()
+      }
+    }, [])
 
     return (
       <>
