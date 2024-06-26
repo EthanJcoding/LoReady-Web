@@ -14,7 +14,7 @@ export interface Schedule {
     character: string
     userId: string
   }
-  raidType: string
+  raidType: '4인레이드' | '8인레이드'
   raidDate: string
   createdBy: string
   characters: Character[]
