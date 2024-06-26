@@ -2,6 +2,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { firestore } from '../config'
 import { Character } from '@/types/schedule'
 import { customDateString } from '@/utils/customDateString'
+import { findParty } from '@/utils/findParty'
 
 interface characterData {
   userId: string
@@ -10,11 +11,12 @@ interface characterData {
 
 async function editPartyCharacter(
   scheduleId: string,
-  partyIdx: string,
   pushingData: characterData,
-  removingCharacterName: string
+  removingCharacterName: string,
+  parties: any
 ) {
   const scheduleRef = doc(firestore, 'schedules', scheduleId)
+  const partyIdx = findParty(removingCharacterName, parties)
 
   try {
     const data = await getDoc(scheduleRef)
