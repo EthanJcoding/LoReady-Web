@@ -5,7 +5,7 @@ import DemoAuthButton from '@/components/auth/DemoAuthButton'
 export default function Hero() {
   return (
     <main className='w-full h-full flex flex-col justify-center items-center'>
-      <section className='max-w-[1600px] flex w-full h-full gap-10 justify-between px-5 py-32 max-sm:px-3 max-lg:py-0'>
+      <section className='max-w-[100rem] flex w-full h-full gap-10 justify-between px-5 max-sm:px-3'>
         <div className='flex-1 flex flex-col items-left justify-center'>
           <div className='mb-8 font-bold text-4xl max-xl:text-3xl max-lg:text-4xl max-sm:text-3xl'>
             <p className='mb-2'>친구들, 길드원들과</p>
