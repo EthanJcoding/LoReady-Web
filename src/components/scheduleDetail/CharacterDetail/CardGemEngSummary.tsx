@@ -14,16 +14,25 @@ export default function CardGemEngSummary({ ArmoryCard, ArmoryGem, ArmoryEngravi
 
   switch (cardEffect) {
     case '세상을 구하는 빛 6세트 (18각성합계)':
-      cardEffect = '세구 18각'
+      cardEffect = '세구빛 18각'
       break
     case '세상을 구하는 빛 6세트 (30각성합계)':
-      cardEffect = '세구 30각'
+      cardEffect = '세구빛 30각'
       break
     case '카제로스의 군단장 6세트 (18각성합계)':
-      cardEffect = '암구 18각'
+      cardEffect = '암구빛 18각'
       break
     case '카제로스의 군단장 6세트 (30각성합계)':
-      cardEffect = '암구 30각'
+      cardEffect = '암구빛 30각'
+      break
+    case '너는 계획이 다 있구나 6세트 (18각성합계)':
+      cardEffect = '너계다 18각'
+      break
+    case '너는 계획이 다 있구나 6세트 (30각성합계)':
+      cardEffect = '너계다 30각'
+      break
+    case '남겨진 바람의 절벽 6세트 (30각성합계)':
+      cardEffect = '남바절 30각'
       break
     default:
       break

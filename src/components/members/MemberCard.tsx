@@ -3,7 +3,6 @@ import { ChaListInterface } from '@/types/characterList'
 import { User } from '@/types/users'
 import { Session } from 'next-auth'
 import Image from 'next/image'
-import { FaGear } from 'react-icons/fa6'
 import Setting from './Setting'
 
 interface Ownprops {
@@ -29,11 +28,9 @@ const moveUsernameToFront = (members: User[], targetUsername: string) => {
 export default async function MemberCard({ members, session }: Ownprops) {
   const sortedMembers = moveUsernameToFront(members, session.user.name)
 
-  const handleClickSetting = () => {}
-
   return (
     <>
-      <ul className='flex gap-4 w-full h-full flex-wrap justify-center sm:justify-normal overflow-scroll'>
+      <ul className='flex gap-4 w-full h-full flex-wrap justify-center sm:justify-normal overflow-y-auto'>
         {sortedMembers.map(async m => {
           const data = (await getCharacterProfile(m.registeredBy)) as ChaListInterface
 
@@ -56,7 +53,7 @@ export default async function MemberCard({ members, session }: Ownprops) {
                       className='w-24 h-24 object-none object-top rounded-full shadow'
                     />
                   </div>
-                  {session?.user.name === m.username && <Setting registeredBy={m.registeredBy} />}
+                  {session?.user.name === m.username && <Setting registeredBy={m.registeredBy} session={session} />}
                 </div>
 
                 <span className='text-primary-accent text-xl font-medium text-center'>{m.registeredBy}</span>

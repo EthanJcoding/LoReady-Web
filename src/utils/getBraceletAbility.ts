@@ -9,9 +9,10 @@ export const getBraceletAbility = (htmlString: string) => {
     const element = elements[i]
 
     if (element.tagName === 'IMG' && element.nextSibling !== null && element.nextSibling.textContent !== null) {
+      const textContentKeyword = element.nextSibling.textContent.trim().split(' ')[0]
       const textContent = element.nextSibling.textContent.trim()
 
-      if (textContent.includes('+')) {
+      if (['신속', '특화', '치명'].includes(textContentKeyword)) {
         result.push(textContent)
       }
     }
@@ -68,13 +69,13 @@ export const getBraceletAbility = (htmlString: string) => {
       }
 
       if (textContent === '쐐기') {
-        if (elements[i + 1].textContent === '0.35%') {
+        if (elements[i + 3].textContent === '0.35%') {
           result.push('쐐기 하')
         }
-        if (elements[i + 1].textContent === '0.45%') {
+        if (elements[i + 3].textContent === '0.45%') {
           result.push('쐐기 중')
         }
-        if (elements[i + 1].textContent === '0.5%') {
+        if (elements[i + 3].textContent === '0.5%') {
           result.push('쐐기 상')
         }
       }
@@ -104,13 +105,13 @@ export const getBraceletAbility = (htmlString: string) => {
       }
 
       if (textContent === '열정') {
-        if (elements[i + 2].textContent === '3%') {
+        if (elements[i + 3].textContent === '3%') {
           result.push('열정 하')
         }
-        if (elements[i + 2].textContent === '3.5%') {
+        if (elements[i + 3].textContent === '3.5%') {
           result.push('열정 중')
         }
-        if (elements[i + 2].textContent === '4%') {
+        if (elements[i + 3].textContent === '4%') {
           result.push('열정 상')
         }
       }
@@ -128,13 +129,13 @@ export const getBraceletAbility = (htmlString: string) => {
       }
 
       if (textContent === '비수') {
-        if (elements[i + 2].textContent === '1.8%') {
+        if (elements[i + 1].textContent === '1.8%') {
           result.push('비수 하')
         }
-        if (elements[i + 2].textContent === '2.1%') {
+        if (elements[i + 1].textContent === '2.1%') {
           result.push('비수 중')
         }
-        if (elements[i + 2].textContent === '2.5%') {
+        if (elements[i + 1].textContent === '2.5%') {
           result.push('비수 상')
         }
       }

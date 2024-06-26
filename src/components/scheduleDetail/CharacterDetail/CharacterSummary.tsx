@@ -38,7 +38,7 @@ export default function CharacterSummary({
               priority={true}
             />
           </div>
-          <div className='flex flex-col w-full'>
+          <div className='flex flex-col w-full space-y-4'>
             <div className='flex flex-wrap w-full gap-4'>
               <ProfileSummary ArmoryProfile={ArmoryProfile} />
               <EquipmentSummary ArmoryEquipment={ArmoryEquipment} />

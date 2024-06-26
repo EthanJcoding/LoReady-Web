@@ -8,70 +8,37 @@ import { User } from '@/types/users'
 import { Session } from 'next-auth'
 import { useToast } from '@/hooks/useToast'
 import { getCharacterData } from '@/api/lostark/getCharacterData'
+import { useSchedule } from '@/hooks/useSchedule'
+import useDropdonwStore from '@/stores/dropdownStore'
+import { useScheduleStore } from '@/stores/scheduleStore'
+import useCharacterStore from '@/stores/characterStore'
+import { useCharacterList } from '@/hooks/useCharacterList'
 
 interface OwnProps {
-  targetCharacter: string
   isPopoverOpen: boolean
   setIsPopoverOpen: (arg0: boolean) => void
-  dropdownSelectedCharacter: Character
-  setDropdownSelectedCharacter: (arg0: Character) => void
-  partyData: { [key: string]: Character[] }
-  setPartyData: (arg0: { [key: string]: Character[] }) => void
   isJoining: boolean
   setIsJoining: (arg0: boolean) => void
   scheduleId: string
   userData: Session | null
-  setIsUserIdExist: (arg0: boolean) => void
-  setSelectedCharacter: (arg0: Character) => void
-}
-
-const findParty = (targetCharacter: string, parties: { [key: string]: Character[] }) => {
-  if (parties.party1.some(character => character.character === targetCharacter)) {
-    return 'party1'
-  }
-  if (parties.party2.some(character => character.character === targetCharacter)) {
-    return 'party2'
-  }
-  return null
 }
 
 export default function Popover({
-  targetCharacter,
+  userData,
+  scheduleId,
   isPopoverOpen,
   setIsPopoverOpen,
-  dropdownSelectedCharacter,
-  setDropdownSelectedCharacter,
-  partyData,
-  setPartyData,
   isJoining,
-  setIsJoining,
-  scheduleId,
-  userData,
-  setIsUserIdExist,
-  setSelectedCharacter
+  setIsJoining
 }: OwnProps) {
   const userId = userData?.user.id
+  const { selectedCharacter, setSelectedCharacter } = useCharacterStore()
+  const { characterList } = useCharacterList(isJoining ? userId : selectedCharacter?.userId)
+  const { dropdownSelectedCharacter, setDropdownSelectedCharacter } = useDropdonwStore()
+  const { schedule } = useScheduleStore()
+  const { updateSchedule } = useSchedule(scheduleId)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [charList, setCharList] = useState<ChaListInterface[]>([])
-  const [charactersLoaded, setCharactersLoaded] = useState(false)
   const toast = useToast()
-
-  useEffect(() => {
-    if (isDropdownOpen && !charactersLoaded) {
-      const fetchCharacters = async () => {
-        if (isJoining) {
-          const { registeredBy } = (await getUserData(userId)) as User
-          const list = await getCharacterList(registeredBy)
-          setCharList(list)
-        } else {
-          const list = await getCharacterList(targetCharacter)
-          setCharList(list)
-        }
-        setCharactersLoaded(true)
-      }
-      fetchCharacters()
-    }
-  }, [isDropdownOpen, charactersLoaded, isJoining, targetCharacter, userId])
 
   const handlePopover = () => {
     setIsPopoverOpen(false)
@@ -92,68 +59,42 @@ export default function Popover({
   }
 
   const handleDelete = async () => {
-    const partyIdx = findParty(targetCharacter, partyData)
-
-    if (partyIdx === 'party1') {
-      const copyArr = [...partyData.party1].filter((char: Character) => char.character !== targetCharacter)
-      setPartyData({ party1: copyArr, party2: partyData.party2 })
-      await deleteUserFromRaid(scheduleId, partyIdx, targetCharacter, userId)
-      toast('삭제되었습니다.', { type: 'success', duration: 5000 })
+    if (schedule && selectedCharacter) {
+      await deleteUserFromRaid(scheduleId, selectedCharacter, schedule.parties)
       setIsPopoverOpen(false)
-      setIsUserIdExist(false)
-
-      if (partyData[partyIdx].length > 0) {
-        setSelectedCharacter(partyData[partyIdx][0])
-      }
-    }
-    if (partyIdx === 'party2') {
-      const copyArr = [...partyData.party2].filter((char: Character) => char.character !== targetCharacter)
-      setPartyData({ party2: copyArr, party1: partyData.party1 })
-      await deleteUserFromRaid(scheduleId, partyIdx, targetCharacter, userId)
+      setSelectedCharacter(schedule.characters[0])
+      updateSchedule()
       toast('삭제되었습니다.', { type: 'success', duration: 5000 })
-      setIsPopoverOpen(false)
-      setIsUserIdExist(false)
-
-      if (partyData[partyIdx].length > 0) {
-        setSelectedCharacter(partyData[partyIdx][0])
-      }
     }
   }
 
   const handleChaSelectBtn = async () => {
-    const partyIdx = findParty(targetCharacter, partyData)
-    if (partyIdx) {
-      const copyObj = { ...partyData }
-      const filteredArr = copyObj[partyIdx].filter((char: Character) => char.character !== targetCharacter)
-      filteredArr.push(dropdownSelectedCharacter)
-
-      copyObj[partyIdx] = filteredArr
-
+    if (schedule && dropdownSelectedCharacter && selectedCharacter) {
       const pushingData = { userId: dropdownSelectedCharacter.userId, character: dropdownSelectedCharacter.character }
-
-      await editPartyCharacter(scheduleId, partyIdx, pushingData, targetCharacter)
-      toast('저장되었습니다.', { type: 'success', duration: 5000 })
+      await editPartyCharacter(scheduleId, pushingData, selectedCharacter.character, schedule.parties)
       setIsPopoverOpen(false)
-      setPartyData(copyObj)
+      setIsJoining(false)
       setSelectedCharacter(dropdownSelectedCharacter)
+      updateSchedule()
+      toast('저장되었습니다.', { type: 'success', duration: 5000 })
     }
   }
 
   const handleSaveJoin = async () => {
-    if (partyData.party1.length <= 3) {
-      await addUserToRaid(scheduleId, 'party1', dropdownSelectedCharacter)
-      const pushingData = [...partyData.party1, dropdownSelectedCharacter]
-      setPartyData({ party1: pushingData, party2: partyData.party2 })
+    if (schedule && dropdownSelectedCharacter && dropdownSelectedCharacter.userId !== '0') {
+      if (schedule.parties.party1.length <= 3) {
+        await addUserToRaid(scheduleId, 'party1', dropdownSelectedCharacter)
+      } else {
+        await addUserToRaid(scheduleId, 'party2', dropdownSelectedCharacter)
+      }
+      setIsPopoverOpen(false)
+      setIsJoining(false)
+      setSelectedCharacter(dropdownSelectedCharacter)
+      toast('저장되었습니다.', { type: 'success', duration: 5000 })
+      updateSchedule()
     } else {
-      await addUserToRaid(scheduleId, 'party2', dropdownSelectedCharacter)
-      const pushingData = [...partyData.party2, dropdownSelectedCharacter]
-      setPartyData({ party2: pushingData, party1: partyData.party1 })
+      toast('캐릭터를 선택해주세요.', { type: 'fail', duration: 5000 })
     }
-    toast('저장되었습니다.', { type: 'success', duration: 5000 })
-    setIsPopoverOpen(false)
-    setIsJoining(false)
-    setIsUserIdExist(true)
-    setSelectedCharacter(dropdownSelectedCharacter)
   }
 
   return (
@@ -167,18 +108,18 @@ export default function Popover({
             onClick={handleDropdown}
             className='w-full border p-2 rounded flex justify-between items-center hover:bg-secondary-gray/50 transition'
           >
-            <div>{dropdownSelectedCharacter.character}</div>
+            <div>{dropdownSelectedCharacter?.character}</div>
             <FaSort />
           </button>
           {isDropdownOpen && (
             <div className='border rounded p-2 overflow-y-scroll space-y-2 absolute top-12 bg-light dark:bg-dark w-[18rem] h-[12rem]'>
-              {charList.map((character, idx) => (
+              {characterList.map((character: ChaListInterface, idx: number) => (
                 <button
                   onClick={() => handleCharSelectForJoining(character.CharacterName)}
                   key={idx}
                   className='flex items-center hover:bg-secondary-gray/50 w-full p-1 rounded transition justify-between gap-2'
                 >
-                  {dropdownSelectedCharacter.character === character.CharacterName && <FaCheck color='#00a4e8' />}
+                  {dropdownSelectedCharacter?.character === character.CharacterName && <FaCheck color='#00a4e8' />}
                   <div className='flex justify-between w-full items-center'>
                     <span className='text-sm'>{character.CharacterName}</span>
                     <span className='text-xs'>{character.ItemAvgLevel}</span>

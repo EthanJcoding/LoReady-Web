@@ -28,7 +28,7 @@ function extractTextWithRegex(htmlString: string) {
 
 const EquipmentIcon = ({ grade, iconSrc }: { grade: string; iconSrc: string }) => (
   <div className={`${getEquipmentGrade(grade)} rounded min-w-[36px] max-h-[36px]`}>
-    <Image src={iconSrc} width={36} height={36} alt='장비 이미지' className='w-full' priority={true} />
+    <Image src={iconSrc} width={36} height={36} alt='장비 이미지' className='w-[36px] h-[36px]' priority={true} />
   </div>
 )
 
@@ -215,7 +215,7 @@ const BraceletAndStoneDetails = ({ equipment }: { equipment: EquipmentInterface 
           <div className='flex flex-wrap gap-2'>
             {bracelet.map((el, idx) => (
               <div key={idx} className='text-xs font-medium border p-0.5 rounded'>
-                {el}
+                <span>{el}</span>
               </div>
             ))}
           </div>
@@ -240,17 +240,17 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
 
   return (
     <div className='flex flex-wrap w-full h-full gap-4 justify-between'>
-      <div className='space-y-2'>
+      <div className='space-y-2 w-[16rem]'>
         {equipments.map((equipment, idx) => (
           <EquipmentDetails key={idx} equipment={equipment} />
         ))}
       </div>
-      <div className='space-y-2 md:w-1/2'>
+      <div className='space-y-2 w-[16rem]'>
         {accessories.map((equipment, idx) => (
           <AccessoryDetails key={idx} equipment={equipment} />
         ))}
       </div>
-      <div className='space-y-2'>
+      <div className='space-y-2 w-max'>
         {braceletAndStone.map((equipment, idx) => (
           <BraceletAndStoneDetails key={idx} equipment={equipment} />
         ))}

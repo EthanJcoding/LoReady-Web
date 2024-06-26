@@ -29,7 +29,7 @@ export async function generateMetadata({ params: { channelId } }: Ownprops) {
 
 export default async function Members({ params: { channelId } }: Ownprops) {
   const { memberIds } = (await getChannelData(channelId)) as Channel
-  const session = (await getServerSession()) as Session
+  const session = (await getServerSession(authOptions)) as Session
 
   const members = []
 
