@@ -14,7 +14,7 @@ export default function Header() {
         <div className='shrink-0 h-full w-[1px] border-l dark:border-primary-gray/50 hidden sm:flex'></div>
         <Gnb />
       </nav>
-      <div className='flex items-center gap-4'>
+      <div className='flex items-center gap-4 max-sm:gap-3'>
         <ThemeButton />
         <AuthButton />
       </div>
