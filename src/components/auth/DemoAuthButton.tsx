@@ -3,7 +3,7 @@
 import { signIn, useSession } from 'next-auth/react'
 
 export default function DemoAuthButton() {
-  const callbackUrl = '/demo/dashboard'
+  const callbackUrl = '/1255547931776520262/dashboard'
   const session = useSession()
 
   if (session.data) return null
