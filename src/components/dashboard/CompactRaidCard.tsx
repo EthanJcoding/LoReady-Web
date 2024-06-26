@@ -69,6 +69,8 @@ function setBossImage(boss: string) {
       return 'illiakan.png'
     case '카양겔':
       return 'kayangel.png'
+    case '상아탑':
+      return '상아탑.webp'
     default:
       return 'mokoko.png'
   }
