@@ -1,45 +1,14 @@
-import { getScheduleData } from '@/api/firebase'
-import { getCharacterData } from '@/api/lostark/getCharacterData'
 import Raid from '@/components/scheduleDetail/Raid'
-import { Schedule } from '@/types/raid'
-import { getChannelData } from '@/api/firebase'
+import { getChannelData, getScheduleData } from '@/api/firebase'
 import { authOptions } from '@/utils/authOptions'
 import { validateMember } from '@/utils/validateMember'
 import { getServerSession } from 'next-auth'
-import { notFound } from 'next/navigation'
 
 interface Ownprops {
   params: {
     channelId: string
     scheduleId: string
   }
-}
-
-interface Character {
-  userId: string
-  character: string
-  data?: any
-}
-
-async function fetchCharacterData(scheduleData: Schedule) {
-  const characterDataByParty: { [key: string]: Character[] } = {}
-
-  for (const [partyKey, party] of Object.entries(scheduleData.parties)) {
-    characterDataByParty[partyKey] = []
-
-    for (const user of party) {
-      try {
-        const characterData = await getCharacterData(user.character)
-
-        user.data = characterData
-        characterDataByParty[partyKey].push(user)
-      } catch (err) {
-        console.error(`Error fetching data for character ${user.character}:`, err)
-      }
-    }
-  }
-
-  return characterDataByParty
 }
 
 export async function generateMetadata({ params: { channelId, scheduleId } }: Ownprops) {
@@ -63,28 +32,13 @@ export async function generateMetadata({ params: { channelId, scheduleId } }: Ow
 }
 
 export default async function ScheduleDetail({ params }: Ownprops) {
-  const { channelId, scheduleId } = params
-  const scheduleData = (await getScheduleData(scheduleId)) as Schedule
-
-  if (scheduleData?.channel !== channelId) notFound()
-  const { raidType, raidLeader, characters, raidName, raidDate } = scheduleData
-
-  const parties = await fetchCharacterData(scheduleData)
+  const { scheduleId } = params
 
   const userData = await getServerSession(authOptions)
 
   return (
     <div className='flex-1 flex flex-col gap-4 sm:flex-row h-full overflow-auto'>
-      <Raid
-        parties={parties}
-        raidType={raidType}
-        raidLeader={raidLeader}
-        characters={characters}
-        raidName={raidName}
-        raidDate={raidDate}
-        userData={userData}
-        scheduleId={scheduleId}
-      />
+      <Raid userData={userData} scheduleId={scheduleId} />
     </div>
   )
 }
