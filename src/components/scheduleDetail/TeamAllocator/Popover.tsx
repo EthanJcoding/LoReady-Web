@@ -1,10 +1,7 @@
-import { Character } from '@/types/raid'
-import { getCharacterList } from '@/api/lostark/getCharacterList'
 import { ChaListInterface } from '@/types/characterList'
 import { FaSort, FaCheck } from 'react-icons/fa'
 import { addUserToRaid, deleteUserFromRaid, editPartyCharacter, getUserData } from '@/api/firebase'
-import { useState, useEffect } from 'react'
-import { User } from '@/types/users'
+import { useState } from 'react'
 import { Session } from 'next-auth'
 import { useToast } from '@/hooks/useToast'
 import { getCharacterData } from '@/api/lostark/getCharacterData'
@@ -21,6 +18,49 @@ interface OwnProps {
   setIsJoining: (arg0: boolean) => void
   scheduleId: string
   userData: Session | null
+}
+
+function checkCharacterRaidEligibility(characterList: ChaListInterface[], raidName: string | undefined) {
+  switch (raidName) {
+    case '발탄 [노말]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1415)
+    case '발탄 [하드]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1445)
+    case '비아키스 [노말]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1430)
+    case '비아키스 [하드]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1460)
+    case '쿠크세이튼':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1430)
+    case '아브렐슈드 [노말]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1520)
+    case '아브렐슈드 [하12노3]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1540)
+    case '카양겔 [노말]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1540)
+    case '아브렐슈드 [하드]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1560)
+    case '카양겔 [하드]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1580)
+    case '일리아칸 [노말]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1580)
+    case '일리아칸 [하드]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1600)
+    case '상아탑 [노말]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1600)
+    case '상아탑 [하드]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1620)
+    case '카멘 [노말]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1610)
+    case '카멘 [하드]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1630)
+    case '에키드나 [노말]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1620)
+    case '에키드나 [하드]':
+      return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1630)
+    default:
+      return characterList
+  }
 }
 
 export default function Popover({
@@ -112,20 +152,22 @@ export default function Popover({
             <FaSort />
           </button>
           {isDropdownOpen && (
-            <div className='border rounded p-2 overflow-y-scroll space-y-2 absolute top-12 bg-light dark:bg-dark w-[18rem] h-[12rem]'>
-              {characterList.map((character: ChaListInterface, idx: number) => (
-                <button
-                  onClick={() => handleCharSelectForJoining(character.CharacterName)}
-                  key={idx}
-                  className='flex items-center hover:bg-secondary-gray/50 w-full p-1 rounded transition justify-between gap-2'
-                >
-                  {dropdownSelectedCharacter?.character === character.CharacterName && <FaCheck color='#00a4e8' />}
-                  <div className='flex justify-between w-full items-center'>
-                    <span className='text-sm'>{character.CharacterName}</span>
-                    <span className='text-xs'>{character.ItemAvgLevel}</span>
-                  </div>
-                </button>
-              ))}
+            <div className='border rounded p-2 overflow-y-auto space-y-2 absolute top-12 bg-light dark:bg-dark w-[17.8rem] max-h-[12rem]'>
+              {checkCharacterRaidEligibility(characterList, schedule?.raidName).map(
+                (character: ChaListInterface, idx: number) => (
+                  <button
+                    onClick={() => handleCharSelectForJoining(character.CharacterName)}
+                    key={idx}
+                    className='flex items-center hover:bg-secondary-gray/50 w-full p-1 rounded transition justify-between gap-2'
+                  >
+                    {dropdownSelectedCharacter?.character === character.CharacterName && <FaCheck color='#00a4e8' />}
+                    <div className='flex justify-between w-full items-center'>
+                      <span className='text-sm'>{character.CharacterName}</span>
+                      <span className='text-xs'>{character.ItemAvgLevel}</span>
+                    </div>
+                  </button>
+                )
+              )}
             </div>
           )}
           <div className='flex w-full gap-4 justify-end'>
