@@ -69,7 +69,7 @@ const AbilityStone = ({ stoneObject }: { stoneObject: StoneObjectInterface }) =>
         const match = stone.contentStr.match(regexString)
 
         return (
-          <div key={idx} className='text-xs font-medium border p-0.5 rounded'>
+          <div key={idx} className='text-xs font-medium border rounded px-1 truncate'>
             {match && match[1]} {value && value[0]}
           </div>
         )
@@ -138,7 +138,7 @@ const EquipmentDetails = ({ equipment }: { equipment: EquipmentInterface }) => {
   return (
     <div className='flex gap-2'>
       <EquipmentIcon grade={equipment.Grade} iconSrc={equipment.Icon} />
-      <div className='flex flex-col justify-between w-full'>
+      <div className='flex flex-col w-full'>
         <div className='text-sm truncate font-medium flex w-full gap-2 items-center'>
           <div className={equipment.Grade === '에스더' ? 'dark:text-[#3CF2E6] text-[#1AB9B6]' : ''}>
             {extractEnhanceValue(equipment.Name) + ' ' + equipment.Type}
@@ -178,7 +178,7 @@ const AccessoryDetails = ({ equipment }: { equipment: EquipmentInterface }) => {
   return (
     <div className='flex gap-2'>
       <EquipmentIcon grade={equipment.Grade} iconSrc={equipment.Icon} />
-      <div className='flex flex-col justify-between'>
+      <div className='flex flex-col w-full'>
         <div className='text-sm truncate font-medium'>{equipment.Type}</div>
         <div className='flex items-center'>
           <div
@@ -214,7 +214,7 @@ const BraceletAndStoneDetails = ({ equipment }: { equipment: EquipmentInterface 
           <div className='text-sm truncate font-medium'>{equipment.Name}</div>
           <div className='flex flex-wrap gap-2'>
             {bracelet.map((el, idx) => (
-              <div key={idx} className='text-xs font-medium border p-0.5 rounded'>
+              <div key={idx} className='text-xs font-medium border rounded px-1 truncate'>
                 <span>{el}</span>
               </div>
             ))}
