@@ -1,6 +1,6 @@
 import { ChaListInterface } from '@/types/characterList'
 import { FaSort, FaCheck } from 'react-icons/fa'
-import { addUserToRaid, deleteUserFromRaid, editPartyCharacter, getUserData } from '@/api/firebase'
+import { addUserToRaid, deleteUserFromRaid, editPartyCharacter } from '@/api/firebase'
 import { useState } from 'react'
 import { Session } from 'next-auth'
 import { useToast } from '@/hooks/useToast'
