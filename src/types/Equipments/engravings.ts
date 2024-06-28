@@ -5,7 +5,7 @@ interface Engraving {
   Tooltip: string
 }
 
-interface Effect {
+export interface EngravingEffect {
   Icon: string
   Name: string
   Description: string
@@ -13,5 +13,5 @@ interface Effect {
 
 export interface EngravingInterface {
   Engravings: Engraving[]
-  Effects: Effect[]
+  Effects: EngravingEffect[]
 }
