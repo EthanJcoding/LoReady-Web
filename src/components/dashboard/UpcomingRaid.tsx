@@ -50,7 +50,7 @@ export default function UpcomingRaid({ channelId, schedulesData, initialSnapshot
       ref={rootRef}
     >
       <div className='relative flex flex-col h-full bg-[#fee2e5] dark:bg-[#0080b7] overflow-y-auto'>
-        <div className='flex justify-between p-5 pb-4 text-xl font-medium bg-inherit sticky top-0 left-0 z-20'>
+        <div className='flex justify-between p-5 pb-4 text-xl font-medium bg-inherit sticky top-0 left-0 z-20 -translate-y-[1px]'>
           다가오는 레이드
         </div>
         <ul className='flex flex-col gap-3 px-5 pb-5'>
