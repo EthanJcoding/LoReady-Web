@@ -15,12 +15,14 @@
   border: 0.25rem solid #f8fafb;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #ffcfd4;
   border-color: #fee2e5;
 }
 html.dark *::-webkit-scrollbar-thumb {
   border-color: #272727;
 }
 html.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #006996;
   border-color: #0080b7;
 }
 
