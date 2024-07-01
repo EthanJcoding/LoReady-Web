@@ -37,7 +37,7 @@ export default async function ScheduleDetail({ params }: Ownprops) {
   const userData = await getServerSession(authOptions)
 
   return (
-    <div className='flex-1 flex flex-col gap-4 sm:flex-row h-full overflow-auto'>
+    <div className='max-w-[121rem] flex-1 flex flex-col gap-4 sm:flex-row h-full overflow-auto'>
       <Raid userData={userData} scheduleId={scheduleId} />
     </div>
   )

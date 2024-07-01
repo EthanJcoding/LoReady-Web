@@ -29,7 +29,7 @@ export default async function Schedule({ params: { channelId } }: Ownprops) {
   const { data, lastSnap } = await getChannelSchedule(channelId)
 
   return (
-    <div className='flex-1 flex flex-col gap-5 overflow-y-auto'>
+    <div className='flex-1 flex flex-col gap-5 px-1 overflow-y-auto'>
       <div className='flex justify-end'>
         <MyScheduleToggle />
       </div>

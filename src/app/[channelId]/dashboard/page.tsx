@@ -30,7 +30,7 @@ export default async function Dashboard({ params: { channelId } }: Ownprops) {
   const { data, lastSnap } = await getChannelSchedule(channelId)
 
   return (
-    <div className='flex-1 flex gap-5 overflow-hidden'>
+    <div className='max-w-[121rem] flex-1 flex gap-5 overflow-hidden'>
       <UpcomingRaid channelId={channelId} schedulesData={data} initialSnapshotData={lastSnap} />
       <AdditionalConts />
     </div>
