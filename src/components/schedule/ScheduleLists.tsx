@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import ScheduleList from './ScheduleList'
 import { getChannelSchedule } from '@/api/firebase'
 import { Schedule, ScheduleWithId } from '@/types/schedule'
-import { useToggleStore } from '@/stores/toggle'
+import { useScheduleFilterStore } from '@/stores/scheduleFilter'
 import { useSession } from 'next-auth/react'
 import { FaSpinner } from 'react-icons/fa'
 
@@ -18,7 +18,7 @@ export default function ScheduleLists({ channelId }: Ownprops) {
   const [lastSnapshot, setLastSnapshot] = useState<Schedule | undefined>()
   const [isMore, setIsMore] = useState(false)
   const targetRef = useRef<HTMLDivElement>(null)
-  const isActive = useToggleStore(state => state.isActive)
+  const isShowMySchedule = useScheduleFilterStore(state => state.isShowMySchedule)
   const session = useSession()
   const userId: string | undefined = session.data?.user?.id
 
@@ -29,7 +29,7 @@ export default function ScheduleLists({ channelId }: Ownprops) {
       const { data, lastSnap } = await getChannelSchedule(
         channelId,
         initial ? undefined : lastSnapshot,
-        isActive ? userId : undefined
+        isShowMySchedule ? userId : undefined
       )
       setSchedules(initial ? data : prevSchedules => [...prevSchedules, ...data])
       setLastSnapshot(lastSnap)
@@ -45,7 +45,7 @@ export default function ScheduleLists({ channelId }: Ownprops) {
   useEffect(() => {
     setIsPending(true)
     fetchSchedules(true)
-  }, [isActive])
+  }, [isShowMySchedule])
 
   // 추가 데이터 fetching
   useEffect(() => {
