@@ -4,46 +4,57 @@ import { useEffect, useRef, useState } from 'react'
 import ScheduleList from './ScheduleList'
 import { getChannelSchedule } from '@/api/firebase'
 import { Schedule, ScheduleWithId } from '@/types/schedule'
-import { DocumentData } from 'firebase/firestore'
 import { useToggleStore } from '@/stores/toggle'
 import { useSession } from 'next-auth/react'
+import { FaSpinner } from 'react-icons/fa'
 
 interface Ownprops {
   channelId: string
-  schedulesData: ScheduleWithId[]
-  initialSnapshotData: Schedule | undefined
 }
 
-export default function ScheduleLists({ channelId, schedulesData, initialSnapshotData }: Ownprops) {
-  const [schedules, setSchedules] = useState<ScheduleWithId[]>(schedulesData)
-  const [lastSnapshot, setLastSnapshot] = useState<Schedule | undefined>(initialSnapshotData)
-  const [isMore, setIsMore] = useState(true)
-  const [isFiltered, setIsFiltered] = useState(false)
+export default function ScheduleLists({ channelId }: Ownprops) {
+  const [isPending, setIsPending] = useState(true)
+  const [schedules, setSchedules] = useState<ScheduleWithId[]>([])
+  const [lastSnapshot, setLastSnapshot] = useState<Schedule | undefined>()
+  const [isMore, setIsMore] = useState(false)
   const targetRef = useRef<HTMLDivElement>(null)
   const isActive = useToggleStore(state => state.isActive)
   const session = useSession()
   const userId: string | undefined = session.data?.user?.id
 
+  const fetchSchedules = async (initial = false) => {
+    try {
+      if (initial) await new Promise(resolve => setTimeout(resolve, 400))
+
+      const { data, lastSnap } = await getChannelSchedule(
+        channelId,
+        initial ? undefined : lastSnapshot,
+        isActive ? userId : undefined
+      )
+      setSchedules(initial ? data : prevSchedules => [...prevSchedules, ...data])
+      setLastSnapshot(lastSnap)
+      setIsMore(lastSnap !== undefined)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      if (initial) setIsPending(false)
+    }
+  }
+
+  // 초기 fetching
+  useEffect(() => {
+    setIsPending(true)
+    fetchSchedules(true)
+  }, [isActive])
+
+  // 추가 데이터 fetching
   useEffect(() => {
     let observer: IntersectionObserver
 
     const handleIntersect = ([entry]: IntersectionObserverEntry[]) => {
       if (entry.isIntersecting && isMore) {
-        getChannelSchedule(channelId, lastSnapshot, isActive ? userId : undefined)
-          .then(res => {
-            setSchedules(prevSchedules => [...prevSchedules, ...res.data])
-            setLastSnapshot(res.lastSnap)
-            setIsMore(res.lastSnap !== undefined)
-          })
-          .catch(error => console.log(error))
+        fetchSchedules()
       }
-    }
-
-    if (isFiltered !== isActive) {
-      setIsFiltered(isActive)
-      setSchedules([])
-      setLastSnapshot(undefined)
-      setIsMore(true)
     }
 
     if (targetRef.current && isMore) {
@@ -53,8 +64,14 @@ export default function ScheduleLists({ channelId, schedulesData, initialSnapsho
     }
 
     return () => observer && observer.disconnect()
-  }, [lastSnapshot, isMore, isActive])
+  }, [lastSnapshot, isMore])
 
+  if (isPending)
+    return (
+      <div className='flex justify-center pt-10'>
+        <FaSpinner className='animate-spin text-7xl' color='#00a4e8' />
+      </div>
+    )
   return (
     <>
       {schedules.length ? (
