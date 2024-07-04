@@ -5,13 +5,16 @@ export const extractBossRank = (raidName: string) => {
 
   switch (rank) {
     case '노말':
-      rank = 'NOMAL'
+      rank = 'NORMAL'
       break
     case '하드':
       rank = 'HARD'
       break
     case '헬':
       rank = 'HELL'
+      break
+    case '하12노3':
+      rank = '하12노3'
       break
   }
 
