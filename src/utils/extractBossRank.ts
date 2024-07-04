@@ -13,6 +13,9 @@ export const extractBossRank = (raidName: string) => {
     case '헬':
       rank = 'HELL'
       break
+    case '하12노3':
+      rank = '하12노3'
+      break
   }
 
   return { boss, rank }

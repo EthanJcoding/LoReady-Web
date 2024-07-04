@@ -35,11 +35,13 @@ function changeBgColor(color: Color) {
 function setLableColor(difficulty: string) {
   switch (difficulty) {
     case 'NORMAL':
-      return 'bg-neutral-950'
+      return 'bg-sky-500'
     case 'HARD':
       return 'bg-amber-400'
     case 'HELL':
       return 'bg-red-600'
+    case '하12노3':
+      return 'bg-green-500'
     default:
       return 'bg-primary-gray'
   }
