@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import ScheduleList from './ScheduleList'
 import { getChannelSchedule } from '@/api/firebase'
 import { Schedule, ScheduleWithId } from '@/types/schedule'
@@ -15,40 +15,43 @@ interface Ownprops {
 export default function ScheduleLists({ channelId }: Ownprops) {
   const [isPending, setIsPending] = useState(true)
   const [schedules, setSchedules] = useState<ScheduleWithId[]>([])
-  const [lastSnapshot, setLastSnapshot] = useState<Schedule | undefined>()
+  // const [lastSnapshot, setLastSnapshot] = useState<Schedule | undefined>()
+  const lastSnapRef = useRef<Schedule | undefined>(undefined)
   const [isMore, setIsMore] = useState(false)
   const targetRef = useRef<HTMLDivElement>(null)
   const isShowMySchedule = useScheduleFilterStore(state => state.isShowMySchedule)
   const session = useSession()
   const userId: string | undefined = session.data?.user?.id
 
-  const fetchSchedules = async (initial = false) => {
-    try {
-      const startTime = Date.now()
-      const { data, lastSnap } = await getChannelSchedule(
-        channelId,
-        initial ? undefined : lastSnapshot,
-        isShowMySchedule ? userId : undefined
-      )
-      const elapsedTime = Date.now() - startTime
-      const delayTime = Math.max(200 - elapsedTime, 0)
+  const fetchSchedules = useCallback(
+    async (initial = false) => {
+      try {
+        const startTime = Date.now()
+        const { data, lastSnap } = await getChannelSchedule(
+          channelId,
+          initial ? undefined : lastSnapRef.current,
+          isShowMySchedule ? userId : undefined
+        )
+        const elapsedTime = Date.now() - startTime
+        const delayTime = Math.max(200 - elapsedTime, 0)
 
-      if (initial) {
-        await new Promise(resolve => setTimeout(resolve, delayTime))
-        setSchedules(data)
-      } else {
-        setSchedules(prevSchedules => [...prevSchedules, ...data])
+        if (initial) {
+          await new Promise(resolve => setTimeout(resolve, delayTime))
+          setSchedules(data)
+        } else {
+          setSchedules(prevSchedules => [...prevSchedules, ...data])
+        }
+
+        lastSnapRef.current = lastSnap
+        setIsMore(lastSnap !== undefined)
+      } catch (error) {
+        console.log('Failed to fetch schedules:', error)
+      } finally {
+        if (initial) setIsPending(false)
       }
-
-      setLastSnapshot(lastSnap)
-      setIsMore(lastSnap !== undefined)
-    } catch (error) {
-      console.log('Failed to fetch schedules:', error)
-    } finally {
-      if (initial) setIsPending(false)
-    }
-  }
-
+    },
+    [isShowMySchedule]
+  )
   // 초기 fetching
   useEffect(() => {
     setIsPending(true)
@@ -72,7 +75,7 @@ export default function ScheduleLists({ channelId }: Ownprops) {
     }
 
     return () => observer && observer.disconnect()
-  }, [lastSnapshot, isMore])
+  }, [isMore])
 
   if (isPending)
     return (
