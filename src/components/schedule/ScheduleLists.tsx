@@ -24,18 +24,26 @@ export default function ScheduleLists({ channelId }: Ownprops) {
 
   const fetchSchedules = async (initial = false) => {
     try {
-      if (initial) await new Promise(resolve => setTimeout(resolve, 400))
-
+      const startTime = Date.now()
       const { data, lastSnap } = await getChannelSchedule(
         channelId,
         initial ? undefined : lastSnapshot,
         isShowMySchedule ? userId : undefined
       )
-      setSchedules(initial ? data : prevSchedules => [...prevSchedules, ...data])
+      const elapsedTime = Date.now() - startTime
+      const delayTime = Math.max(200 - elapsedTime, 0)
+
+      if (initial) {
+        await new Promise(resolve => setTimeout(resolve, delayTime))
+        setSchedules(data)
+      } else {
+        setSchedules(prevSchedules => [...prevSchedules, ...data])
+      }
+
       setLastSnapshot(lastSnap)
       setIsMore(lastSnap !== undefined)
     } catch (error) {
-      console.log(error)
+      console.log('Failed to fetch schedules:', error)
     } finally {
       if (initial) setIsPending(false)
     }
