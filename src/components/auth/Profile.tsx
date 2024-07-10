@@ -20,9 +20,7 @@ export default function Profile() {
         className='w-full bg-indigo-500 inline-flex items-center justify-center whitespace-nowrap space-x-2 px-4 h-10 rounded-lg hover:bg-indigo-500/90 transition'
         onClick={() => signOut({ callbackUrl: '/' })}
       >
-        <div className='text-sm text-white font-semibold'>
-          {session?.user.id === 'demo' ? '둘러보기 종료' : '로그아웃'}
-        </div>
+        <div className='text-sm text-white font-semibold'>로그아웃</div>
       </button>
     </div>
   )
