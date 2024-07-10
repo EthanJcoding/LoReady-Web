@@ -1,53 +1,40 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import ScheduleList from './ScheduleList'
 import { useScheduleFilterStore } from '@/stores/scheduleFilter'
 import { useSession } from 'next-auth/react'
 import { FaSpinner } from 'react-icons/fa'
 import { useFetchSchedules } from '@/hooks/useFetchSchedules'
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll'
 
 interface Ownprops {
   channelId: string
 }
 
 export default function ScheduleLists({ channelId }: Ownprops) {
-  const targetRef = useRef<HTMLDivElement>(null)
   const isShowMySchedule = useScheduleFilterStore(state => state.isShowMySchedule)
   const session = useSession()
   const userId: string | undefined = session.data?.user?.id
-  const { schedules, isPending, isMore, fetchSchedules } = useFetchSchedules(channelId, userId, isShowMySchedule)
+  const { schedules, isPending, isMore, lastSnapRef, fetchSchedules } = useFetchSchedules(
+    channelId,
+    userId,
+    isShowMySchedule
+  )
+  const targetRef = useInfiniteScroll(fetchSchedules, isMore, lastSnapRef)
 
-  // 초기 fetching
   useEffect(() => {
     fetchSchedules(true)
   }, [isShowMySchedule])
 
-  // 추가 데이터 fetching
-  useEffect(() => {
-    let observer: IntersectionObserver
-
-    const handleIntersect = ([entry]: IntersectionObserverEntry[]) => {
-      if (entry.isIntersecting && isMore) {
-        fetchSchedules()
-      }
-    }
-
-    if (targetRef.current && isMore) {
-      observer = new IntersectionObserver(handleIntersect)
-
-      observer.observe(targetRef.current)
-    }
-
-    return () => observer && observer.disconnect()
-  }, [isMore])
-
-  if (isPending)
+  if (isPending) {
     return (
       <div className='flex justify-center pt-10'>
         <FaSpinner className='animate-spin text-7xl' color='#00a4e8' />
       </div>
     )
+  }
+
   return (
     <>
       {schedules.length ? (
