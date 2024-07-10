@@ -3,19 +3,17 @@
 import { useEffect } from 'react'
 import ScheduleList from './ScheduleList'
 import { useScheduleFilterStore } from '@/stores/scheduleFilter'
-import { useSession } from 'next-auth/react'
 import { FaSpinner } from 'react-icons/fa'
 import { useFetchSchedules } from '@/hooks/useFetchSchedules'
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll'
 
 interface Ownprops {
   channelId: string
+  userId: string
 }
 
-export default function ScheduleLists({ channelId }: Ownprops) {
+export default function ScheduleLists({ channelId, userId }: Ownprops) {
   const isShowMySchedule = useScheduleFilterStore(state => state.isShowMySchedule)
-  const session = useSession()
-  const userId: string | undefined = session.data?.user?.id
   const { schedules, isPending, isMore, lastSnapRef, fetchSchedules } = useFetchSchedules(
     channelId,
     userId,
