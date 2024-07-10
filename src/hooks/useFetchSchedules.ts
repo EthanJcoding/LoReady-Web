@@ -2,7 +2,11 @@ import { getChannelSchedule } from '@/api/firebase'
 import { Schedule, ScheduleWithId } from '@/types/schedule'
 import { useCallback, useRef, useState } from 'react'
 
-export const useFetchSchedules = (channelId: string, userId: string | undefined, isShowMySchedule: boolean) => {
+export const useFetchSchedules = (
+  channelId: string,
+  userId: string | undefined = undefined,
+  isShowMySchedule: boolean = false
+) => {
   const [schedules, setSchedules] = useState<ScheduleWithId[]>([])
   const [isPending, setIsPending] = useState(true)
   const [isMore, setIsMore] = useState(false)
@@ -40,5 +44,5 @@ export const useFetchSchedules = (channelId: string, userId: string | undefined,
     [isShowMySchedule]
   )
 
-  return { schedules, isPending, isMore, fetchSchedules }
+  return { schedules, isPending, isMore, lastSnapRef, fetchSchedules }
 }
