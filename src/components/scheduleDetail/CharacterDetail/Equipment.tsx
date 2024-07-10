@@ -100,7 +100,7 @@ const EquipmentDetails = ({ equipment }: { equipment: EquipmentInterface }) => {
   let 엘라 = ''
 
   for (const key in parsedObject) {
-    if (parsedObject[key].type === 'IndentStringGroup') {
+    if (parsedObject[key].type === 'IndentStringGroup' && parsedObject[key].value !== null) {
       if (parsedObject[key].value.Element_000.topStr.includes('엘릭서')) {
         upgradeContent.elixir = parsedObject[key].value
       }
@@ -202,10 +202,9 @@ const AccessoryDetails = ({ equipment }: { equipment: EquipmentInterface }) => {
 const BraceletAndStoneDetails = ({ equipment }: { equipment: EquipmentInterface }) => {
   const parsedObject = JSON.parse(equipment.Tooltip)
   const abilityStone = parsedObject.Element_006.value.Element_000?.contentStr
-  const braceletJson = parsedObject.Element_004.value.Element_001
 
   if (equipment.Type === '팔찌') {
-    const bracelet = getBraceletAbility(braceletJson)
+    const bracelet = getBraceletAbility(equipment)
 
     return (
       <div className='flex gap-2'>
@@ -213,7 +212,7 @@ const BraceletAndStoneDetails = ({ equipment }: { equipment: EquipmentInterface 
         <div className='flex flex-col'>
           <div className='text-sm truncate font-medium'>{equipment.Name}</div>
           <div className='flex flex-wrap gap-2'>
-            {bracelet.map((el, idx) => (
+            {bracelet?.map((el, idx) => (
               <div key={idx} className='text-xs font-medium border rounded px-1 truncate'>
                 <span>{el}</span>
               </div>
