@@ -1,9 +1,9 @@
-import { getChannelData, getChannelSchedule } from '@/api/firebase'
+import { getChannelData } from '@/api/firebase'
 import ScheduleLists from '@/components/schedule/ScheduleLists'
 import MyScheduleToggle from '@/components/schedule/MyScheduleToggle'
 import { authOptions } from '@/utils/authOptions'
 import { validateMember } from '@/utils/validateMember'
-import { getServerSession } from 'next-auth'
+import { Session, getServerSession } from 'next-auth'
 
 interface Ownprops {
   params: {
@@ -26,13 +26,15 @@ export async function generateMetadata({ params: { channelId } }: Ownprops) {
 }
 
 export default async function Schedule({ params: { channelId } }: Ownprops) {
+  const { user } = (await getServerSession(authOptions)) as Session
+
   return (
     <div className='flex-1 flex flex-col gap-5 px-1 overflow-y-auto'>
       <div className='flex justify-end'>
         <MyScheduleToggle />
       </div>
       <div className='flex-1'>
-        <ScheduleLists channelId={channelId} />
+        <ScheduleLists channelId={channelId} userId={user.id} />
       </div>
     </div>
   )
