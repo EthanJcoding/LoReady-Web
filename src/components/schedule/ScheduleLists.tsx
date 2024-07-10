@@ -30,7 +30,7 @@ export default function ScheduleLists({ channelId }: Ownprops) {
   if (isPending) {
     return (
       <div className='flex justify-center pt-10'>
-        <FaSpinner className='animate-spin text-7xl' color='#00a4e8' />
+        <FaSpinner className='animate-spin text-5xl' color='#00a4e8' />
       </div>
     )
   }
