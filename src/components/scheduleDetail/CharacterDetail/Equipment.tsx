@@ -1,4 +1,4 @@
-import { EquipmentInterface } from '@/types/Equipments/equipments'
+import { EquipmentInterface, ToolTipIndentStringGroup, ToolTipObject } from '@/types/Equipments/equipments'
 import { StoneObjectInterface } from '@/types/Equipments/equipments'
 import { getBraceletAbility } from '@/utils/getBraceletAbility'
 import { getElixir } from '@/utils/getElixir'
@@ -200,25 +200,38 @@ const AccessoryDetails = ({ equipment }: { equipment: EquipmentInterface }) => {
 }
 
 const BraceletAndStoneDetails = ({ equipment }: { equipment: EquipmentInterface }) => {
-  const parsedObject = JSON.parse(equipment.Tooltip)
-  const abilityStone = parsedObject.Element_006.value.Element_000?.contentStr
+  const parsedObject: ToolTipObject = JSON.parse(equipment.Tooltip)
 
-  if (equipment.Type === '팔찌') {
+  function isIndentStringGroup(value: any): value is ToolTipIndentStringGroup {
+    return value && typeof value === 'object' && 'Element_000' in value
+  }
+
+  const getAbilityStone = (parsedObject: ToolTipObject) => {
+    for (const item of Object.values(parsedObject)) {
+      if (item.type === 'IndentStringGroup' && isIndentStringGroup(item.value)) {
+        if (item.value.Element_000.topStr.includes('무작위 각인 효과')) {
+          return item.value.Element_000.contentStr as StoneObjectInterface
+        }
+      }
+    }
+    return null
+  }
+
+  const renderAbilityStone = () => {
+    const abilityStone = getAbilityStone(parsedObject) as StoneObjectInterface
+
+    return <AbilityStone stoneObject={abilityStone} />
+  }
+
+  const renderBracelet = () => {
     const bracelet = getBraceletAbility(equipment)
-
     return (
-      <div className='flex gap-2'>
-        <EquipmentIcon grade={equipment.Grade} iconSrc={equipment.Icon} />
-        <div className='flex flex-col'>
-          <div className='text-sm truncate font-medium'>{equipment.Name}</div>
-          <div className='flex flex-wrap gap-2'>
-            {bracelet?.map((el, idx) => (
-              <div key={idx} className='text-xs font-medium border rounded px-1 truncate'>
-                <span>{el}</span>
-              </div>
-            ))}
+      <div className='flex flex-wrap gap-2'>
+        {bracelet?.map((el, idx) => (
+          <div key={idx} className='text-xs font-medium border rounded px-1 truncate'>
+            <span>{el}</span>
           </div>
-        </div>
+        ))}
       </div>
     )
   }
@@ -226,9 +239,11 @@ const BraceletAndStoneDetails = ({ equipment }: { equipment: EquipmentInterface 
   return (
     <div className='flex gap-2'>
       <EquipmentIcon grade={equipment.Grade} iconSrc={equipment.Icon} />
-      <div className='flex flex-col justify-between'>
-        <div className='text-sm truncate font-medium'>{equipment.Type}</div>
-        <AbilityStone stoneObject={abilityStone} />
+      <div className='flex flex-col'>
+        <div className='text-sm truncate font-medium'>
+          {equipment.Type === '팔찌' ? equipment.Name : equipment.Type}
+        </div>
+        {equipment.Type === '팔찌' ? renderBracelet() : renderAbilityStone()}
       </div>
     </div>
   )
