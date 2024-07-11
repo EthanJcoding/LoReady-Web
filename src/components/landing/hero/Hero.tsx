@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import Animation from '../animation/animation'
 import DemoAuthButton from '@/components/auth/DemoAuthButton'
 
@@ -16,19 +15,19 @@ export default function Hero() {
           </div>
           <div className='flex items-center gap-4 mb-8 max-sm:gap-3'>
             <div className='flex gap-4 max-sm:gap-3'>
-              <Link
+              <a
                 className='text-light bg-primary-accent hover:bg-primary-accent/70 font-medium py-2 px-4 rounded transition'
                 href={process.env.NEXT_PUBLIC_DOCUMENT_LINK as string}
                 target='_blank'
               >
                 사용법
-              </Link>
-              <Link
+              </a>
+              <a
                 className='text-light bg-primary-accent hover:bg-primary-accent/70 font-medium py-2 px-4 rounded transition'
                 href={process.env.NEXT_PUBLIC_ADDBOT_LINK as string}
               >
                 봇 추가하기
-              </Link>
+              </a>
             </div>
             <DemoAuthButton />
           </div>
