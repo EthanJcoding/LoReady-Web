@@ -40,7 +40,7 @@ export default function MenuContent() {
           <ServerLists />
         </div>
       </div>
-      <footer className='flex flex-col gap-5 px-7 py-5 border-t border-inherit'>
+      <footer className='flex  gap-5 px-7 py-5 border-t border-inherit items-center space-x-1'>
         <div className='text-xs text-primary-gray'>
           This site is not associated with Smilegae RPG. &copy; 2024. LoReady. All rights reserved.
         </div>
