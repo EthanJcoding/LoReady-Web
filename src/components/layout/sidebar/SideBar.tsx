@@ -44,13 +44,14 @@ export default function SideBar() {
         <div className='text-xs text-primary-gray'>
           This site is not associated with Smilegae RPG. &copy; 2024. LoReady. All rights reserved.
         </div>
-        <Link
+        <a
           href={contactDiscordURL}
           target='_blank'
+          rel='noopener noreferrer'
           className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-1 rounded-full hover:scale-125 transition'
         >
           <FaDiscord color='white' size={20} />
-        </Link>
+        </a>
       </footer>
     </aside>
   )
