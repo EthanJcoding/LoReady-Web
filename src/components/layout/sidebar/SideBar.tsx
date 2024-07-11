@@ -1,11 +1,13 @@
 import ServerLists from './ServerLists'
 import ThemeButton from './ThemeButton'
-import { MdEmail } from 'react-icons/md'
 import { BsHash } from 'react-icons/bs'
 import Image from 'next/image'
 import Link from 'next/link'
+import { FaDiscord } from 'react-icons/fa'
 
 export default function SideBar() {
+  const contactDiscordURL = 'https://discord.gg/JR26Kcr3'
+
   return (
     <aside className='w-72 2xl:flex 2xl:flex-col hidden bg-white border-r border-secondary-gray/50 dark:bg-neutral-900 dark:border-primary-gray/50'>
       <header className='flex items-center p-7'>
@@ -38,16 +40,17 @@ export default function SideBar() {
           <ServerLists />
         </div>
       </div>
-      <footer className='flex flex-col gap-5 px-7 py-5 border-t border-inherit'>
-        <ul className='flex gap-5 text-base text-inherit'>
-          <li className='flex items-center gap-1'>
-            <span>
-              <MdEmail size='20' />
-            </span>
-            Contact us (준비중)
-          </li>
-        </ul>
-        <div className='text-xs text-primary-gray'>&copy; 2024. LoReady. All rights reserved.</div>
+      <footer className='flex  gap-5 px-7 py-5 border-t border-inherit items-center space-x-1'>
+        <div className='text-xs text-primary-gray'>
+          This site is not associated with Smilegae RPG. &copy; 2024. LoReady. All rights reserved.
+        </div>
+        <Link
+          href={contactDiscordURL}
+          target='_blank'
+          className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-1 rounded-full hover:scale-125 transition'
+        >
+          <FaDiscord color='white' size={20} />
+        </Link>
       </footer>
     </aside>
   )
