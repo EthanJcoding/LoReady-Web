@@ -10,7 +10,7 @@ export default async function Gnb() {
 
   if (session) {
     const { channels } = (await getUserData(session.user.id)) as User
-    dashboardUrl = `${channels[0]}/dashboard`
+    dashboardUrl = `/${channels[0]}/dashboard`
   }
 
   return (
