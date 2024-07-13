@@ -1,14 +1,12 @@
-import { CardsInterface } from '@/types/Equipments/cards'
-import { EngravingEffect, EngravingInterface } from '@/types/Equipments/engravings'
-import { GemsInterface } from '@/types/Equipments/gems'
+import { ArmoryCardsInterface, ArmoryEngravingInterface, ArmoryGemInterface } from '@/types/Equipments/armory'
 
 interface Ownprops {
-  ArmoryCard: CardsInterface
-  ArmoryEngraving: EngravingInterface
-  ArmoryGem: GemsInterface
+  ArmoryCard: ArmoryCardsInterface
+  ArmoryEngraving: ArmoryEngravingInterface
+  ArmoryGem: ArmoryGemInterface
 }
 
-const getGemAvgLevel = (ArmoryGem: GemsInterface) => {
+const getGemAvgLevel = (ArmoryGem: ArmoryGemInterface) => {
   let sum = 0
 
   if (ArmoryGem) {
@@ -20,7 +18,7 @@ const getGemAvgLevel = (ArmoryGem: GemsInterface) => {
   } else return '보석이 없어요'
 }
 
-const getEngraving = (Effects: EngravingEffect[]) => {
+const getEngraving = (Effects: ArmoryEngravingInterface['Effects']) => {
   const formattedEffects: { name: string; level: string; icon: string }[] = []
 
   // 주어진 배열을 순회하며 각 객체의 이름과 레벨을 추출하여 객체화
@@ -37,7 +35,6 @@ const getEngraving = (Effects: EngravingEffect[]) => {
 
 export default function CardGemEngSummary({ ArmoryCard, ArmoryGem, ArmoryEngraving }: Ownprops) {
   let cardEffect = ArmoryCard.Effects[0].Items[ArmoryCard.Effects[0].Items.length - 1].Name
-  const { Effects } = ArmoryEngraving
 
   switch (cardEffect) {
     case '세상을 구하는 빛 6세트 (18각성합계)':
@@ -78,7 +75,7 @@ export default function CardGemEngSummary({ ArmoryCard, ArmoryGem, ArmoryEngravi
       <div className='flex w-full space-x-2 items-center'>
         <div className='border rounded px-1 text-sm font-semibold truncate'>각인</div>
         <div className='flex gap-1 2xl:text-lg text-sm font-semibold truncate '>
-          {getEngraving(Effects).map((engrave, idx) => (
+          {getEngraving(ArmoryEngraving.Effects).map((engrave, idx) => (
             <div key={idx}>{engrave.level}</div>
           ))}
         </div>

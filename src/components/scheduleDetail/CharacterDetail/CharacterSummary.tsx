@@ -1,19 +1,21 @@
-import { EquipmentInterface } from '@/types/Equipments/equipments'
-import { ProfileInterface } from '@/types/gameProfile'
 import Image from 'next/image'
 import EquipmentSummary from './EquipmentSummary'
-import { CardsInterface } from '@/types/Equipments/cards'
 import CardGemEngSummary from './CardGemEngSummary'
-import { GemsInterface } from '@/types/Equipments/gems'
-import { EngravingInterface } from '@/types/Equipments/engravings'
 import ProfileSummary from './ProfileSummary'
+import {
+  ArmoryCardsInterface,
+  ArmoryEngravingInterface,
+  ArmoryEquipmentInterface,
+  ArmoryGemInterface,
+  ArmoryProfileInterface
+} from '@/types/Equipments/armory'
 
 interface Ownprops {
-  ArmoryProfile: ProfileInterface
-  ArmoryEquipment: EquipmentInterface[]
-  ArmoryCard: CardsInterface
-  ArmoryGem: GemsInterface
-  ArmoryEngraving: EngravingInterface
+  ArmoryProfile: ArmoryProfileInterface
+  ArmoryEquipment: ArmoryEquipmentInterface[]
+  ArmoryCard: ArmoryCardsInterface
+  ArmoryGem: ArmoryGemInterface
+  ArmoryEngraving: ArmoryEngravingInterface
 }
 
 export default function CharacterSummary({

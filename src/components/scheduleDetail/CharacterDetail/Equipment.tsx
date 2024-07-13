@@ -1,12 +1,13 @@
-import { EquipmentInterface, ToolTipIndentStringGroup, ToolTipObject } from '@/types/Equipments/equipments'
+import { ToolTipIndentStringGroup, ToolTipObject } from '@/types/Equipments/equipments'
 import { StoneObjectInterface } from '@/types/Equipments/equipments'
 import { getBraceletAbility } from '@/utils/getBraceletAbility'
 import { getElixir } from '@/utils/getElixir'
 import Image from 'next/image'
 import { getEquipmentAndAccessories } from '@/utils/getEquipmentAndAccessories'
+import { ArmoryEquipmentInterface } from '@/types/Equipments/armory'
 
 interface Ownprops {
-  ArmoryEquipment: EquipmentInterface[]
+  ArmoryEquipment: ArmoryEquipmentInterface[]
 }
 interface UpgradeContent {
   type: string
@@ -84,7 +85,7 @@ const extractEnhanceValue = (str: string) => {
   return match ? match[0] : null
 }
 
-const EquipmentDetails = ({ equipment }: { equipment: EquipmentInterface }) => {
+const EquipmentDetails = ({ equipment }: { equipment: ArmoryEquipmentInterface }) => {
   const parsedObject = JSON.parse(equipment.Tooltip)
   const quality = parsedObject.Element_001.value.qualityValue
   const upgradeContent: UpgradeContent = {
@@ -166,7 +167,7 @@ const EquipmentDetails = ({ equipment }: { equipment: EquipmentInterface }) => {
   )
 }
 
-const AccessoryDetails = ({ equipment }: { equipment: EquipmentInterface }) => {
+const AccessoryDetails = ({ equipment }: { equipment: ArmoryEquipmentInterface }) => {
   const parsedObject = JSON.parse(equipment.Tooltip)
   const quality = parsedObject.Element_001.value.qualityValue
   let accessoryStat = [parsedObject.Element_005.value.Element_001]
@@ -199,7 +200,7 @@ const AccessoryDetails = ({ equipment }: { equipment: EquipmentInterface }) => {
   )
 }
 
-const BraceletAndStoneDetails = ({ equipment }: { equipment: EquipmentInterface }) => {
+const BraceletAndStoneDetails = ({ equipment }: { equipment: ArmoryEquipmentInterface }) => {
   const parsedObject: ToolTipObject = JSON.parse(equipment.Tooltip)
 
   function isIndentStringGroup(value: any): value is ToolTipIndentStringGroup {

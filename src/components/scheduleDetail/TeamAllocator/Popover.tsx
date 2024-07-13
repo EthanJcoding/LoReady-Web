@@ -1,4 +1,3 @@
-import { ChaListInterface } from '@/types/characterList'
 import { FaSort, FaCheck } from 'react-icons/fa'
 import { addUserToRaid, deleteUserFromRaid, editPartyCharacter } from '@/api/firebase'
 import { useState } from 'react'
@@ -10,6 +9,7 @@ import useDropdonwStore from '@/stores/dropdownStore'
 import { useScheduleStore } from '@/stores/scheduleStore'
 import useCharacterStore from '@/stores/characterStore'
 import { useCharacterList } from '@/hooks/useCharacterList'
+import { ArmoryProfileInterface } from '@/types/Equipments/armory'
 
 interface OwnProps {
   isPopoverOpen: boolean
@@ -20,7 +20,7 @@ interface OwnProps {
   userData: Session | null
 }
 
-function checkCharacterRaidEligibility(characterList: ChaListInterface[], raidName: string | undefined) {
+function checkCharacterRaidEligibility(characterList: ArmoryProfileInterface[], raidName: string | undefined) {
   switch (raidName) {
     case '발탄 [노말]':
       return characterList.filter(char => parseFloat(char.ItemAvgLevel.replace(/,/g, '')) > 1415)
@@ -154,7 +154,7 @@ export default function Popover({
           {isDropdownOpen && (
             <div className='border rounded p-2 overflow-y-auto space-y-2 absolute top-12 bg-light dark:bg-dark w-[17.8rem] max-h-[12rem]'>
               {checkCharacterRaidEligibility(characterList, schedule?.raidName).map(
-                (character: ChaListInterface, idx: number) => (
+                (character: ArmoryProfileInterface, idx: number) => (
                   <button
                     onClick={() => handleCharSelectForJoining(character.CharacterName)}
                     key={idx}

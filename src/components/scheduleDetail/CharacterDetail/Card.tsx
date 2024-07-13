@@ -1,8 +1,8 @@
+import { ArmoryCardsInterface } from '@/types/Equipments/armory'
 import Image from 'next/image'
-import { CardsInterface } from '@/types/Equipments/cards'
 
 interface Ownprops {
-  ArmoryCard: CardsInterface
+  ArmoryCard: ArmoryCardsInterface
 }
 
 export default function Card({ ArmoryCard }: Ownprops) {

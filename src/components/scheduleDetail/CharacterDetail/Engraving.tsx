@@ -1,8 +1,8 @@
-import { EngravingInterface } from '@/types/Equipments/engravings'
+import { ArmoryEngravingInterface } from '@/types/Equipments/armory'
 import Image from 'next/image'
 
 interface Ownprops {
-  ArmoryEngraving: EngravingInterface
+  ArmoryEngraving: ArmoryEngravingInterface
 }
 
 export default function Engraving({ ArmoryEngraving }: Ownprops) {

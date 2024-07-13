@@ -1,11 +1,11 @@
-import { EquipmentInterface } from '@/types/Equipments/equipments'
+import { ArmoryEquipmentInterface } from '@/types/Equipments/armory'
 import { getAccQualityAvg } from '@/utils/getAccQualityAvg'
 import { getAccStatSum } from '@/utils/getAccStatSum'
 import { getEquipmentAndAccessories } from '@/utils/getEquipmentAndAccessories'
 import { getSetOption } from '@/utils/getSetOption'
 
 interface Ownprops {
-  ArmoryEquipment: EquipmentInterface[]
+  ArmoryEquipment: ArmoryEquipmentInterface[]
 }
 
 export default function EquipmentSummary({ ArmoryEquipment }: Ownprops) {

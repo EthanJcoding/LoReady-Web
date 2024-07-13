@@ -1,17 +1,20 @@
 import { useState } from 'react'
-import { CardsInterface } from '@/types/Equipments/cards'
-import { EquipmentInterface } from '@/types/Equipments/equipments'
-import { GemsInterface } from '@/types/Equipments/gems'
 import Card from './Card'
 import Gem from './Gem'
 import Equipment from './Equipment'
 import Engraving from './Engraving'
+import {
+  ArmoryEquipmentInterface,
+  ArmoryCardsInterface,
+  ArmoryGemInterface,
+  ArmoryEngravingInterface
+} from '@/types/Equipments/armory'
 
 interface Ownprops {
-  ArmoryEquipment: EquipmentInterface[]
-  ArmoryCard: CardsInterface
-  ArmoryGem: GemsInterface
-  ArmoryEngraving: any
+  ArmoryEquipment: ArmoryEquipmentInterface[]
+  ArmoryCard: ArmoryCardsInterface
+  ArmoryGem: ArmoryGemInterface
+  ArmoryEngraving: ArmoryEngravingInterface
 }
 
 export default function ArmoryTab({ ArmoryEquipment, ArmoryCard, ArmoryGem, ArmoryEngraving }: Ownprops) {

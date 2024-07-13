@@ -1,7 +1,7 @@
-import { ProfileInterface } from '@/types/gameProfile'
+import { ArmoryProfileInterface } from '@/types/Equipments/armory'
 
 interface Ownprops {
-  ArmoryProfile: ProfileInterface
+  ArmoryProfile: ArmoryProfileInterface
 }
 
 export default function ProfileSummary({ ArmoryProfile }: Ownprops) {

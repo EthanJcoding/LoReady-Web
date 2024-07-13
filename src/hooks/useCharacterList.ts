@@ -1,6 +1,6 @@
 import { getUserData } from '@/api/firebase'
 import { getCharacterList } from '@/api/lostark/getCharacterList'
-import { ChaListInterface } from '@/types/characterList'
+import { ArmoryProfileInterface } from '@/types/armory'
 import { User } from '@/types/users'
 import { useQuery } from '@tanstack/react-query'
 
@@ -15,7 +15,7 @@ export const useCharacterList = (userId: string) => {
   })
 
   return {
-    characterList: data as ChaListInterface[],
+    characterList: data as ArmoryProfileInterface[],
     isLoading: isPending,
     error
   }
