@@ -1,11 +1,3 @@
-export interface EquipmentInterface {
-  Type: string
-  Name: string
-  Icon: string
-  Tooltip: string
-  Grade: string
-}
-
 interface Element {
   bPoint: number
   contentStr: string
