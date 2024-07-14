@@ -12,7 +12,11 @@ export const getCharacterData = async (chaName: string) => {
       }
     )
 
-    return data.data
+    if (data) {
+      return data.data
+    } else {
+      console.log('not able to load character data:', data)
+    }
   } catch (err) {
     console.error(err)
   }
