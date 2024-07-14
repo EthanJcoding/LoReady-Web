@@ -1,10 +1,10 @@
 import { getCharacterProfile } from '@/api/lostark/getCharacterProfile'
-import { ChaListInterface } from '@/types/characterList'
 import { User } from '@/types/users'
 import { Session } from 'next-auth'
 import Image from 'next/image'
 import Setting from './Setting'
 import { FaExclamationCircle } from 'react-icons/fa'
+import { ArmoryProfileInterface } from '@/types/Equipments/armory'
 
 interface OwnProps {
   members: User[]
@@ -27,7 +27,7 @@ const CharacterInfo = ({ label, value }: { label: string; value: string | number
   </div>
 )
 
-const MemberCardContent = ({ data, m, session }: { data: ChaListInterface; m: User; session: Session }) => (
+const MemberCardContent = ({ data, m, session }: { data: ArmoryProfileInterface; m: User; session: Session }) => (
   <>
     <header className='flex flex-col justify-center border-b space-y-4'>
       <div className='flex'>
@@ -87,7 +87,7 @@ const MemberCard = async ({ members, session }: OwnProps) => {
     <ul className='flex gap-4 w-full h-full flex-wrap justify-center sm:justify-normal overflow-y-auto'>
       {await Promise.all(
         sortedMembers.map(async m => {
-          const data = (await getCharacterProfile(m.registeredBy)) as ChaListInterface
+          const data = (await getCharacterProfile(m.registeredBy)) as ArmoryProfileInterface
 
           const isCurrentUser = session.user.name === m.username
           const cardClassName = `rounded flex flex-col p-4 w-[16.5rem] h-[20rem] justify-between ${

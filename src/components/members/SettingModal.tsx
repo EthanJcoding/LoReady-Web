@@ -1,6 +1,6 @@
 import { updateRegisteredChar } from '@/api/firebase'
 import { getCharacterList } from '@/api/lostark/getCharacterList'
-import { ChaListInterface } from '@/types/characterList'
+import { ArmoryProfileInterface } from '@/types/Equipments/armory'
 import { Session } from 'next-auth'
 import { useReducer, useEffect, useCallback, useMemo } from 'react'
 import { FaCheck, FaSort } from 'react-icons/fa'
@@ -14,14 +14,14 @@ interface OwnProps {
 interface State {
   selected: string
   isDropdownOpen: boolean
-  charList: ChaListInterface[]
+  charList: ArmoryProfileInterface[]
   error: string | null
 }
 
 type Action =
   | { type: 'SET_SELECTED'; payload: string }
   | { type: 'TOGGLE_DROPDOWN' }
-  | { type: 'SET_CHAR_LIST'; payload: ChaListInterface[] }
+  | { type: 'SET_CHAR_LIST'; payload: ArmoryProfileInterface[] }
   | { type: 'SET_ERROR'; payload: string }
 
 const initialState: State = {
@@ -135,7 +135,7 @@ export default function SettingModal({ setIsOpen, registeredBy, session }: OwnPr
 }
 
 interface CharacterItemProps {
-  character: ChaListInterface
+  character: ArmoryProfileInterface
   isSelected: boolean
   onClick: () => void
 }

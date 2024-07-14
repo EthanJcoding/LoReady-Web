@@ -1,6 +1,6 @@
-import { EquipmentInterface } from '@/types/Equipments/equipments'
+import { ArmoryEquipmentInterface } from '@/types/Equipments/armory'
 
-export const getEquipmentAndAccessories = (ArmoryEquipment: EquipmentInterface[]) => {
+export const getEquipmentAndAccessories = (ArmoryEquipment: ArmoryEquipmentInterface[]) => {
   const equipments = []
   const accessories = []
   const braceletAndStone = []

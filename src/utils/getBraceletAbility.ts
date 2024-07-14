@@ -1,6 +1,6 @@
-import { EquipmentInterface } from '@/types/Equipments/equipments'
+import { ArmoryEquipmentInterface } from '@/types/Equipments/armory'
 
-export const getBraceletAbility = (equipment: EquipmentInterface) => {
+export const getBraceletAbility = (equipment: ArmoryEquipmentInterface) => {
   if (equipment) {
     const parsedObject = JSON.parse(equipment.Tooltip)
     const braceletJson = parsedObject.Element_004.value.Element_001

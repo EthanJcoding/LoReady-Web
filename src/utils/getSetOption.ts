@@ -1,10 +1,10 @@
-import { EquipmentInterface } from '@/types/Equipments/equipments'
+import { ArmoryEquipmentInterface } from '@/types/Equipments/armory'
 
 interface Result {
   [key: string]: number[]
 }
 
-export const getSetOption = (armoryEquipment: EquipmentInterface[]) => {
+export const getSetOption = (armoryEquipment: ArmoryEquipmentInterface[]) => {
   const result: Result = {}
 
   // 정규식 패턴

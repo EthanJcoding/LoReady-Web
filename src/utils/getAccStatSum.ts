@@ -1,6 +1,6 @@
-import { EquipmentInterface } from '@/types/Equipments/equipments'
+import { ArmoryEquipmentInterface } from '@/types/Equipments/armory'
 
-export const getAccStatSum = (accessories: EquipmentInterface[]) => {
+export const getAccStatSum = (accessories: ArmoryEquipmentInterface[]) => {
   let sum = 0
 
   for (let i = 0; i < accessories.length; i++) {
