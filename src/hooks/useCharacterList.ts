@@ -1,6 +1,6 @@
 import { getUserData } from '@/api/firebase'
 import { getCharacterList } from '@/api/lostark/getCharacterList'
-import { ArmoryProfileInterface } from '@/types/armory'
+import { ArmoryProfileInterface } from '@/types/Equipments/armory'
 import { User } from '@/types/users'
 import { useQuery } from '@tanstack/react-query'
 

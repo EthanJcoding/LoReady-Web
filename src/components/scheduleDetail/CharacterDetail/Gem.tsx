@@ -6,7 +6,7 @@ interface Ownprops {
 }
 
 export default function Gem({ ArmoryGem }: Ownprops) {
-  if (ArmoryGem === null) {
+  if (ArmoryGem.Gems === null) {
     return <div>보석이 없어요!</div>
   }
 

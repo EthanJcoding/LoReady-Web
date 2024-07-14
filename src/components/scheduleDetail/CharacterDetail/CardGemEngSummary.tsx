@@ -9,7 +9,7 @@ interface Ownprops {
 const getGemAvgLevel = (ArmoryGem: ArmoryGemInterface) => {
   let sum = 0
 
-  if (ArmoryGem) {
+  if (ArmoryGem.Gems) {
     ArmoryGem.Gems.map(g => (sum += g.Level))
 
     const gemAvg = Math.round((sum / ArmoryGem.Gems.length) * 10) / 10
@@ -75,9 +75,9 @@ export default function CardGemEngSummary({ ArmoryCard, ArmoryGem, ArmoryEngravi
       <div className='flex w-full space-x-2 items-center'>
         <div className='border rounded px-1 text-sm font-semibold truncate'>각인</div>
         <div className='flex gap-1 2xl:text-lg text-sm font-semibold truncate '>
-          {getEngraving(ArmoryEngraving.Effects).map((engrave, idx) => (
+          {/* {getEngraving(ArmoryEngraving?.Effects).map((engrave, idx) => (
             <div key={idx}>{engrave.level}</div>
-          ))}
+          ))} */}
         </div>
       </div>
     </div>
