@@ -6,8 +6,6 @@ import Link from 'next/link'
 import { FaDiscord } from 'react-icons/fa'
 
 export default function SideBar() {
-  const contactDiscordURL = 'https://discord.gg/JR26Kcr3'
-
   return (
     <aside className='w-72 2xl:flex 2xl:flex-col hidden bg-white border-r border-secondary-gray/50 dark:bg-neutral-900 dark:border-primary-gray/50'>
       <header className='flex items-center p-7'>
@@ -45,7 +43,7 @@ export default function SideBar() {
           This site is not associated with Smilegae RPG. &copy; 2024. LoReady. All rights reserved.
         </div>
         <a
-          href={contactDiscordURL}
+          href={process.env.NEXT_PUBLIC_DISCORD_CHANNEL}
           target='_blank'
           rel='noopener noreferrer'
           className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-1 rounded-full hover:scale-125 transition'

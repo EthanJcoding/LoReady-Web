@@ -10,7 +10,7 @@ interface Ownprops {
 export default function HeaderLink({ href, children, isDisabled = false, target = '_self' }: Ownprops) {
   return (
     <Link
-      className={`transition hover:bg-secondary-gray/50 rounded p-2 ${
+      className={`transition hover:bg-secondary-gray hover:dark:bg-secondary-gray/20 rounded p-2 ${
         isDisabled ? 'pointer-events-none opacity-50' : ''
       }`}
       href={href}
