@@ -25,6 +25,7 @@ interface CharacterState {
   isLoading: boolean
   error: Error | null
   searchCharacter: (character: string) => Promise<void>
+  resetSearchResult: () => void
 }
 
 export const useSearchStore = create<CharacterState>(set => ({
@@ -45,5 +46,6 @@ export const useSearchStore = create<CharacterState>(set => ({
       console.error('Error in searchCharacter:', error)
       set({ error: error instanceof Error ? error : new Error('An unknown error occurred'), isLoading: false })
     }
-  }
+  },
+  resetSearchResult: () => set({ character: null, error: null, isLoading: false })
 }))

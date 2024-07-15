@@ -15,6 +15,7 @@ interface CharacterState {
   isLoading: boolean
   error: Error | null
   searchSiblings: (character: string) => Promise<void>
+  resetSiblings: () => void
 }
 
 function sortByItemAvgLevel(characters: Siblings[]) {
@@ -45,5 +46,6 @@ export const useSiblingsStore = create<CharacterState>(set => ({
       console.error('Error in searchCharacter:', error)
       set({ error: error instanceof Error ? error : new Error('An unknown error occurred'), isLoading: false })
     }
-  }
+  },
+  resetSiblings: () => set({ siblings: null, error: null, isLoading: false })
 }))

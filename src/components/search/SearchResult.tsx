@@ -8,13 +8,17 @@ import { useEffect } from 'react'
 import { FaSpinner } from 'react-icons/fa'
 
 export default function SearchResult() {
-  const { character, error, isLoading, searchCharacter } = useSearchStore()
+  const { character, error, isLoading, searchCharacter, resetSearchResult } = useSearchStore()
   const searchParams = useSearchParams()
   const characterName = searchParams.get('query')
 
   useEffect(() => {
     if (characterName) {
       searchCharacter(characterName.trim().replace(/\s+/g, ''))
+    }
+
+    return () => {
+      resetSearchResult()
     }
   }, [characterName])
 
