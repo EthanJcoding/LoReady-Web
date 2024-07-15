@@ -14,8 +14,8 @@ const RecentSearches: React.FC<RecentSearchesProps> = ({ searches, onClearAll, o
   }
 
   return (
-    <div className='mt-4 w-full lg:w-[16rem] bg-white dark:bg-gray-800 rounded-lg shadow-md '>
-      <div className='flex justify-between items-center py-2 px-4 bg-gray-50 dark:bg-gray-700'>
+    <div className='w-full bg-white dark:bg-light/5 rounded-lg shadow-md overflow-hidden flex flex-col'>
+      <div className='flex justify-between items-center py-2 px-4 bg-primary-blue dark:bg-gray-700'>
         <h3 className='text-lg font-semibold text-gray-700 dark:text-gray-200'>최근 검색어</h3>
         <button
           onClick={onClearAll}
@@ -29,14 +29,14 @@ const RecentSearches: React.FC<RecentSearchesProps> = ({ searches, onClearAll, o
         {searches.map(search => (
           <li
             key={search}
-            className='flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition p-2'
+            className='flex items-center justify-between hover:bg-secondary-gray/50 dark:hover:bg-gray-700 transition p-2'
           >
             <button
               onClick={() => onSearch(search)}
               className='flex items-center flex-grow text-left text-gray-700 dark:text-gray-200'
             >
               <FaSearch className='mr-3 text-gray-400' />
-              <span className='truncate'>{search}</span>
+              <span className='truncate text-sm'>{search}</span>
             </button>
             <button
               onClick={() => onRemove(search)}
