@@ -67,7 +67,7 @@ export default function SearchInput() {
     <div className='flex flex-col items-center w-full space-y-4 h-min'>
       <form
         onSubmit={handleSubmit}
-        className='flex h-10 w-full lg:w-[16rem] rounded-md border border-input bg-white dark:bg-dark px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-primary-accent focus-visible:ring-offset-2 ring-offset-background items-center shadow-md'
+        className='flex h-10 w-full rounded-md border border-input bg-white dark:bg-dark px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-primary-accent focus-visible:ring-offset-2 ring-offset-background items-center shadow-md'
       >
         <input
           className='w-full focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 bg-transparent'
