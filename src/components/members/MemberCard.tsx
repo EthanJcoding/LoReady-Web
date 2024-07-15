@@ -22,7 +22,7 @@ const moveUsernameToFront = (members: User[], targetUsername: string): User[] =>
 
 const CharacterInfo = ({ label, value }: { label: string; value: string | number }) => (
   <div className='flex w-full gap-2 items-center'>
-    <span className='border rounded-xl px-2 font-semibold'>{label}</span>
+    <span className='flex-none border rounded-xl px-2 font-semibold'>{label}</span>
     <span className='font-medium truncate'>{value}</span>
   </div>
 )
