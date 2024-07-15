@@ -6,6 +6,7 @@ import ArmoryTab from '../scheduleDetail/CharacterDetail/ArmoryTab'
 import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 import { FaSpinner } from 'react-icons/fa'
+import { FaMagnifyingGlass } from 'react-icons/fa6'
 
 export default function SearchResult() {
   const { character, error, isLoading, searchCharacter, resetSearchResult } = useSearchStore()
@@ -35,7 +36,12 @@ export default function SearchResult() {
   }
 
   if (!character) {
-    return <div>검색 결과가 없습니다.</div>
+    return (
+      <div className='w-full h-full flex items-center justify-center space-x-4'>
+        <FaMagnifyingGlass size={24} />
+        <span className='text-2xl font-medium'>캐릭터를 검색해주세요.</span>
+      </div>
+    )
   }
 
   return (
