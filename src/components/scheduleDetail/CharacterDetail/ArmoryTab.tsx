@@ -46,7 +46,7 @@ export default function ArmoryTab({ ArmoryEquipment, ArmoryCard, ArmoryGem, Armo
 
   return (
     <div className='w-full h-full flex flex-col space-y-4'>
-      <div className='flex space-x-4 border-b '>
+      <div className='flex space-x-4 border-b p-2 '>
         {tabArray.map((t, idx) => {
           return (
             <button

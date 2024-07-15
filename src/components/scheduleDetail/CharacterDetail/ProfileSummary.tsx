@@ -12,8 +12,8 @@ export default function ProfileSummary({ ArmoryProfile }: Ownprops) {
         <div className='2xl:text-lg text-sm font-semibold truncate'>{ArmoryProfile.ServerName}</div>
       </div>
       <div className='flex w-full space-x-2 items-center'>
-        <div className='border rounded px-1 text-sm font-semibold truncate'>전투</div>
-        <div className='2xl:text-lg text-sm font-semibold truncate'>Lv. {ArmoryProfile.CharacterLevel}</div>
+        <div className='border rounded px-1 text-sm font-semibold truncate '>직업</div>
+        <div className='2xl:text-lg text-sm font-semibold truncate'>{ArmoryProfile.CharacterClassName}</div>
       </div>
       <div className='flex w-full space-x-2 items-center'>
         <div className='border rounded px-1 text-sm font-semibold truncate'>원정대</div>
@@ -22,6 +22,10 @@ export default function ProfileSummary({ ArmoryProfile }: Ownprops) {
       <div className='flex w-full space-x-2 items-center'>
         <div className='border rounded px-1 text-sm font-semibold truncate '>아이템</div>
         <div className='2xl:text-lg text-sm font-semibold truncate'>Lv. {ArmoryProfile.ItemAvgLevel}</div>
+      </div>
+      <div className='flex w-full space-x-2 items-center'>
+        <div className='border rounded px-1 text-sm font-semibold truncate'>전투</div>
+        <div className='2xl:text-lg text-sm font-semibold truncate'>Lv. {ArmoryProfile.CharacterLevel}</div>
       </div>
     </div>
   )

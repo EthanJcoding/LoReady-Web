@@ -12,7 +12,7 @@ export default function CharacterDetail({ isLoading }: Ownprops) {
   if (selectedCharacter && !isLoading) {
     if (selectedCharacter.data === null) {
       return (
-        <section className='flex flex-col border sm:w-2/3 w-full h-full p-8 rounded-lg shadow-sm gap-4 overflow-y-auto text-center justify-center'>
+        <section className='flex flex-col border lg:w-2/3 w-full h-full p-8 rounded-lg shadow-sm gap-4 overflow-y-auto text-center justify-center'>
           <h1 className='flex justify-center '>
             <FaExclamationCircle size={80} />
           </h1>
@@ -27,7 +27,7 @@ export default function CharacterDetail({ isLoading }: Ownprops) {
       const { ArmoryEquipment, ArmoryProfile, ArmoryCard, ArmoryEngraving, ArmoryGem } = selectedCharacter.data
 
       return (
-        <section className='flex flex-col border sm:w-2/3 w-full h-full p-8 rounded-lg shadow-sm gap-4 overflow-y-auto'>
+        <section className='flex flex-col border lg:w-2/3 w-full h-full p-8 rounded-lg shadow-sm gap-4 overflow-y-auto'>
           <CharacterSummary
             ArmoryProfile={ArmoryProfile}
             ArmoryEquipment={ArmoryEquipment}

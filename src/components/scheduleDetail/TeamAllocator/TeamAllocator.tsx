@@ -59,13 +59,11 @@ export default function TeamAllocator({ userData, scheduleId, isLoading }: Ownpr
 
     return (
       <>
-        <section className='flex flex-col border sm:w-1/3 w-full sm:h-full h-1/2 p-8 rounded-lg shadow-sm space-y-4 overflow-y-scroll sm:overflow-auto '>
-          <div className='w-full'>
-            <h1 className='font-semibold border-b flex justify-between w-full items-center'>
-              <span className='2xl:text-2xl text-xl truncate'>{schedule.raidName}</span>
-              <span className='hidden lg:flex truncate'>{dayjs(schedule.raidDate).format('MM월 DD일')}</span>
-            </h1>
-          </div>
+        <section className='flex flex-col border lg:w-1/3 w-full lg:h-full h-1/2 p-8 rounded-lg shadow-sm space-y-4 overflow-y-scroll lg:overflow-auto '>
+          <header className='font-semibold border-b flex justify-between w-full items-center p-2'>
+            <span className='2xl:text-2xl text-xl truncate'>{schedule.raidName}</span>
+            <span className='hidden lg:flex truncate'>{dayjs(schedule.raidDate).format('MM월 DD일')}</span>
+          </header>
 
           <PartyList
             raidType={schedule.raidType}
@@ -79,7 +77,7 @@ export default function TeamAllocator({ userData, scheduleId, isLoading }: Ownpr
             {isUserIdExist ? null : (
               <button
                 onClick={() => handleJoinParty()}
-                className='truncate text-light bg-primary-accent hover:bg-primary-accent/70 font-medium h-10 md:px-4 md:py-2 px-2 rounded transition text-xs sm:text-base'
+                className='truncate text-light bg-primary-accent hover:bg-primary-accent/70 font-medium h-10 lg:px-4 lg:py-2 px-2 rounded transition text-xs lg:text-base'
               >
                 참여하기
               </button>
@@ -87,7 +85,7 @@ export default function TeamAllocator({ userData, scheduleId, isLoading }: Ownpr
 
             <button
               onClick={() => handleSave()}
-              className='truncate text-dark dark:text-light bg-transparent hover:bg-secondary-gray/50 font-medium h-10 md:px-4 md:py-2 px-2 border rounded transition text-xs sm:text-base'
+              className='truncate text-dark dark:text-light bg-transparent hover:bg-secondary-gray/50 font-medium h-10 lg:px-4 lg:py-2 px-2 border rounded transition text-xs lg:text-base'
             >
               저장하기
             </button>

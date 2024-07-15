@@ -29,12 +29,12 @@ export default function RaidLeaderDropdown({ scheduleId }: Ownprops) {
     <div className='relative inline-block'>
       <button
         onClick={handleRaidLeaderDropdownOpen}
-        className='max-w-[16rem] truncate text-dark dark:text-light bg-transparent hover:bg-secondary-gray/50 font-medium h-10 md:px-4 md:py-2 px-2 border rounded transition text-xs sm:text-base'
+        className='max-w-[16rem] truncate text-dark dark:text-light bg-transparent hover:bg-secondary-gray/50 font-medium h-10 lg:px-4 lg:py-2 px-2 border rounded transition text-xs lg:text-base'
       >
         공대장: {schedule?.raidLeader.character}
       </button>
       {isDropdownOpen && (
-        <div className='absolute bottom-full mb-2 w-full rounded shadow bg-transparent border max-h-[8rem] overflow-y-scroll'>
+        <div className='absolute bottom-full mb-2 w-full rounded shadow bg-dark border max-h-[8rem] overflow-y-scroll'>
           <div className='py-1' role='menu' aria-orientation='vertical' aria-labelledby='options-menu'>
             {schedule?.characters.map((char, idx) => (
               <button

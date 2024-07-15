@@ -254,7 +254,7 @@ export default function Equipment({ ArmoryEquipment }: Ownprops) {
   const { accessories, equipments, braceletAndStone } = getEquipmentAndAccessories(ArmoryEquipment)
 
   return (
-    <div className='flex flex-wrap w-full h-full gap-4 justify-between'>
+    <div className='flex flex-wrap h-full gap-8 justify-center md:justify-normal'>
       <div className='space-y-2 w-[16rem]'>
         {equipments.map((equipment, idx) => (
           <EquipmentDetails key={idx} equipment={equipment} />

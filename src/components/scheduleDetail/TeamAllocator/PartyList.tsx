@@ -73,7 +73,7 @@ export default function PartyList({ raidType, userId, isPopoverOpen, setIsPopove
   if (raidType === '8인레이드' && schedule) {
     return (
       <>
-        <div className='w-full sm:h-1/2 space-y-2'>
+        <div className='w-full lg:h-1/2 space-y-2'>
           <span className='text-lg font-semibold '>1번 파티</span>
           {schedule.parties.party1.map((member, idx) => {
             return (
@@ -88,7 +88,7 @@ export default function PartyList({ raidType, userId, isPopoverOpen, setIsPopove
                 <button onClick={() => handleSelect(member)} className='flex space-x-2 w-full items-center'>
                   <div>{idx + 1}.</div>
                   {schedule.raidLeader.character === member.character && <PiCrownSimpleFill color='#FCD34D' />}
-                  <div className=''>{member.character}</div>
+                  <div className='truncate'>{member.character}</div>
                 </button>
                 <div className='flex space-x-2'>
                   <button onClick={() => moveMemberBetweenParties('party1', 'party2', idx)}>
@@ -110,7 +110,7 @@ export default function PartyList({ raidType, userId, isPopoverOpen, setIsPopove
             )
           })}
         </div>
-        <div className='w-full sm:h-1/2 space-y-2'>
+        <div className='w-full lg:h-1/2 space-y-2'>
           <span className='text-lg font-semibold'>2번 파티</span>
           {schedule.parties.party2.map((member, idx) => {
             return (
