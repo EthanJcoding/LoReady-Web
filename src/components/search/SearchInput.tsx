@@ -27,9 +27,11 @@ export default function SearchInput() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (input.trim()) {
+    const characterName = input.trim().replace(/\s+/g, '')
+
+    if (characterName) {
       // 최근 검색어 업데이트
-      let updatedSearches = [input.trim(), ...recentSearches.filter(s => s !== input.trim())]
+      let updatedSearches = [characterName, ...recentSearches.filter(s => s !== characterName)]
 
       // 최근 검색어를 5개로 제한
       if (updatedSearches.length > 5) {
@@ -37,7 +39,7 @@ export default function SearchInput() {
       }
 
       const newSearchParams = new URLSearchParams(searchParams.toString())
-      newSearchParams.set('query', input.trim())
+      newSearchParams.set('query', characterName)
       router.push(`?${newSearchParams.toString()}`, { scroll: false })
 
       saveRecentSearches(updatedSearches)
