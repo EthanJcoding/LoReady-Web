@@ -4,20 +4,20 @@ import { getUserData } from '@/api/firebase'
 import { User } from '@/types/users'
 import { Session } from 'next-auth'
 import HeaderLink from './HeaderLink'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Ownprops {
   session: Session
 }
 
 export default function GnbMobile({ session }: Ownprops) {
-  let dashboardUrl = ''
+  const [dashboardUrl, setDashboardUrl] = useState<string>('')
 
   useEffect(() => {
     const fetchChannel = async () => {
       if (session) {
         const { channels } = (await getUserData(session.user.id)) as User
-        dashboardUrl = `/${channels[0]}/dashboard`
+        setDashboardUrl(`/${channels[0]}/dashboard`)
       }
     }
 

@@ -48,7 +48,7 @@ export default function Header({ session }: Ownprops) {
       </button>
 
       {isMenuOpen && (
-        <div className='absolute top-full right-0 shadow-md z-50 bg-white dark:bg-light/5 sm:hidden rounded-lg'>
+        <div className='absolute top-full right-0 shadow-md z-50 bg-white dark:bg-dark sm:hidden rounded-lg'>
           <div className='flex flex-col p-4 space-y-4'>
             <AuthButton />
             <GnbMobile session={session} />
