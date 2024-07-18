@@ -7,7 +7,7 @@ import Profile from './Profile'
 import { Session } from 'next-auth'
 
 interface Ownprops {
-  session: Session | null
+  session?: Session | null
 }
 
 export default function AuthButton({ session }: Ownprops) {
