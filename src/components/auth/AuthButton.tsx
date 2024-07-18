@@ -1,18 +1,21 @@
 'use client'
 
 import { signIn } from 'next-auth/react'
-import { useSession } from 'next-auth/react'
 import { useSearchParams } from 'next/navigation'
 import { FaDiscord } from 'react-icons/fa'
 import Profile from './Profile'
+import { Session } from 'next-auth'
 
-export default function AuthButton() {
-  const { data: session } = useSession()
+interface Ownprops {
+  session: Session | null
+}
+
+export default function AuthButton({ session }: Ownprops) {
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('redirect_url') || ''
 
   if (session) {
-    return <Profile />
+    return <Profile session={session} />
   }
 
   return (
