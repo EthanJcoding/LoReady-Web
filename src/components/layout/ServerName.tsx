@@ -1,12 +1,15 @@
 import { getChannelData } from '@/api/firebase'
 import Image from 'next/image'
 import AuthButton from '../auth/AuthButton'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/utils/authOptions'
 
 interface Ownprops {
   id: string
 }
 
 export default async function ServerName({ id }: Ownprops) {
+  const session = await getServerSession(authOptions)
   const data = await getChannelData(id)
 
   if (!data) return
@@ -27,7 +30,7 @@ export default async function ServerName({ id }: Ownprops) {
         </span>
         <span className='truncate'>{data.channelName}</span>
       </div>
-      <AuthButton />
+      <AuthButton session={session} />
     </div>
   )
 }

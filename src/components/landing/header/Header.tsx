@@ -3,8 +3,12 @@ import Image from 'next/image'
 import ThemeButton from '@/components/layout/sidebar/ThemeButton'
 import AuthButton from '@/components/auth/AuthButton'
 import Gnb from './Gnb'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/utils/authOptions'
 
-export default function Header() {
+export default async function Header() {
+  const session = await getServerSession(authOptions)
+
   return (
     <header className='flex justify-between w-full'>
       <nav className='flex space-x-4 items-center'>
@@ -16,7 +20,7 @@ export default function Header() {
       </nav>
       <div className='flex items-center gap-4 max-sm:gap-3'>
         <ThemeButton />
-        <AuthButton />
+        <AuthButton session={session} />
       </div>
     </header>
   )
